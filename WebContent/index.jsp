@@ -14,9 +14,11 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
 	<jsp:include page="share/header.jsp"></jsp:include>
+	
 	<div class="container">
-		
+	
 	</div>
-	<jsp:include page="share/footer.jsp"></jsp:include>
+	
+	<jsp:include page="share/footer.html"></jsp:include>
 </body>
 </html>
