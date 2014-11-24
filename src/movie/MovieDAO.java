@@ -1,4 +1,4 @@
-package user;
+package movie;
 
 import java.sql.*;
 
@@ -7,7 +7,7 @@ import javax.sql.*;
 
 import common.PageResult;
 
-public class UserDAO {
+public class MovieDAO {
 	public static DataSource getDataSource() throws NamingException {
 		Context initContext = null;
 		Context environmentContext = null;
@@ -17,7 +17,7 @@ public class UserDAO {
 		
 		return (DataSource) environmentContext.lookup("jdbc/WebDB");
 	}
-	public static PageResult<User> getPage(int page, int numItemsInPage) 
+	public static PageResult<Movie> getPage(int page, int numItemsInPage) 
 			throws SQLException, NamingException {
 		Connection conn = null;
 		Statement stmt = null;
@@ -28,7 +28,7 @@ public class UserDAO {
 		}
 		
 		DataSource ds = getDataSource();
-		PageResult<User> result = new PageResult<User>(numItemsInPage, page);
+		PageResult<Movie> result = new PageResult<Movie>(numItemsInPage, page);
 		
 		
 		int startPos = (page - 1) * numItemsInPage;
@@ -38,7 +38,7 @@ public class UserDAO {
 			stmt = conn.createStatement();
 			
 			// users 테이블: user 수 페이지수 개산
-	 		rs = stmt.executeQuery("SELECT COUNT(*) FROM users");
+	 		rs = stmt.executeQuery("SELECT COUNT(*) FROM movies");
 			rs.next();
 			
 			result.setNumItems(rs.getInt(1));
@@ -50,14 +50,18 @@ public class UserDAO {
 			
 	 		// users 테이블 SELECT
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM users ORDER BY name LIMIT " + startPos + ", " + numItemsInPage);
+			rs = stmt.executeQuery("SELECT * FROM movies ORDER BY title LIMIT " + startPos + ", " + numItemsInPage);
 			
 			while(rs.next()) {
-				result.getList().add(new User(rs.getInt("id"),
-							rs.getString("userid"),
-							rs.getString("name"),
-							rs.getString("pwd"),
-							rs.getString("email")
+				result.getList().add(new Movie(rs.getInt("id"),
+							rs.getString("title"),
+							rs.getString("link"),
+							rs.getString("image"),
+							rs.getString("subtitle"),
+							rs.getString("pubdate"),
+							rs.getString("director"),
+							rs.getString("actor"),
+							rs.getInt("userrating")
 						));
 			}
 		} finally {
@@ -70,8 +74,8 @@ public class UserDAO {
 		return result;		
 	}
 	
-	public static User findById(int id) throws NamingException, SQLException{
-		User user = null;
+	public static Movie findById(int id) throws NamingException, SQLException{
+		Movie movie = null;
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -83,18 +87,22 @@ public class UserDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE id = ?");
 			stmt.setInt(1, id);
 			
 			// 수행
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				user = new User(rs.getInt("id"),
-						rs.getString("userid"),
-						rs.getString("name"),
-						rs.getString("pwd"),
-						rs.getString("email"));
+				movie = new Movie(rs.getInt("id"),
+						rs.getString("title"),
+						rs.getString("link"),
+						rs.getString("image"),
+						rs.getString("subtitle"),
+						rs.getString("pubdate"),
+						rs.getString("director"),
+						rs.getString("actor"),
+						rs.getInt("userrating"));
 
 			}	
 		} finally {
@@ -104,10 +112,10 @@ public class UserDAO {
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
 		
-		return user;
+		return movie;
 	}
 	
-	public static boolean create(User user) throws SQLException, NamingException {
+	public static boolean create(Movie movie) throws SQLException, NamingException {
 		int result;
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -120,13 +128,18 @@ public class UserDAO {
 
 			// 질의 준비
 			stmt = conn.prepareStatement(
-					"INSERT INTO users(userid, name, pwd, email) " +
-					"VALUES(?, ?, ?, ?)"
+					"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) " +
+					"VALUES(?, ?, ?, ?, ?, ?, ?)"
 					);
-			stmt.setString(1,  user.getUserid());
-			stmt.setString(2,  user.getName());
-			stmt.setString(3,  user.getPwd());
-			stmt.setString(3,  user.getEmail());
+			stmt.setString(1,  movie.getTitle());
+			stmt.setString(2,  movie.getLink());
+			stmt.setString(3,  movie.getImage());
+			stmt.setString(4,  movie.getSubtitle());
+			stmt.setString(5,  movie.getPubdate());
+			stmt.setString(6,  movie.getDirector());
+			stmt.setString(7,  movie.getActor());
+			stmt.setInt(8,  movie.getUserrating());
+			
 			
 			// 수행
 			result = stmt.executeUpdate();
@@ -140,7 +153,7 @@ public class UserDAO {
 		return (result == 1);
 	}
 	
-	public static boolean update(User user) throws SQLException, NamingException {
+	public static boolean update(Movie movie) throws SQLException, NamingException {
 		int result;
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -153,13 +166,19 @@ public class UserDAO {
 
 			// 질의 준비
 			stmt = conn.prepareStatement(
-					"UPDATE users " +
-					"SET  name=?, email=?" +
+					"UPDATE movies " +
+					"SET  title = ?, link = ?, image = ?, subtitle = ?, pubdate = ?, director = ?, actor = ?, userrating = ?" +
 					"WHERE id=?"
 					);
-			stmt.setString(1,  user.getName());
-			stmt.setString(2,  user.getEmail());
-			stmt.setInt(3,  user.getId());
+			stmt.setString(1,  movie.getTitle());
+			stmt.setString(2,  movie.getLink());
+			stmt.setString(3,  movie.getImage());
+			stmt.setString(4,  movie.getSubtitle());
+			stmt.setString(5,  movie.getPubdate());
+			stmt.setString(6,  movie.getDirector());
+			stmt.setString(7,  movie.getActor());
+			stmt.setInt(8,  movie.getUserrating());
+			stmt.setInt(9,  movie.getId());
 			
 			// 수행
 			result = stmt.executeUpdate();
@@ -185,7 +204,7 @@ public class UserDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("DELETE FROM users WHERE id=?");
+			stmt = conn.prepareStatement("DELETE FROM movies WHERE id=?");
 			stmt.setInt(1,  id);
 			
 			// 수행
