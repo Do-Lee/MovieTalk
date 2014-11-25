@@ -13,6 +13,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//connect.facebook.net/en_US/all.js"></script>
 </head>
 <body>
 	<jsp:include page="./share/header.jsp"></jsp:include>
@@ -49,7 +50,9 @@
 			</div>
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
-					<a href="#"><img src="./images/facebook.jpg"></a> 
+					<a class="fb_button fb_button_large" id="btnLogin" href="FBAuthServlet.do" data-size="xlarge">
+						<img src="./images/facebook.jpg">
+					</a>
 					<a href="#"><img src="./images/twitter.jpg"></a>
 				</div>
 			</div>
