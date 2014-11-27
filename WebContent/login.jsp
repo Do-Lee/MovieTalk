@@ -13,13 +13,13 @@
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//connect.facebook.net/en_US/all.js"></script>
+
 </head>
 <body>
 	<jsp:include page="./share/header.jsp"></jsp:include>
 
 	<div class="container">
-		<form class="form-horizontal">
+		<form class="form-horizontal" >
 			<div class="form-group">
 				<label for="userid" class="col-lg-2 control-label">ID</label>
 				<div class="col-lg-3">
@@ -48,17 +48,12 @@
 					<button type="submit" class="btn btn-default">Login</button>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="col-lg-offset-2 col-lg-10">
-					<a class="fb_button fb_button_large" id="btnLogin" href="FBAuthServlet.do" data-size="xlarge">
-						<img src="./images/facebook.jpg">
-					</a>
-					<a href="#"><img src="./images/twitter.jpg"></a>
-				</div>
-			</div>
 		</form>
 	</div>
-
-	<jsp:include page="./share/footer.jsp"></jsp:include>
+		<jsp:include page="./share/footer.jsp"></jsp:include>
 </body>
+
 </html>
+
+
+
