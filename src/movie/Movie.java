@@ -12,12 +12,12 @@ public class Movie implements Serializable{
 	private String pubdate;
 	private String director;
 	private String actor;
-	private int userrating;
+	private float userrating;
 	
 	public Movie() {
 	}
 	
-	public Movie(int id, String title, String link, String image, String subtitle, String pubdate, String director, String actor, int userrating) {
+	public Movie(int id, String title, String link, String image, String subtitle, String pubdate, String director, String actor, float userrating) {
 		setId(id);
 		setTitle(title);
 		setLink(link);
@@ -45,7 +45,7 @@ public class Movie implements Serializable{
 	public void setDirector(String director) {this.director = director;}
 	public String getActor() {return actor;}
 	public void setActor(String actor) {this.actor = actor;}
-	public int getUserrating() {return userrating;}
-	public void setUserrating(int userrating) {this.userrating = userrating;}
+	public float getUserrating() {return userrating;}
+	public void setUserrating(float userrating2) {this.userrating = userrating2;}
 
 }

@@ -1,11 +1,11 @@
 package movie;
 
 import java.sql.*;
-import java.util.Vector;
 
 import javax.naming.*;
 import javax.sql.*;
 
+import naver.*;
 import common.PageResult;
 
 public class MovieDAO {
@@ -116,6 +116,44 @@ public class MovieDAO {
 		return movie;
 	}
 	
+	// execute queries with informations taken by Naver Search API
+	public static boolean create(Feed feed) throws SQLException, NamingException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+			
+			for(FeedMessage message: feed.getMessages()) {
+				stmt = conn.prepareStatement(
+						"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) " +
+						"VALUES(?, ?, ?, ?, ?, ?, ?)"
+						);
+				stmt.setString(1, message.getTitle());
+				stmt.setString(2, message.getLink());
+				stmt.setString(3, message.getImage());
+				stmt.setString(4, message.getSubtitle());
+				stmt.setString(5, message.getPubDate());
+				stmt.setString(6, message.getDirector());
+				stmt.setString(7, message.getActor());
+				stmt.setFloat(8, Float.parseFloat(message.getUserRating()));
+				result = stmt.executeUpdate();
+			}
+			
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return (result == 1);
+	}
+	
 	public static boolean create(Movie movie) throws SQLException, NamingException {
 		int result;
 		Connection conn = null;
@@ -126,7 +164,8 @@ public class MovieDAO {
 		
 		try {
 			conn = ds.getConnection();
-
+			
+			// 
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) " +
@@ -139,7 +178,7 @@ public class MovieDAO {
 			stmt.setString(5,  movie.getPubdate());
 			stmt.setString(6,  movie.getDirector());
 			stmt.setString(7,  movie.getActor());
-			stmt.setInt(8,  movie.getUserrating());
+			stmt.setFloat(8,  movie.getUserrating());
 			
 			
 			// 수행
@@ -178,7 +217,7 @@ public class MovieDAO {
 			stmt.setString(5,  movie.getPubdate());
 			stmt.setString(6,  movie.getDirector());
 			stmt.setString(7,  movie.getActor());
-			stmt.setInt(8,  movie.getUserrating());
+			stmt.setFloat(8,  movie.getUserrating());
 			stmt.setInt(9,  movie.getId());
 			
 			// 수행
@@ -218,35 +257,5 @@ public class MovieDAO {
 		}
 		
 		return (result == 1);		
-	}
-	public static Vector<String> getDataList(String title) throws SQLException, NamingException {
-		Vector<String> data_List = new Vector<String>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		DataSource ds = getDataSource();
-		
-		try {
-			conn = ds.getConnection();
-
-			// 질의 준비
-			stmt = conn.prepareStatement("SELECT title FROM movies WHERE title like ?%");
-			stmt.setString(1, title);
-			
-			// 수행
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				data_List.add(rs.getString("title"));
-			}	
-		} finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		
-		return data_List;
 	}
 }
