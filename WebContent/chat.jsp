@@ -9,7 +9,7 @@
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <!-- Latest compiled and JQuery -->
-<script src="//code.jquery.com/jquery-lastest"></script>
+<script src="//code.jquery.com/jquery-latest.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
