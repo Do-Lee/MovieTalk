@@ -66,10 +66,10 @@
 					<div id="messages"></div>
 					<div id="error" style="display: none"></div>
 					<form id="chat_form">
-						<input id="name" type="text" size="50"> <input id="msg"
-							type="text" size="50"> <input id="send" type="button"
-							value="send"> <img src="images/ajax-loader.gif"
-							style="display: none;" id="loading">
+						<input id="name" type="text" size="50"> 
+						<input id="msg" type="text" size="50">
+						<input id="send" type="button" value="send"> 
+						<img src="images/ajax-loader.gif" style="display: none;" id="loading">
 					</form>
 				</div>
 			</div>

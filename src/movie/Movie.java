@@ -14,8 +14,7 @@ public class Movie implements Serializable{
 	private String actor;
 	private float userrating;
 	
-	public Movie() {
-	}
+	public Movie() {}
 	
 	public Movie(int id, String title, String link, String image, String subtitle, String pubdate, String director, String actor, float userrating) {
 		setId(id);
