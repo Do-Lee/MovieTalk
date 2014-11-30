@@ -8,9 +8,10 @@
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="./administrator.jsp">관리자 페이지</a></li>
+				<li><a href="./member.jsp">회원 페이지</a></li>
 				<li><a href="./register.jsp">회원가입</a></li>
 				<li><a href="#none" onClick="location.href='./login.jsp?returnUrl=' + encodeURIComponent(location)">로그인</a></li>
-				<li><a href="#none" onClick="FBLogout();" id = "logout">로그아웃</a></li>
+				<li><a href="#none" onClick="FBLogout();" id="logout">로그아웃</a></li>
 			</ul>
 		</div>
 	</div>
