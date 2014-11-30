@@ -5,14 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Movie Talk</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<!-- Latest compiled and JQuery -->
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<script src="./js/jquery-1.8.2.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 </head>
 <body>
 	<jsp:include page="share/header.jsp"></jsp:include>
@@ -25,7 +20,7 @@
 						<h3>Hot Topic</h3>
 					</div>
 				</div>
-				<div class="thumbnail">
+				<div class="thumbnail" style="float: bottom">
 					<div class="caption">
 						<h3>New Topic</h3>
 					</div>
@@ -58,7 +53,9 @@
 			</div>
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">
-					<a href="./openChat.jsp"><img src="./images/open_chat.jpg"></a>
+					<a href="./openChat.jsp">
+					<img src="./images/open_chat.jpg">
+					</a>
 					<div class="caption">
 						<h3>Open Chatting</h3>
 					</div>

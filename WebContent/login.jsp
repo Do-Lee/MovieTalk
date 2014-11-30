@@ -5,22 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Movie Talk</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<!-- Latest compiled and JQuery -->
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<script src="./js/jquery-1.8.2.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <script src="//connect.facebook.net/en_US/all.js"></script>
 </head>
 <body>
 	<jsp:include page="./share/header.jsp"></jsp:include>
-	<div class="row-fluid">
-		<div class="span4">...</div>
-		<div class="span8 offset4">...</div>
-	</div>
 
 	<div class="container">
 		<form class="form-horizontal">
@@ -52,21 +43,78 @@
 					<button type="submit" class="btn btn-default">Login</button>
 				</div>
 			</div>
-			<<<<<<< Updated upstream =======
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
-					<a class="fb_button fb_button_large" id="btnLogin"
+					<fb:login-button id="login" scope="public_profile,user_friends"
+						onlogin="checkLoginState();"></fb:login-button>
+					<!-- <a class="fb_button fb_button_large" id="btnLogin"
 						href="FBAuthServlet.do" data-size="xlarge"> <img
 						src="./images/facebook.jpg">
-					</a> <a href="#"><img src="./images/twitter.jpg"></a>
+					</a> <a href="#"><img src="./images/twitter.jpg"></a> -->
 				</div>
 			</div>
-			>>>>>>> Stashed changes
 		</form>
 	</div>
 	<jsp:include page="./share/footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '1500964636829366',
+			xfbml : true,
+			version : 'v2.2'
+		});
+	};
 
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	// Load the SDK asynchronously
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id))
+			return;
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	function statusChangeCallback(response) {
+		if (response.status === 'connected') {
+			$('#login').hide();
+			$('#logout').show();
+		} else if (response.status === 'not_authorized') {
+			init();
+		} else {
+			init();
+		}
+	}
+	// This function is called when someone finishes with the Login Button.
+	function checkLoginState() {
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+	function FBLogout() {
+		FB.logout(function(response) {
+			$('#login').show();
+			$('#logout').hide();
+		});
+	}
+	function init() {
+		$('#login').show();
+		$('#logout').hide();
+	}
+</script>
 </html>
 
 

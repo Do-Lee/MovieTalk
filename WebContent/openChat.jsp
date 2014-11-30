@@ -5,14 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Movie Talk</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<!-- Latest compiled and JQuery -->
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<script src="./js/jquery-1.8.2.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 </head>
 <body>
 	<jsp:include page="share/header.jsp"></jsp:include>
