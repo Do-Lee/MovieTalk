@@ -12,7 +12,7 @@
                
                <%if(userid != null) {%>
                    <%
-                     if(userid == user.getAdmin()) {
+                     if(userid.equals(user.getAdmin())) {
                    %>
                   <li><a href="./administrator.jsp">관리자 페이지</a></li>
                   <%} else {%>
