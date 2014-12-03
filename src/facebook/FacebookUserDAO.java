@@ -7,8 +7,6 @@ import javax.sql.*;
 
 import common.PageResult;
 
-
-
 public class FacebookUserDAO {
 	public static DataSource getDataSource() throws NamingException {
 		Context initCtx = null;
@@ -33,8 +31,6 @@ public class FacebookUserDAO {
 		
 		DataSource ds = getDataSource();
 		PageResult<FacebookUser> result = new PageResult<FacebookUser>(numItemsInPage, page);
-		
-		
 		int startPos = (page - 1) * numItemsInPage;
 		
 		try {
@@ -72,17 +68,14 @@ public class FacebookUserDAO {
 	}
 	
 	public static FacebookUser findById(int id) throws NamingException, SQLException{
-		FacebookUser fbuser = null;
-		
+		FacebookUser fbuser = null;		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
 		DataSource ds = getDataSource();
 		
 		try {
 			conn = ds.getConnection();
-
 			// 질의 준비
 			stmt = conn.prepareStatement("SELECT * FROM fbusers WHERE id = ?");
 			stmt.setInt(1, id);
@@ -92,9 +85,8 @@ public class FacebookUserDAO {
 
 			if (rs.next()) {
 				fbuser = new FacebookUser(rs.getInt("id"),
-						rs.getString("fbid"),
-						rs.getString("name")
-						);
+							rs.getString("fbid"),
+							rs.getString("name"));
 			}	
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -108,15 +100,11 @@ public class FacebookUserDAO {
 	
 	public static FacebookUser findByFbId(String fbid) throws NamingException, SQLException{
 		FacebookUser userinfo=null;
-		
-		Connection conn = null;
+		DataSource ds = getDataSource();		
+		Connection conn = ds.getConnection();
+		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
-	
-		
-		DataSource ds = getDataSource();
-		conn = ds.getConnection();
 		
 		try {
 			// 질의 준비
@@ -145,30 +133,24 @@ public class FacebookUserDAO {
 	
 	public static FacebookUser findByUserId(String userid) throws NamingException, SQLException{
 		FacebookUser userinfo=null;
-		
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-	
-		
 		DataSource ds = getDataSource();
-		conn = ds.getConnection();
+		Connection conn = ds.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;		
 		
 		try {
 			// 질의 준비
-		
-				stmt = conn.prepareStatement("SELECT * FROM fbusers WHERE userid = ?");
-				stmt.setString(1, userid);
+			stmt = conn.prepareStatement("SELECT * FROM fbusers WHERE userid = ?");
+			stmt.setString(1, userid);
 				
-				// 수행
-				rs = stmt.executeQuery();
+			// 수행
+			rs = stmt.executeQuery();
 				
-				if(rs.next()) {
-					userinfo = new FacebookUser(rs.getInt("id"),
-							rs.getString("fbid"),
-							rs.getString("name"));
-				}
+			if(rs.next()) {
+				userinfo = new FacebookUser(rs.getInt("id"),
+					rs.getString("fbid"),
+					rs.getString("name"));
+			}
 				
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -190,7 +172,6 @@ public class FacebookUserDAO {
 		
 		try {
 			conn = ds.getConnection();
-
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"INSERT INTO fbusers(id, fbid, name) " +
@@ -222,7 +203,7 @@ public class FacebookUserDAO {
 		
 		try {
 			conn = ds.getConnection();
-
+			conn = getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"UPDATE fbusers " +
@@ -254,7 +235,7 @@ public class FacebookUserDAO {
 		
 		try {
 			conn = ds.getConnection();
-
+			conn = getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement("DELETE FROM fbusers WHERE id=?");
 			stmt.setInt(1,  id);

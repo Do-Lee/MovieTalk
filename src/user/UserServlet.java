@@ -48,7 +48,6 @@ public class UserServlet extends HttpServlet {
 		try {
 			if (op == null || op.equals("index")) {
 				int page = getIntFromParameter(request.getParameter("page"), 1);
-				
 				PageResult<User> users = UserDAO.getPage(page, 10);
 				request.setAttribute("users", users);
 				request.setAttribute("page", page);

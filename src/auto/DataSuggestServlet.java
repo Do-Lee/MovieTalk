@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import movie.Movie;
 import movie.MovieDAO;
 
 /**
@@ -42,9 +43,9 @@ public class DataSuggestServlet extends HttpServlet {
 
 		String query=request.getParameter("query");
 		PrintWriter out=response.getWriter();
-		Vector<String> data_list = null;
+		Vector<Movie> movieList = null;
 		try {
-			data_list = MovieDAO.getDataList(query);
+			movieList = MovieDAO.getMovieList(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,9 +58,9 @@ public class DataSuggestServlet extends HttpServlet {
 		}else{
 			if(query.length() > 0)
 			{
-				for( String data : data_list )
+				for( Movie data : movieList )
 				{
-					if( data.contains(query))
+					if( data.getTitle().contains(query))
 					{	
 						out.println("<li onclick=\"fill('"+data+"');\">"+data+"</li>"); 
 					}

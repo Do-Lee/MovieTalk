@@ -21,7 +21,7 @@
 				<h3>Errors:</h3>
 				<ul>
 					<c:forEach var="msg" items="${errorMsgs}">
-						<li><c:out value="${msg}" /></li>
+						<li><c:out value="${msg}" escapeXml="false"/></li>
 					</c:forEach>
 				</ul>
 			</c:if>

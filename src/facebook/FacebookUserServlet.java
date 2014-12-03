@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.PageResult;
 
@@ -22,13 +23,9 @@ import common.PageResult;
 public class FacebookUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public FacebookUserServlet() {
 		super();
 	}
-
 
 	private int getIntFromParameter(String str, int defaultValue) {
 		int id;
@@ -41,9 +38,6 @@ public class FacebookUserServlet extends HttpServlet {
 		return id;
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String op = request.getParameter("op");
 		String actionUrl = "";
@@ -80,6 +74,8 @@ public class FacebookUserServlet extends HttpServlet {
 
 				if (ret) {
 					request.setAttribute("msg", "사용자 정보가 삭제되었습니다.");
+					HttpSession session = request.getSession();
+					session.invalidate();
 					actionUrl = "success.jsp";
 				} else {
 					request.setAttribute("error", "사용자 정보 삭제에 실패했습니다.");
@@ -110,11 +106,7 @@ public class FacebookUserServlet extends HttpServlet {
 		return method == null || method.equals("POST");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		boolean ret = false;
 		String actionUrl="";
 		FacebookUser fbuser = new FacebookUser();

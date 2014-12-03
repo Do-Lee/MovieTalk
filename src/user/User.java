@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private final String admin = "webmaster";
 	private int id;
 	private String userid;
 	private String name;
@@ -31,6 +32,6 @@ public class User implements Serializable{
 	public void setPwd(String pwd) {this.pwd = pwd;}
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
-
+	public String getAdmin() {return admin;}
 
 }

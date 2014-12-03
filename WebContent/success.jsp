@@ -14,8 +14,7 @@
 	<jsp:include page="share/header.jsp"></jsp:include>
 
 	<div class="container">
-		<!-- <div class="alert alert-success">${msg}</div>-->
-        <div class="alert alert-success"><%=request.getAttribute("msg") %></div>
+		<div class="alert alert-success"><c:out value="${msg}" escapeXml="false"/></div>
 		<div class="form-action">
 			<a href="user" class="btn">목록으로</a>
 		</div>

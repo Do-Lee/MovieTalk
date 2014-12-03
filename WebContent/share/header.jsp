@@ -1,17 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+  <jsp:useBean id="user" class="user.User"/>
+<%String userid = (String)session.getAttribute("id"); %>
+<%String pwd = (String)session.getAttribute("password"); %>
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <!-- member bar -->
 <div class="navbar navbar-default">
 	<div class="nav nav-pills">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="./administrator.jsp">관리자 페이지</a></li>
-				<li><a href="./member.jsp">회원 페이지</a></li>
+               
+               <%if(userid != null) {%>
+                   <%
+                     if(userid == user.getAdmin()) {
+                   %>
+                  <li><a href="./administrator.jsp">관리자 페이지</a></li>
+                  <%} else {%>
+				  <li><a href="./member.jsp">회원 페이지</a></li>
+                 <%} 
+                 }%>
 				<li><a href="./register.jsp">회원가입</a></li>
-				<li><a href="#none" onClick="location.href='./login.jsp?returnUrl=' + encodeURIComponent(location)">로그인</a></li>
-				<li><a href="#none" onClick="FBLogout();" id="logout">로그아웃</a></li>
+               
+               <%
+                 if(session.getAttribute("id") == null) {
+               %>
+				<li><a href="login.jsp">로그인</a></li>
+               <%
+                 } else {
+               %>
+                <li>ID: <%=userid %></li>
+				<li><a href="LogoutController.do" onClick="FBLogout(); alert('로그아웃되었습니다.');" id="logout">로그아웃</a></li>
+               <%} %>
 			</ul>
 		</div>
 	</div>
@@ -19,7 +38,7 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 50px" align="center">
-	<form class="form-inline" method="POST">
+	<form class="form-inline" method="POST" action="MovieServlet.do">
 		<div class="form-group">
 			<h1>
 				<a href="./index.jsp">Movie Talk</a>

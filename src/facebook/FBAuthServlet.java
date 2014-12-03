@@ -24,8 +24,7 @@ public class FBAuthServlet extends HttpServlet {
 		if( code == null){			
 			String oauthURL = Facebook.getOAuthURL();
 			response.sendRedirect (oauthURL);
-		}
-		else{			
+		} else{			
 			Facebook facebook = Facebook.getInstance(code); 
 			
 			// 현재 페이스북 사용자 정보를 가져온다.
@@ -42,10 +41,12 @@ public class FBAuthServlet extends HttpServlet {
 				FacebookUser fbuserinfo = FacebookUserDAO.findByFbId(fbid);
 				if(fbuserinfo == null ) {
 					actionUrl = "fbuser?op=register";
-				}else {
+				} else {
+					HttpSession session = request.getSession();
+					session.setAttribute("id", fbid);
 					actionUrl = "fbuser?op=index";
 				}
-			}catch (SQLException | NamingException e) {
+			} catch (SQLException | NamingException e) {
 				request.setAttribute("error", e.getMessage());
 				e.printStackTrace();
 				actionUrl = "error.jsp";
