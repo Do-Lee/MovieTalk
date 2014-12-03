@@ -2,7 +2,8 @@ package user;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -55,7 +56,6 @@ public class UserServlet extends HttpServlet {
 			} else if (op.equals("show")) {
 				User user = UserDAO.findById(id);
 				request.setAttribute("user", user);
-
 				actionUrl = "show.jsp";
 			} else if (op.equals("update")) {
 				User user = UserDAO.findById(id);
@@ -111,11 +111,11 @@ public class UserServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		
-		String userid = request.getParameter("userid");
-		String name = request.getParameter("name");
-		String pwd = request.getParameter("pwd");
-		String pwd_confirm = request.getParameter("pwd_confirm");
-		String email = request.getParameter("email");
+		String userid = (String)request.getParameter("userid");
+		String name = (String)request.getParameter("nickname");
+		String pwd = (String)request.getParameter("password");
+		String pwd_confirm = (String)request.getParameter("pwd_confirm");
+		String email = (String)request.getParameter("email");
 		
 		List<String> errorMsgs = new ArrayList<String>();
 		
@@ -129,7 +129,7 @@ public class UserServlet extends HttpServlet {
 			}
 			user.setPwd(pwd);
 		} else {
-			user.setId(getIntFromParameter(request.getParameter("id"), -1));
+			user.setId(getIntFromParameter((String)request.getParameter("id"), -1));
 		}
 
 		if (userid == null || userid.trim().length() == 0) {
@@ -160,7 +160,7 @@ public class UserServlet extends HttpServlet {
 				msg = "<b>" + name + "</b>님의 사용자 정보가 수정되었습니다.";
 			}
 			if (ret != true) {
-				errorMsgs.add("변경에 실패했습니다.");
+				errorMsgs.add("변경에  실패했습니다.");
 				actionUrl = "error.jsp";
 			} else {
 				request.setAttribute("msg", msg);

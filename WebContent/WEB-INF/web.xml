@@ -15,4 +15,38 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+
+	<servlet>
+	  	<description>UserServlet</description>
+  		<display-name>UserServlet</display-name>
+	    	<servlet-name>UserServlet</servlet-name>
+	    	<servlet-class>user.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    	<servlet-name>UserServlet</servlet-name>
+	    	<url-pattern>/UserServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    	<description>LoginController</description>
+	    	<display-name>LoginController</display-name>
+	    	<servlet-name>LoginController</servlet-name>
+	    	<servlet-class>user.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    	<servlet-name>LoginController</servlet-name>
+	    	<url-pattern>/LoginController.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+	    	<description>LogoutController</description>
+	    	<display-name>LogoutController</display-name>
+	    	<servlet-name>LogoutController</servlet-name>
+	    	<servlet-class>user.LogoutController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    	<servlet-name>LogoutController</servlet-name>
+	    	<url-pattern>/LogoutController.do</url-pattern>
+	</servlet-mapping>
+
 </web-app>

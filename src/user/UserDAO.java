@@ -17,9 +17,26 @@ public class UserDAO {
 		
 		return (DataSource) environmentContext.lookup("jdbc/WebDB");
 	}
+	
+	public static Connection getConnection() {
+		String dbUrl = "jdbc:mysql://localhost:3306/movietalk";
+		String dbId = "webproject";
+		String dbPass = "test";
+		
+		Connection conn = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(dbUrl, dbId, dbPass);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	
 	public static PageResult<User> getPage(int page, int numItemsInPage) 
 			throws SQLException, NamingException {
-		Connection conn = null;
+		Connection conn = getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;		
 
@@ -27,14 +44,15 @@ public class UserDAO {
 			page = 1;
 		}
 		
-		DataSource ds = getDataSource();
+		//DataSource ds = getDataSource();
 		PageResult<User> result = new PageResult<User>(numItemsInPage, page);
 		
 		
 		int startPos = (page - 1) * numItemsInPage;
 		
 		try {
-			conn = ds.getConnection();
+			//conn = ds.getConnection();
+			conn = getConnection();
 			stmt = conn.createStatement();
 			
 			// users 테이블: user 수 페이지수 개산
@@ -70,18 +88,89 @@ public class UserDAO {
 		return result;		
 	}
 	
-	public static User findById(int id) throws NamingException, SQLException{
+	public static User checkIdPwd(String userid, String pwd) throws NamingException, SQLException {
 		User user = null;
 		
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		DataSource ds = getDataSource();
+		//DataSource ds = getDataSource();
 		
 		try {
-			conn = ds.getConnection();
+			//conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM users WHERE userid = ? and pwd = ?");
+			stmt.setString(1, userid);
+			stmt.setString(2, pwd);
+			
+			// 수행
+			rs = stmt.executeQuery();
 
+			if (rs.next()) {
+				user = new User(rs.getInt("id"),
+						rs.getString("userid"),
+						rs.getString("name"),
+						rs.getString("pwd"),
+						rs.getString("email"));
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return user;
+	}
+	
+	public static User findById(String userid) throws NamingException, SQLException {
+		User user = null;
+		
+		Connection conn = getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		//DataSource ds = getDataSource();
+		
+		try {
+			//conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM users WHERE userid = ?");
+			stmt.setString(1, userid);
+			
+			// 수행
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				user = new User(rs.getInt("id"),
+						rs.getString("userid"),
+						rs.getString("name"),
+						rs.getString("pwd"),
+						rs.getString("email"));
+
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return user;
+	}
+	
+	public static User findById(int id) throws NamingException, SQLException{
+		User user = null;
+		
+		Connection conn = getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		//DataSource ds = getDataSource();
+		
+		try {
+			//conn = ds.getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
 			stmt.setInt(1, id);
@@ -109,15 +198,14 @@ public class UserDAO {
 	
 	public static boolean create(User user) throws SQLException, NamingException {
 		int result;
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		DataSource ds = getDataSource();
+		//DataSource ds = getDataSource();
 		
 		try {
-			conn = ds.getConnection();
-
+			//conn = ds.getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"INSERT INTO users(userid, name, pwd, email) " +
@@ -126,7 +214,7 @@ public class UserDAO {
 			stmt.setString(1,  user.getUserid());
 			stmt.setString(2,  user.getName());
 			stmt.setString(3,  user.getPwd());
-			stmt.setString(3,  user.getEmail());
+			stmt.setString(4,  user.getEmail());
 			
 			// 수행
 			result = stmt.executeUpdate();
@@ -142,15 +230,14 @@ public class UserDAO {
 	
 	public static boolean update(User user) throws SQLException, NamingException {
 		int result;
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		DataSource ds = getDataSource();
+		//DataSource ds = getDataSource();
 		
 		try {
-			conn = ds.getConnection();
-
+			//conn = ds.getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"UPDATE users " +
@@ -175,15 +262,14 @@ public class UserDAO {
 	
 	public static boolean remove(int id) throws NamingException, SQLException {
 		int result;
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		DataSource ds = getDataSource();
+		//DataSource ds = getDataSource();
 		
 		try {
-			conn = ds.getConnection();
-
+			//conn = ds.getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement("DELETE FROM users WHERE id=?");
 			stmt.setInt(1,  id);

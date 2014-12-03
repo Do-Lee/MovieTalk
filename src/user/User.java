@@ -10,9 +10,7 @@ public class User implements Serializable{
 	private String pwd;
 	private String email;
 	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+	public User() {}
 	
 	public User(int id,String userid, String name,String pwd, String email) {
 		super();
