@@ -18,6 +18,7 @@
 		<ul class="nav nav-tabs" style="margin-bottom: 30px">
 			<li><a href="#">Member</a></li>
 			<li><a href="#">Chatting List</a></li>
+			<li><a href="fb_index.jsp">FacebookMember</a></li>
 		</ul>
 
 		<!-- 위의 상태에 따라 c:out 써서 member, chatting list 로 바꿈 -->

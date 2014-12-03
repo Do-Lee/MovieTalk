@@ -48,5 +48,13 @@
 	    	<servlet-name>LogoutController</servlet-name>
 	    	<url-pattern>/LogoutController.do</url-pattern>
 	</servlet-mapping>
+	  <servlet>
+    <servlet-name>FBAuthServlet</servlet-name>
+    <servlet-class>facebook.FBAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FBAuthServlet</servlet-name>
+    <url-pattern>/FBAuthServlet.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>
