@@ -29,7 +29,6 @@
 					<tr>
 						<th>Id</th>
 						<th>FacebookNumber</th>
-						<th>UserID</th>
 						<th>Name</th>
 						<th></th>
 					</tr>
@@ -40,7 +39,6 @@
 							<td><a href="fbuser?id=${fbuser.id}"><c:out
 										value="${fbuser.id}" /></a></td>
 							<td><c:out value="${fbuser.fbId}" /></td>
-							<td><c:out value="${fbuser.userid}" /></td>
 							<td><c:out value="${fbuser.name}"/></td>
 							<td><a href="fbuser?op=update&id=${fbuser.id}"
 								class="btn btn-mini btn-danger" data-action="delete"

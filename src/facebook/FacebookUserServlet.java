@@ -120,38 +120,12 @@ public class FacebookUserServlet extends HttpServlet {
 		FacebookUser fbuser = new FacebookUser();
 
 		request.setCharacterEncoding("utf-8");
-		String userid = request.getParameter("userid");
-		String pwd = request.getParameter("pwd");
-		String pwd_confirm = request.getParameter("pwd_confirm");
 		String fbid = request.getParameter("fbid");
 		String name = request.getParameter("name");
 		List<String> errorMsgs = new ArrayList<String>();
 
-		// 회원가입 오류 메세지
-
-		if (isRegisterMode(request)) {
-			if(userid != "" && pwd != "" ) {
-				if (pwd == null || pwd.length() < 5) {
-					errorMsgs.add("비밀번호는 5자 이상 입력해주세요.");
-				} else if (!pwd.equals(pwd_confirm)) {
-					errorMsgs.add("비밀번호가 일치하지 않습니다.");
-				} else {
-					fbuser.setPwd(pwd);
-					fbuser.setfbId(fbid);
-					fbuser.setName(name);
-				}
-			}else {
-				errorMsgs.add("다시 입력해주세요.");
-			}
-		} else {
-			fbuser.setId(getIntFromParameter(request.getParameter("id"), -1));
-		}
-
-		if (userid == null || userid.trim().length() == 0) {
-			errorMsgs.add("ID가 공백입니다.");
-		}else {
-			fbuser.setUserid(userid);
-		}
+		fbuser.setfbId(fbid);
+		fbuser.setName(name);
 
 		String msg="";
 

@@ -15,8 +15,7 @@ import com.restfb.types.User;
 public class FBAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String code = request.getParameter("code"); 
 
 		request.setCharacterEncoding("UTF-8");
@@ -44,7 +43,7 @@ public class FBAuthServlet extends HttpServlet {
 				if(fbuserinfo == null ) {
 					actionUrl = "fbuser?op=register";
 				}else {
-					actionUrl = "fb_login.jsp";
+					actionUrl = "fbuser?op=index";
 				}
 			}catch (SQLException | NamingException e) {
 				request.setAttribute("error", e.getMessage());

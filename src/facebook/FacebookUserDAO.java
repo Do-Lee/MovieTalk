@@ -58,8 +58,6 @@ public class FacebookUserDAO {
 			while(rs.next()) {
 				result.getList().add(new FacebookUser(rs.getInt("id"),
 						rs.getString("fbid"),
-						rs.getString("userid"),
-						rs.getString("pwd"),
 						rs.getString("name")
 						));
 			}
@@ -95,8 +93,6 @@ public class FacebookUserDAO {
 			if (rs.next()) {
 				fbuser = new FacebookUser(rs.getInt("id"),
 						rs.getString("fbid"),
-						rs.getString("userid"),
-						rs.getString("pwd"),
 						rs.getString("name")
 						);
 			}	
@@ -134,8 +130,6 @@ public class FacebookUserDAO {
 				if(rs.next()) {
 					userinfo = new FacebookUser(rs.getInt("id"),
 							rs.getString("fbid"),
-							rs.getString("userid"),
-							rs.getString("pwd"),
 							rs.getString("name"));
 				}
 				
@@ -173,8 +167,6 @@ public class FacebookUserDAO {
 				if(rs.next()) {
 					userinfo = new FacebookUser(rs.getInt("id"),
 							rs.getString("fbid"),
-							rs.getString("userid"),
-							rs.getString("pwd"),
 							rs.getString("name"));
 				}
 				
@@ -201,14 +193,12 @@ public class FacebookUserDAO {
 
 			// 질의 준비
 			stmt = conn.prepareStatement(
-					"INSERT INTO fbusers(id, fbid, userid, pwd, name) " +
-					"VALUES(?, ?, ?, ?, ?)"
+					"INSERT INTO fbusers(id, fbid, name) " +
+					"VALUES(?, ?, ?)"
 					);
 			stmt.setInt(1,  fbuser.getId());
 			stmt.setString(2,  fbuser.getfbId());
-			stmt.setString(3, fbuser.getUserid());
-			stmt.setString(4, fbuser.getPwd());
-			stmt.setString(5, fbuser.getName());
+			stmt.setString(3, fbuser.getName());
 			
 			// 수행
 			result = stmt.executeUpdate();
@@ -236,12 +226,11 @@ public class FacebookUserDAO {
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"UPDATE fbusers " +
-					"SET userid=?, pwd=? "+
+					"SET name=?"+
 					"WHERE id=?"
 					);
-			stmt.setString(1,  fbuser.getUserid());
-			stmt.setString(2,  fbuser.getPwd());
-			stmt.setInt(3,  fbuser.getId());
+			stmt.setString(1,  fbuser.getName());
+			stmt.setInt(2,  fbuser.getId());
 			
 			// 수행
 			result = stmt.executeUpdate();
