@@ -12,15 +12,14 @@
 <body>
 	<jsp:include page="share/header.jsp"></jsp:include>
 
-	<div class="container" align="center">
+	<div class="container">
 
 		<form class="form-horizontal" method="POST">
-
 			<div class="form-group">
 				<label for="movietitle" class="col-lg-2 control-label">Movie Title</label>
 				<div class="col-lg-3">
 				<input type="text" class="form-control" id="movietitle"
-						placeholder="Movie Title">
+						placeholder="Movie Title" style="width: 300px;">
 				</div>
 			</div>
 
@@ -28,20 +27,20 @@
 				<label for="title" class="col-lg-2 control-label">Title</label>
 				<div class="col-lg-3">
 					<input type="text" class="form-control" id="title"
-						placeholder="Title">
+						placeholder="Title" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="writer" class="col-lg-2 control-label">Writer</label>
 				<div class="col-lg-3">
 					<input type="text" class="form-control" id="nickname"
-						placeholder="Nickname">
+						placeholder="Nickname" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="content" class="col-lg-2 control-label">Content</label>
 				<div class="col-lg-3">
-					<textarea class="form-control" rows="10"></textarea>
+					<textarea class="form-control" rows="10" style="width: 300px;"></textarea>
 				</div>
 			</div>
 			<div class="form-group">

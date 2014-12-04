@@ -41,7 +41,6 @@ public class MovieDAO {
 		DataSource ds = getDataSource();
 		PageResult<Movie> result = new PageResult<Movie>(numItemsInPage, page);
 
-
 		int startPos = (page - 1) * numItemsInPage;
 
 		try {

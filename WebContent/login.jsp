@@ -19,14 +19,14 @@
 				<label for="userid" class="col-lg-2 control-label">ID</label>
 				<div class="col-lg-3">
 					<input type="text" class="form-control" id="userid" name="userid"
-						placeholder="ID" required="required">
+						placeholder="ID" required="required" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="pwd" class="col-lg-2 control-label">Password</label>
 				<div class="col-lg-3">
 					<input type="password" class="form-control" id="pwd" name="pwd"
-						placeholder="Password" required="required">
+						placeholder="Password" required="required" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">

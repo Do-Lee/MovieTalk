@@ -102,7 +102,6 @@ public class FacebookUserDAO {
 		FacebookUser userinfo=null;
 		DataSource ds = getDataSource();		
 		Connection conn = ds.getConnection();
-		Connection conn = getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -203,7 +202,6 @@ public class FacebookUserDAO {
 		
 		try {
 			conn = ds.getConnection();
-			conn = getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement(
 					"UPDATE fbusers " +
@@ -235,7 +233,6 @@ public class FacebookUserDAO {
 		
 		try {
 			conn = ds.getConnection();
-			conn = getConnection();
 			// 질의 준비
 			stmt = conn.prepareStatement("DELETE FROM fbusers WHERE id=?");
 			stmt.setInt(1,  id);

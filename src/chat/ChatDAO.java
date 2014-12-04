@@ -45,7 +45,6 @@ public class ChatDAO {
 						+"ORDER BY id ;");
 			}
 
-			
 			// 수행
 			rs = stmt.executeQuery();
 
@@ -78,7 +77,6 @@ public class ChatDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			
 			stmt = conn.prepareStatement("INSERT INTO chats(userid, message) VALUES (?, ?);");
 			stmt.setString(1, msg.getUserid());
 			stmt.setString(2, msg.getContent());
