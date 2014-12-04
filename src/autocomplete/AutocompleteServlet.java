@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import movie.Movie;
 import movie.MovieDAO;
 
 /**
@@ -38,9 +39,9 @@ public class AutocompleteServlet extends HttpServlet {
 		String query = request.getParameter("query");
 		PrintWriter out = response.getWriter();
 		
-		Vector<String> data_list = null;
+		Vector<Movie> movieList = null;
 		try {
-			data_list = MovieDAO.getDataList(query);
+			movieList = MovieDAO.getMovieList(query);
 		} 
 		catch (SQLException e) {e.printStackTrace();} 
 		catch (NamingException e) {e.printStackTrace();}
@@ -50,9 +51,10 @@ public class AutocompleteServlet extends HttpServlet {
 		}
 		else{
 			if(query.length() > 0) {
-				for( String data : data_list ) {
-					if( data.contains(query)) {	
-						out.println("<li onclick=\"fill('"+data+"');\">"+data+"</li>"); 
+				for( Movie movie : movieList ) {
+					if( movie.getTitle().contains(query)) {	
+						out.println("<li onclick=\"fill('"+movie.getTitle()+"');\">"
+									+ movie.getTitle()+"</li>"); 
 					}
 				}
 			}
