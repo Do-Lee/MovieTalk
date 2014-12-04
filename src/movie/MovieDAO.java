@@ -280,7 +280,7 @@ public class MovieDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("SELECT title FROM movies WHERE title like ?%");
+			stmt = conn.prepareStatement("SELECT title FROM movies WHERE title LIKE %?%");
 			stmt.setString(1, title);
 			// 수행
 			rs = stmt.executeQuery();
@@ -288,7 +288,10 @@ public class MovieDAO {
 			while (rs.next()) {
 				data_List.add(rs.getString("title"));
 			}	
-		} finally {
+		} 
+		// 찾을수 없을 때
+		catch (SQLException e) {}
+		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}
 			if (stmt != null) try{stmt.close();} catch(SQLException e) {}

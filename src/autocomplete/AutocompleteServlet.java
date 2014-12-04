@@ -50,7 +50,7 @@ public class AutocompleteServlet extends HttpServlet {
 		}
 		else{
 			if(query.length() > 0) {
-				for( String data : dataList ) {
+				for( String data : data_list ) {
 					if( data.contains(query)) {	
 						out.println("<li onclick=\"fill('"+data+"');\">"+data+"</li>"); 
 					}
