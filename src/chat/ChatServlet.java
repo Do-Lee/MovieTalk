@@ -3,9 +3,11 @@ package chat;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
 import org.json.simple.*;
 
 @WebServlet("/ChatServlet")
@@ -16,6 +18,7 @@ public class ChatServlet extends HttpServlet {
 		super();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		String current_name = "";
@@ -28,7 +31,8 @@ public class ChatServlet extends HttpServlet {
 		
 		try {
 			last = Integer.parseInt(request.getParameter("last"));
-		} catch(NumberFormatException e) {}
+		} 
+		catch(NumberFormatException e) {}
 
 		JSONObject resultObj = new JSONObject();
 
@@ -42,9 +46,10 @@ public class ChatServlet extends HttpServlet {
 				last = chatList.get(chatList.size() - 1).getId();
 			}
 			resultObj.put("size", chatList.size());
-			resultObj.put("msgs", jsonList);
+			resultObj.put("messages", jsonList);
 			resultObj.put("last", last);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			resultObj.put("ERROR", e.getMessage());
 		} 
@@ -54,24 +59,26 @@ public class ChatServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
-		boolean ret = false;
-		
 		request.setCharacterEncoding("UTF-8");
+		
+		HttpSession session = request.getSession(true);
 
-		String userid = request.getParameter("userid");
+		String userid = (String) session.getAttribute("id");
 		String content = request.getParameter("content");
-
-		HttpSession session=request.getSession(true);
-		session.setAttribute("userid", userid.toString());
-
+		System.out.println(userid);
 		try {
 			if (ChatDAO.sendMessage(new Message(userid, content))) {					
 				response.getWriter().write("ok");
-			} else {
+				System.out.println("ok");
+			} 
+			else {
 				response.getWriter().write("메세지 전송에 실패했습니다..");
+				System.out.println("fail");
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			response.getWriter().write(e.getMessage());
+			System.out.println("error");
 
 		} 
 	}

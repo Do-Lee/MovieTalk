@@ -6,9 +6,11 @@
 <meta charset="UTF-8">
 <title>Movie Talk</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/chat.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/json2.js"></script>
+
 </head>
 <body>
 	<jsp:include page="share/header.jsp"></jsp:include>
@@ -66,8 +68,7 @@
 					<div id="messages"></div>
 					<div id="error" style="display: none"></div>
 					<form id="chat_form">
-						<input id="name" type="text" size="50"> 
-						<input id="msg" type="text" size="50">
+						<input id="message" type="text" size="50">
 						<input id="send" type="button" value="send"> 
 						<img src="images/ajax-loader.gif" style="display: none;" id="loading">
 					</form>
@@ -90,34 +91,20 @@
 		}, function(data) {
 			if (data.messages.length > 0 && last_id < data.last) {
 				last_id = data.last;
-				$(data.messages).each(
-						function(i, item) {
-
-							// 각 메시지를 해당위치에 추가
-							$("<div class='message " + item.mine + "'></div>")
-									.append(
-											"<span class='name'>" + item.namen
-													+ "</span>").append(
-											item.content).append(
-											"<span class='time'>" + item.time
-													+ "</span>").appendTo(
-											"#messages");
-						});
+				$(data.messages).each(function(i, item) {
+					// 각 메시지를 해당위치에 추가
+					$("<div class='message " + item.mine + "'></div>").append(
+							"<span class='name'>" + item.userid + "</span>").append(item.message).append(
+							"<span class='time'>" + item.time + "</span>").appendTo("#messages");
+				});
 				// 새로운 메시지가 있을 경우, 입력 폼이 보이도록 스크롤
-				$('html, body').animate({
-					scrollTop : $("#chat_form").offset().top
-				}, 1000);
+				$('html, body').animate({scrollTop : $("#chat_form").offset().top}, 1000);
 			}
 		});
 	}
 	$(function() {
 		$("#send").click(function() {
 			// 이름이나 내용이 없으면 포커스를 옮기고 종료
-			if ($("#name").val().length == 0) {
-				alert("이름을 입력하여 주세요.");
-				$("#name").focus();
-				return;
-			}
 			if ($("#message").val().length == 0) {
 				alert("내용을 입력하여 주세요.");
 				$("#message").focus();
@@ -126,14 +113,13 @@
 
 			// Ajax로 글 내용 전달
 			$.post('ChatServlet', {
-				name : $("#name").val(),
 				content : $("#message").val()
 			}, function(data) {
 				if (data.indexOf("ERROR") != -1) {
 					// 에러가 있으면 내용 출력
 					$("#error").text(data).fadeIn();
-
-				} else {
+				} 
+				else {
 					$("#error").fadeOut();
 				}
 			});
@@ -149,12 +135,8 @@
 		});
 
 		// Ajax 진행 중임을 표시
-		$('#loading').ajaxStart(function() {
-			$(this).show();
-		});
-		$('#loading').ajaxComplete(function() {
-			$(this).hide();
-		});
+		$('#loading').ajaxStart(function() {$(this).show();});
+		$('#loading').ajaxComplete(function() {$(this).hide();});
 
 		receive();
 

@@ -49,9 +49,9 @@ public class ChatDAO {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Message msg = new Message(rs.getInt("id"), rs.getString("movietitle"), rs.getString("title"), rs.getString("name"), 
+				Message msg = new Message(rs.getInt("id"), rs.getString("movietitle"), rs.getString("title"), rs.getString("userid"), 
 								rs.getString("message"), rs.getTimestamp("created_at"));
-				msgList.add(msg);		
+				msgList.add(msg);
 			}	
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -61,35 +61,34 @@ public class ChatDAO {
 		}
 		
 		return msgList;
-		
-	
 	}
-	public static boolean sendMessage(Message msg) throws SQLException, NamingException
-	{
+	public static boolean sendMessage(Message msg) throws SQLException, NamingException {
 		int result;
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		DataSource ds = getDataSource();
-		
+
 		try {
 			conn = ds.getConnection();
 
 			// 질의 준비
 			stmt = conn.prepareStatement("INSERT INTO chats(userid, message) VALUES (?, ?);");
 			stmt.setString(1, msg.getUserid());
-			stmt.setString(2, msg.getContent());
-			
+			stmt.setString(2, msg.getMessage());
+
 			// 수행
 			result = stmt.executeUpdate();
-		} finally {
+		} 
+		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}
 			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
-		
+
 		return (result == 1);
 	}
 }

@@ -1,0 +1,52 @@
+.name {
+	background: #b0a57b;
+	color: white;
+	margin-right: 10px;
+	font-weight: bold;
+	padding: 3px;
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+
+#messages {
+	width: 95%;
+}
+
+.message {
+	background: #ece8da;
+	margin-bottom: 1px;
+}
+
+.mine {
+	background: #fffcd9;
+}
+
+.time {
+	font: 9px Tahoma;
+	color: #b0af9f;
+	margin: 5px 0;
+}
+
+.mine .name {
+	background: #c0c460;
+}
+
+input#name {
+	width: 100px;
+}
+
+input#msg {
+	width: 70%;
+}
+
+input#send {
+	width: 50px;
+}
+
+#error {
+	width: 95%;
+	background: #fcd2ec;
+	color: #a30808;
+	padding: 10px;
+}

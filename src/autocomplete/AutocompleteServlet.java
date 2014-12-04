@@ -59,5 +59,4 @@ public class AutocompleteServlet extends HttpServlet {
 		}
 		out.close();
 	}
-
 }
