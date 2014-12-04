@@ -4,29 +4,8 @@
 <%String userid = (String) session.getAttribute("id"); %>
 <%String pwd = (String) session.getAttribute("password"); %>
 
+<link rel="stylesheet" href="./css/autocomplete.css">
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
-<style type="text/css">
-	.suggest_box {
-    	position: absolute;
-    	margin: 0px 0px 0px 0px;
-    	width: 300px;
-    	background-color: #212427;
-    	color: #fff;
-    	z-index: 10;
-    	align="center";
-	}
-	.suggest_box li {
-			margin: 0px 0px 3px 0px;
-			padding: 5px;
-			cursor: pointer;
-			font-size: 16px;
-			text-align: left;
-			list-style-type:none;
-	}
-	.suggest_box li:hover {
-			background-color: #659CD8;
-	}
-	</style>
 
 <!-- member bar -->
 <div class="navbar navbar-default">
