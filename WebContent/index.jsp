@@ -16,19 +16,19 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail">
+				<div class="thumbnail" style="height: 240px;">
 					<div class="caption">
 						<h4>Hot Topic</h4>
 					</div>
 				</div>
-				<div class="thumbnail" style="float: bottom">
+				<div class="thumbnail" style="height: 240px; float: bottom">
 					<div class="caption">
 						<h4 style="margin-top:8px 0 10px 0; text-align: center;">New Topic</h4>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail">
+				<div class="thumbnail" style="height: 500px;">
 					<img src="./images/movie1.jpg">
 					<div class="caption">
 						<h4>Movie 1</h4>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail">
+				<div class="thumbnail" style="height: 500px;">
 					<img src="./images/movie2.jpg">
 					<div class="caption">
 						<h4>Movie 2</h4>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail">
+				<div class="thumbnail" style="height: 500px;">
 					<img src="./images/movie3.jpg">
 					<div class="caption">
 						<h4>Movie 3</h4>
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail">
+				<div class="thumbnail" style="height: 500px;">
 					<a href="./add_chat.jsp">
 					<img src="./images/add_chat.jpg">
 					</a>

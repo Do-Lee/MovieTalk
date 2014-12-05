@@ -37,7 +37,7 @@
 </div>
 
 <!-- search bar -->
-<div class="container" style="padding-top: 50px;" align="center">
+<div class="container" style="padding-top: 30px;" align="center">
 	<form class="form-inline" method="POST" action="MovieServlet.do">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
@@ -51,7 +51,7 @@
 </div>
 
 <!-- menu bar -->
-<div class="navbar navbar-default" style="margin-top: 50px; background: #939393;">
+<div class="navbar navbar-default" style="margin-top: 30px; background: #939393;">
 	<div class="nav nav-pills"></div>
 </div>
 

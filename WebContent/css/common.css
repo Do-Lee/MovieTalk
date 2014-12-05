@@ -18,8 +18,8 @@ a:hover, a:active {
 }
 
 .thumbnail {
-	background: #d8d8d8; 
-	min-height: 500px;
+	background: #d8d8d8;
+	overflow-y: auto;
 }
 
 .thumbnail a:link, a:visited {
@@ -30,8 +30,4 @@ a:hover, a:active {
 .thumbnail a:hover, a:active {
 	color: white;
 	text-decoration: none;
-}
-
-.span5 {
-	width: 20%;
 }
