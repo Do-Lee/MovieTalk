@@ -27,13 +27,13 @@ public class Message implements java.io.Serializable {
 		this.title = title;
 		this.userid = userid;
 		this.message = message;
-		this.time = simpleTime(time);
+		this.time = simpleDate(time);
 	}
 
 	public String getUserid() {return userid;}
 	public int getId() {return id;}
 	public String getMessage() {return message;}
-	public void setTime(Timestamp time) {this.time = simpleTime(time);}
+	public void setTime(Timestamp time) {this.time = simpleDate(time);}
 	public String getMovietitle() {return movietitle;}
 	public void setMovietitle(String movietitle) {this.movietitle = movietitle;}
 	public String getTitle() {return title;}
@@ -55,11 +55,11 @@ public class Message implements java.io.Serializable {
 		return jsonObj;
 	}
 
-	private String simpleTime(Timestamp time) {
+	private String simpleDate(Timestamp time) {
 		String simpleTime = new String();
 		
 		
-		for(int i=time.toString().indexOf('-')+1; i<time.toString().lastIndexOf(':'); i++) {
+		for(int i=time.toString().indexOf('-') + 1; i<time.toString().lastIndexOf(' '); i++) {
 			simpleTime += time.toString().charAt(i);
 		}
 		

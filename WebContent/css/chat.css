@@ -2,65 +2,63 @@
 	width: 100%;
 }
 
-.message {
-	word-wrap: break-word;
-	width: 100%;
-}
-
 .name {
+	font: 9px Tahoma;
 	float: left;
-	padding-right: 5px;
-}
-
-.content {
-	max-width: 65%;
-	padding: 5px 10px 5px 15px;
-	background-color: white;
-	margin: 0;
-	margin-bottom: 10px;
-	border-radius: 0 15px 15px 0;
-	float: left;
+	background: #939393;
+	color: white;
+	padding: 3px 5px 3px 10px;
+	border-radius: 0 0 0 10px;	
 }
 
 .time {
 	font: 9px Tahoma;
 	color: white;
 	background-color: #9aaeb7;
-	margin: 7.5px 0;
-	margin-bottom: 17.5px;
-	padding: 2px 10px 2px 5px;
+	margin: 0;
+	padding: 3px 10px 3px 5px;
 	border-radius: 0 15px 15px 0;
 	float: left;
 }
 
-
-.mine {
-	
+.content {
+	word-wrap: break-word;
+	max-width: 165px;
+	padding: 5px 10px 5px 15px;
+	background-color: white;
+	margin: 5px 0 20px 0;
+	border-radius: 0 15px 15px 15px;
+	float: left;
 }
 
+
 .mine .name {
+	font: 9px Tahoma;
 	float: right;
-	padding-right: 5px;
+	background: #939393;
+	color: white;
+	padding: 3px 10px 3px 5px;
+	border-radius: 0 0 10px 0;
 }
 
 .mine .time {
 	font: 9px Tahoma;
 	color: white;
 	background-color: #9aaeb7;
-	margin: 7.5px 0;
-	padding: 2px 5px 2px 10px;
+	margin: 0;
+	padding: 3px 5px 3px 10px;
 	border-radius: 15px 0 0 15px;
 	float: right;
 }
 
 .mine .content {
-	max-width: 50%;
+	word-wrap: break-word;
+	float: right;
+	max-width: 165px;
 	padding: 5px 15px 5px 10px;
 	background-color: #00b5e4;
-	margin: 0;
-	margin-bottom: 10px;
-	border-radius: 15px 0 0 15px;
-	float: right;
+	margin: 5px 0 20px 0;
+	border-radius: 15px 0 15px 15px;
 }
 
 #error {
