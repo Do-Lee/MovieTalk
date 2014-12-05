@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="height: 500px; overflow-y: auto; background: #dcdcdc;">
+				<div class="thumbnail">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
@@ -44,8 +44,8 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="height: 500px; overflow-y: auto; background: #dcdcdc;">
-					<img src="./images/movie2.jpg" style="width: 200px; height: 290px">
+				<div class="thumbnail">
+					<img src="./images/movie2.jpg">
 					<div class="caption">
 						<h3>Movie 2</h3>
 						<p>Movie Information</p>
@@ -56,13 +56,13 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="height: 500px; overflow-y: auto; background: #dcdcdc;">
-					<div id="messages" style="word-wrap: break-word;"></div>
-					<div id="error" style="display: none"></div>
+				<div class="thumbnail">
+					<div id="messages"></div>
+					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
-							<input type="text" class="form-control" id="message" style="width: 100%;">
-							<input type="button" class="btn btn-default" id="send"  value="send" style="width: 100%; background: #eeeeee;"> 
+							<input type="text" class="form-control" id="message">
+							<input type="button" class="btn btn-default" id="send" value="send" style="width: 100%; background: #eeeeee;"> 
 						</div>
 					</form>
 				</div>

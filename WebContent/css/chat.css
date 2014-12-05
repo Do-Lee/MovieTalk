@@ -2,6 +2,11 @@
 	width: 100%;
 }
 
+.message {
+	word-wrap: break-word;
+	width: 100%;
+}
+
 .name {
 	float: left;
 	padding-right: 5px;
@@ -59,6 +64,7 @@
 }
 
 #error {
+	display: none;
 	width: 95%;
 	background: #fcd2ec;
 	color: #a30808;

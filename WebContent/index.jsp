@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail" style="height: 500px;">
+				<div class="thumbnail">
 					<img src="./images/movie1.jpg">
 					<div class="caption">
 						<h4>Movie 1</h4>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail" style="height: 500px;">
+				<div class="thumbnail">
 					<img src="./images/movie2.jpg">
 					<div class="caption">
 						<h4>Movie 2</h4>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail" style="height: 500px;">
+				<div class="thumbnail">
 					<img src="./images/movie3.jpg">
 					<div class="caption">
 						<h4>Movie 3</h4>
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<div class="thumbnail" style="height: 500px;">
+				<div class="thumbnail">
 					<a href="./add_chat.jsp">
 					<img src="./images/add_chat.jpg">
 					</a>
