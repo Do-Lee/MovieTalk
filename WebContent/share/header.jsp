@@ -13,8 +13,8 @@
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
 
-				<%if(userid != null) {%>
-				<%
+				<%if(userid != null) {
+				
                      if(userid.equals(user.getAdmin())) {
                    %>
 				<li><a href="./administrator.jsp">관리자 페이지</a></li>
@@ -45,7 +45,7 @@
 	<form class="form-inline" method="POST" action="MovieServlet.do">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
-			<input type="text" class="form-control" id="data" style="width: 300px;">
+			<input type="text" class="form-control" id="data" style="width: 300px;" required="required">
 			<img src="images/ajax-loader.gif" style="display:none;" id="loading">
 			<div class="suggest_box" id="suggest_box"></div> 
 			<button type="submit" class="btn btn-default">Search</button>

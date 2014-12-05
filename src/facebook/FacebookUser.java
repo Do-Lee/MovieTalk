@@ -1,7 +1,5 @@
 package facebook;
 
-
-
 public class FacebookUser implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +17,7 @@ public class FacebookUser implements java.io.Serializable {
 		this.name = name;
 	}
 
+	// setters & getters
 	public int getId() {return id;}
 	public void setId(int id) {this.id = id;}
 	public String getfbId() {return fbid;}

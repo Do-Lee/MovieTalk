@@ -12,9 +12,6 @@ public class PageResult<T> implements java.io.Serializable{
 	private int page;
 	
 	private final static int delta = 5;
-	public List<T> getListUsers() {
-		return list;
-	}
 	
 	public PageResult(int numItemsInPage, int page) {
 		super();
@@ -25,41 +22,25 @@ public class PageResult<T> implements java.io.Serializable{
 		list = new ArrayList<T>();
 	}
 	
-	public List<T> getList() {
-		return list;
-	}
-	
-	public int getNumItemsInPage() {
-		return numItemsInPage;
-	}
-
-	public int getNumItems() {
-		return numItems;
-	}
+	// setters & getters
+	public List<T> getList() {return list;}
+	public List<T> getListUsers() {return list;}
+	public int getNumItems() {return numItems;}
+	public int getNumPages() {return numPages;}
+	public int getNumItemsInPage() {return numItemsInPage;}
+	public int getPage() {return page;}
+	public int getStartPageNo() {return (page <= delta) ? 1: page - delta;}
 	
 	public void setNumItems(int numItems) {
 		this.numItems = numItems;
 		numPages = (int) Math.ceil((double)numItems / (double)numItemsInPage);
 	}
-	public int getNumPages() {
-		return numPages;
-	}
-	
-	public int getPage() {
-		return page;
-	}
-	
-	public int getStartPageNo() {
-		return (page <= delta) ? 1: page - delta;
-	}
-	
 	public int getEndPageNo() {
 		int endPageNo = getStartPageNo() + (delta * 2) + 1;
 
 		if (endPageNo > numPages) {
 			endPageNo = numPages;
 		}
-
 		return endPageNo;
 	}
 }

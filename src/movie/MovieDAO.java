@@ -44,7 +44,7 @@ public class MovieDAO {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 
-			// users 테이블: user 수 페이지수 개산
+			// movies 테이블: movie 수 페이지수 개산
 			rs = stmt.executeQuery("SELECT COUNT(*) FROM movies");
 			rs.next();
 
@@ -55,7 +55,7 @@ public class MovieDAO {
 			stmt.close();
 			stmt = null;
 
-			// users 테이블 SELECT
+			// movies 테이블 SELECT
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM movies ORDER BY title LIMIT " + startPos + ", " + numItemsInPage);
 
@@ -291,5 +291,64 @@ public class MovieDAO {
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
 		return data_List;
+	}
+	
+	public static PageResult<Movie> getSearchPage(int page, int numItemsInPage, String title) 
+			throws SQLException, NamingException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;		
+		DataSource ds = getDataSource();
+		
+		if (page <= 0) {
+			page = 1;
+		}
+		
+		PageResult<Movie> result = new PageResult<Movie>(numItemsInPage, page);
+
+		int startPos = (page - 1) * numItemsInPage;
+
+		try {
+			conn = ds.getConnection();
+
+
+			// movies 테이블: movie 수 페이지수 계산
+			stmt = conn.prepareStatement("SELECT COUNT(*) FROM movies WHERE title LIKE %?%");
+			stmt.setString(1, title);
+			
+			rs = stmt.executeQuery();
+			rs.next();
+
+			result.setNumItems(rs.getInt(1));
+
+			rs.close();
+			rs = null;
+			stmt.close();
+			stmt = null;
+
+			// movies 테이블 SELECT
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE title LIKE %?% ORDER BY title LIMIT " + startPos + ", " + numItemsInPage);
+			stmt.setString(1, title);
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				result.getList().add(new Movie(rs.getInt("id"),
+						rs.getString("title"),
+						rs.getString("link"),
+						rs.getString("image"),
+						rs.getString("subtitle"),
+						rs.getString("pubdate"),
+						rs.getString("director"),
+						rs.getString("actor"),
+						Float.toString(rs.getFloat("userrating"))));
+			}
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+
+		return result;		
 	}
 }

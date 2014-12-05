@@ -44,7 +44,7 @@ public class FBAuthServlet extends HttpServlet {
 				} else {
 					HttpSession session = request.getSession();
 					session.setAttribute("id", fbid);
-					actionUrl = "fbuser?op=index";
+					actionUrl = "index.jsp";
 				}
 			} catch (SQLException | NamingException e) {
 				request.setAttribute("error", e.getMessage());

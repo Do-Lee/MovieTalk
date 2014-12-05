@@ -42,9 +42,9 @@ public class AutocompleteServlet extends HttpServlet {
 		Vector<Movie> movieList = null;
 		try {
 			movieList = MovieDAO.getMovieList(query);
-		} 
-		catch (SQLException e) {e.printStackTrace();} 
-		catch (NamingException e) {e.printStackTrace();}
+		} catch (SQLException | NamingException e) {
+			e.printStackTrace();
+		}
 		
 		if (query == null){
 			out.println("<div>Cannot access</div>");

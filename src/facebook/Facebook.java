@@ -19,15 +19,12 @@ public class Facebook{
 	// facebook에 등록시킬 사이트주소
 	public static final String SITEURL="http://localhost:8080/MovieTalk";
 	// facebook에 요청할  권한 리스트
-	// 아래 사이트에서 필요한 권한 확인 가능
-	// https://developers.facebook.com/docs/reference/login/#permissions
-	private static final String PERMISSIONS ="user_about_me,publish_stream,read_friendlists," +
-		"offline_access,user_photos,friends_about_me,user_birthday,friends_birthday";	
+	private static final String PERMISSIONS ="user_about_me";	
 
 	private FacebookClient facebookClient;
-	
 	private Facebook(String accessToken) {this.facebookClient = new DefaultFacebookClient(accessToken);}
 
+	// setters & getters
 	public static Facebook getInstance(String code) throws IOException{return new Facebook(getAccessToken(code));}
 	public User getCurrentUser() {return facebookClient.fetchObject("me", User.class);}
 	public String getAPPID() {return Facebook.APPID;}

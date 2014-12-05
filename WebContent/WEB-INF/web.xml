@@ -17,44 +17,54 @@
 	</resource-ref>
 
 	<servlet>
-	  	<description>UserServlet</description>
+		<description>UserServlet</description>
   		<display-name>UserServlet</display-name>
-	    	<servlet-name>UserServlet</servlet-name>
-	    	<servlet-class>user.UserServlet</servlet-class>
+	    <servlet-name>UserServlet</servlet-name>
+	    <servlet-class>user.UserServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    	<servlet-name>UserServlet</servlet-name>
-	    	<url-pattern>/UserServlet.do</url-pattern>
+	    <servlet-name>UserServlet</servlet-name>
+	    <url-pattern>/UserServlet.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-	    	<description>LoginController</description>
-	    	<display-name>LoginController</display-name>
-	    	<servlet-name>LoginController</servlet-name>
-	    	<servlet-class>user.LoginController</servlet-class>
+	    <description>LoginController</description>
+	    <display-name>LoginController</display-name>
+	    <servlet-name>LoginController</servlet-name>
+	    <servlet-class>user.LoginController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    	<servlet-name>LoginController</servlet-name>
-	    	<url-pattern>/LoginController.do</url-pattern>
+	    <servlet-name>LoginController</servlet-name>
+	    <url-pattern>/LoginController.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
-	    	<description>LogoutController</description>
-	    	<display-name>LogoutController</display-name>
-	    	<servlet-name>LogoutController</servlet-name>
-	    	<servlet-class>user.LogoutController</servlet-class>
+	    <description>LogoutController</description>
+	    <display-name>LogoutController</display-name>
+	    <servlet-name>LogoutController</servlet-name>
+	    <servlet-class>user.LogoutController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    	<servlet-name>LogoutController</servlet-name>
-	    	<url-pattern>/LogoutController.do</url-pattern>
+	    <servlet-name>LogoutController</servlet-name>
+	    <url-pattern>/LogoutController.do</url-pattern>
 	</servlet-mapping>
-	  <servlet>
-    <servlet-name>FBAuthServlet</servlet-name>
-    <servlet-class>facebook.FBAuthServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FBAuthServlet</servlet-name>
-    <url-pattern>/FBAuthServlet.do</url-pattern>
-  </servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FBAuthServlet</servlet-name>
+    	<servlet-class>facebook.FBAuthServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>FBAuthServlet</servlet-name>
+   		<url-pattern>/FBAuthServlet.do</url-pattern>
+  	</servlet-mapping>
+  	
+	<servlet>
+		<servlet-name>MovieServlet</servlet-name>
+		<servlet-class>movie.MovieServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MovieServlet</servlet-name>
+		<url-pattern>/MovieServlet.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
