@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Movie Talk</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/common.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 </head>

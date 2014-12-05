@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Movie Talk</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/common.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 </head>
@@ -17,12 +18,12 @@
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">
 					<div class="caption">
-						<h3>Hot Topic</h3>
+						<h4>Hot Topic</h4>
 					</div>
 				</div>
 				<div class="thumbnail" style="float: bottom">
 					<div class="caption">
-						<h3>New Topic</h3>
+						<h4 style="margin-top:8px 0 10px 0; text-align: center;">New Topic</h4>
 					</div>
 				</div>
 			</div>
@@ -30,8 +31,9 @@
 				<div class="thumbnail">
 					<img src="./images/movie1.jpg">
 					<div class="caption">
-						<h3>Movie 1</h3>
-						<p><a href="./chat.jsp">test chat</a></p>
+						<h4>Movie 1</h4>
+						<p style="margin: 0px;"><a href="./chat.jsp" >test chat</a></p>
+						<p style="margin: 0px;"><a href="./chat.jsp" >test chat</a></p>
 					</div>
 				</div>
 			</div>
@@ -39,7 +41,7 @@
 				<div class="thumbnail">
 					<img src="./images/movie2.jpg">
 					<div class="caption">
-						<h3>Movie 2</h3>
+						<h4>Movie 2</h4>
 					</div>
 				</div>
 			</div>
@@ -47,17 +49,17 @@
 				<div class="thumbnail">
 					<img src="./images/movie3.jpg">
 					<div class="caption">
-						<h3>Movie 3</h3>
+						<h4>Movie 3</h4>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">
-					<a href="./openChat.jsp">
-					<img src="./images/open_chat.jpg">
+					<a href="./add_chat.jsp">
+					<img src="./images/add_chat.jpg">
 					</a>
 					<div class="caption">
-						<h3>Open Chatting</h3>
+						<h4>Add Chatting</h4>
 					</div>
 				</div>
 			</div>

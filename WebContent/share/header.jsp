@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 
 <!-- member bar -->
-<div class="navbar navbar-default">
+<div class="navbar navbar-default" style="background: #fbfbfb;">
 	<div class="nav nav-pills">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
@@ -51,7 +51,7 @@
 </div>
 
 <!-- menu bar -->
-<div class="navbar navbar-default" style="margin-top: 50px; background: #888888">
+<div class="navbar navbar-default" style="margin-top: 50px; background: #939393;">
 	<div class="nav nav-pills"></div>
 </div>
 

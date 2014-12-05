@@ -41,7 +41,7 @@ public class ChatDAO {
 			} else {
 				// 마지막 10개의 메시지만..
 				stmt = conn.prepareStatement("SELECT * FROM "
-						+"(SELECT * FROM chats ORDER BY id DESC LIMIT 10 ) t " 
+						+"(SELECT * FROM chats ORDER BY id DESC LIMIT 100 ) t " 
 						+"ORDER BY id ;");
 			}
 
