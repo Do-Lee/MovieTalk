@@ -50,8 +50,8 @@
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
 					<a class="fb_button fb_button_large" id="btnLogin"
-						href="FBAuthServlet.do" data-size="xlarge"> <span
-						class="fb_button_text">FaceBook LogIn</span>
+						href="FBAuthServlet.do" data-size="xlarge"> <span class="fb_button_text">
+						<img alt="facebook" src="./images/facebook_login.png"></span>
 					</a>
 				</div>
 			</div>
