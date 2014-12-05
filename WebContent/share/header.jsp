@@ -12,25 +12,21 @@
 	<div class="nav nav-pills">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-
-				<%if(userid != null) {
-				
-                     if(userid.equals(user.getAdmin())) {
-                   %>
+				<% if(userid != null) {
+                	if(userid.equals(user.getAdmin())) {
+                %>
 				<li><a href="./administrator.jsp">관리자 페이지</a></li>
-				<%} else {%>
+				<%	} 
+                	else { %>
 				<li><a href="./member.jsp">회원 페이지</a></li>
-				<%} 
-                 }%>
+				<%	} 
+                } %>
 				<li><a href="./register.jsp">회원가입</a></li>
 
-				<%
-                 if(session.getAttribute("id") == null) {
-               %>
+				<% if(userid == null) { %>
 				<li><a href="login.jsp">로그인</a></li>
-				<%
-                 } else {
-               %>
+				<% } 
+				else { %>
 				<li><a href="./member.jsp">ID: <%=userid %></a></li>
 				<li><a href="LogoutController.do"
 					onClick="FBLogout(); alert('로그아웃되었습니다.');" id="logout">로그아웃</a></li>
@@ -55,9 +51,8 @@
 </div>
 
 <!-- menu bar -->
-<div class="navbar navbar-default" style="margin-top: 50px">
-	<div class="nav nav-pills">
-	</div>
+<div class="navbar navbar-default" style="margin-top: 50px; background: #888888">
+	<div class="nav nav-pills"></div>
 </div>
 
 <script type="text/javascript">

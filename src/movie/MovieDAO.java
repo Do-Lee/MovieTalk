@@ -282,7 +282,7 @@ public class MovieDAO {
 				data_List.add(movie);
 			}	
 		} 
-		// 찾을수 없을 때
+		// 비슷한것을 찾을수 없을 때
 		catch (SQLException e) {}
 		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -310,7 +310,6 @@ public class MovieDAO {
 
 		try {
 			conn = ds.getConnection();
-
 
 			// movies 테이블: movie 수 페이지수 계산
 			stmt = conn.prepareStatement("SELECT COUNT(*) FROM movies WHERE title LIKE %?%");
@@ -342,7 +341,10 @@ public class MovieDAO {
 						rs.getString("actor"),
 						Float.toString(rs.getFloat("userrating"))));
 			}
-		} finally {
+		} 
+		// 비슷한것을 찾을수 없을 때
+		catch (SQLException e) {}
+		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}
 			if (stmt != null) try{stmt.close();} catch(SQLException e) {}

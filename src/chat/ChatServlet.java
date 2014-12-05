@@ -23,8 +23,8 @@ public class ChatServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		String current_name = "";
 
-		if(session != null && session.getAttribute("userid") != null) {
-			current_name = session.getAttribute("userid").toString();
+		if(session != null && session.getAttribute("id") != null) {
+			current_name = (String) session.getAttribute("id");
 		}
 		
 		int last = -1;
@@ -65,20 +65,21 @@ public class ChatServlet extends HttpServlet {
 
 		String userid = (String) session.getAttribute("id");
 		String content = request.getParameter("content");
-		System.out.println(userid);
+		
+		if(userid == null) {
+			return;
+		}
+		
 		try {
 			if (ChatDAO.sendMessage(new Message(userid, content))) {					
 				response.getWriter().write("ok");
-				System.out.println("ok");
 			} 
 			else {
 				response.getWriter().write("메세지 전송에 실패했습니다..");
-				System.out.println("fail");
 			}
 		} 
 		catch (Exception e) {
 			response.getWriter().write(e.getMessage());
-			System.out.println("error");
 
 		} 
 	}

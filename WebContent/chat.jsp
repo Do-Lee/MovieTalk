@@ -18,7 +18,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="max-height: 500px; overflow-y: auto">
+				<div class="thumbnail" style="max-height: 500px; overflow-y: auto; background: #dcdcdc;">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="max-height: 500px; overflow-y: auto">
+				<div class="thumbnail" style="max-height: 500px; overflow-y: auto; background: #dcdcdc;">
 					<img src="./images/movie2.jpg" style="width: 200px; height: 290px">
 					<div class="caption">
 						<h3>Movie 2</h3>
@@ -55,22 +55,14 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
-				<div class="thumbnail" style="max-height: 500px; overflow-y: auto;">
-					<!-- 
-					<form method="POST" id="chat_form">
-						<div class="form-group">
-							<div class="col-lg-9">
-								<input id="message" type="text" size="50"> 
-							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
-						</div>
-					</form>-->
-					<div id="messages"></div>
+				<div class="thumbnail" style="height: 500px; overflow-y: auto; background: #dcdcdc;">
+					<div id="messages" style="word-wrap: break-word;"></div>
 					<div id="error" style="display: none"></div>
 					<form id="chat_form">
-						<input id="message" type="text" size="50">
-						<input id="send" type="button" value="send"> 
-						<img src="images/ajax-loader.gif" style="display: none;" id="loading">
+						<div class="form-group">
+							<input type="text" class="form-control" id="message" style="width: 100%;">
+							<input type="button" class="btn btn-default" id="send"  value="send" style="width: 100%;"> 
+						</div>
 					</form>
 				</div>
 			</div>
@@ -93,18 +85,25 @@
 				last_id = data.last;
 				$(data.messages).each(function(i, item) {
 					// 각 메시지를 해당위치에 추가
-					$("<div class='message " + item.mine + "'></div>").append(
-							"<span class='name'>" + item.userid + "</span>").append(item.message).append(
-							"<span class='time'>" + item.time + "</span>").appendTo("#messages");
+					$("<div class='message " + item.mine + "'></div>").
+						append("<span class='name'>" + item.userid + "</span><br>").
+						append("<span class='content'>" + item.message + "</span>").
+						append("<span class='time'>" + item.time + "</span><br><br>").
+						appendTo("#messages");
 				});
 				// 새로운 메시지가 있을 경우, 입력 폼이 보이도록 스크롤
-				$('html, body').animate({scrollTop : $("#chat_form").offset().top}, 1000);
+				$(".thumbnail").animate({scrollTop : $(".thumbnail").offset().top}, 1000);
 			}
 		});
 	}
 	$(function() {
 		$("#send").click(function() {
 			// 이름이나 내용이 없으면 포커스를 옮기고 종료
+			<% if ((String) session.getAttribute("id") == null) { %>
+				alert("로그인 해주세요.");
+				location.replace("./login.jsp");
+				return;
+			<% } %>
 			if ($("#message").val().length == 0) {
 				alert("내용을 입력하여 주세요.");
 				$("#message").focus();

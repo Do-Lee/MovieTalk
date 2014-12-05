@@ -1,7 +1,6 @@
 package chat;
 
 import java.sql.Timestamp;
-import java.util.*;
 
 import org.json.simple.JSONObject;
 
@@ -14,7 +13,7 @@ public class Message implements java.io.Serializable {
 	private String title;
 	private String userid;
 	private String message;
-	private Date time;
+	private String time;
 
 	// Constructor
 	public Message(String userid, String message) {
@@ -28,13 +27,13 @@ public class Message implements java.io.Serializable {
 		this.title = title;
 		this.userid = userid;
 		this.message = message;
-		this.time = time;
+		this.time = simpleTime(time);
 	}
 
 	public String getUserid() {return userid;}
 	public int getId() {return id;}
 	public String getMessage() {return message;}
-	public void setTime(Date time) {this.time = time;}
+	public void setTime(Timestamp time) {this.time = simpleTime(time);}
 	public String getMovietitle() {return movietitle;}
 	public void setMovietitle(String movietitle) {this.movietitle = movietitle;}
 	public String getTitle() {return title;}
@@ -56,8 +55,14 @@ public class Message implements java.io.Serializable {
 		return jsonObj;
 	}
 
-
-
-
-
+	private String simpleTime(Timestamp time) {
+		String simpleTime = new String();
+		
+		
+		for(int i=time.toString().indexOf('-')+1; i<time.toString().lastIndexOf(':'); i++) {
+			simpleTime += time.toString().charAt(i);
+		}
+		
+		return simpleTime;
+	}
 }
