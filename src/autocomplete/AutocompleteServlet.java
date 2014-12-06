@@ -48,9 +48,9 @@ public class AutocompleteServlet extends HttpServlet {
 		else{
 			if(query.length() > 0) {
 				for( Message message : chatList ) {
-					if( message.getTitle().contains(query)) {	
-						out.println("<li onclick=\"fill('"+message.getTitle()+"');\">"
-									+ message.getTitle()+"</li>"); 
+					if( message.getMovietitle().contains(query)) {	
+						out.println("<li onclick=\"fill('"+message.getMovietitle()+"');\">"
+									+ message.getMovietitle()+"</li>"); 
 					}
 				}
 			}
@@ -58,3 +58,4 @@ public class AutocompleteServlet extends HttpServlet {
 		out.close();
 	}
 }
+

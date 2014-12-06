@@ -38,19 +38,18 @@
 				<tbody>
 					<c:forEach var="chat" items="${chats.list }">
 						<tr>
-							<td><c:out value="${chat.title}"/></td>
-							<td><c:out value="${chat.movietitle}"/></td>
-							<td><c:out value="${chat.writer}"/></td>
+							<td><c:out value="${chat.title}" /></td>
+							<td><c:out value="${chat.movietitle}" /></td>
+							<td><c:out value="${chat.userid}" /></td>
 						</tr>
 					</c:forEach>
-                    
 				</tbody>
 			</table>
 		</div>
 
 		<jsp:include page="./page.jsp">
 			<jsp:param name="currentPage" value="${chats.page}" />
-			<jsp:param name="url" value="movie" />
+			<jsp:param name="url" value="chat" />
 			<jsp:param name="startPage" value="${chats.startPageNo}" />
 			<jsp:param name="endPage" value="${chats.endPageNo}" />
 			<jsp:param name="numPages" value="${chats.numPages}" />
