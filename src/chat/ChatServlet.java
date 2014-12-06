@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+<<<<<<< HEAD
 import javax.naming.NamingException;
+=======
+>>>>>>> FETCH_HEAD
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,20 +30,20 @@ public class ChatServlet extends HttpServlet {
 		super();
 	}
 
+	private String getMode(HttpServletRequest request) {
+		return (String) request.getParameter("_method");
+	}
+
+
 	private int getIntFromParameter(String str, int defaultValue) {
 		int id;
 
 		try {
 			id = Integer.parseInt(str);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			id = defaultValue;
 		}
 		return id;
-	}
-
-	private String getMode(HttpServletRequest request) {
-		return (String) request.getParameter("_method");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,13 +51,13 @@ public class ChatServlet extends HttpServlet {
 		String op = request.getParameter("op");
 		System.out.println(op);
 
-		
+
 		int id = getIntFromParameter(request.getParameter("id"), -1);
-		
+
 		if (op == null && id > 0) {
 			op = "show";
 		}
-		
+
 		if(op.equals("admin")) {
 			String actionUrl = "";
 
@@ -116,30 +119,53 @@ public class ChatServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		request.setCharacterEncoding("UTF-8");
+		String op = request.getParameter("op");
 
-		HttpSession session = request.getSession(true);
 
-		String userid = (String) session.getAttribute("name");
-		String content = request.getParameter("content");
+		int id = getIntFromParameter(request.getParameter("id"), -1);
 
-		if(userid == null) {
-			return;
+		if (op == null && id > 0) {
+			op = "show";
 		}
 
-		//		if(getMode(request).equals("createChat")) {
-		//			// 방 개설 함수
-		//		} 
+		//	      if(getMode(request).equals("createChat")) {
+		//	         // 방 개설 함수
+		//	      } 
 		try {
-			if (ChatDAO.sendMessage(new Message(userid, content))) {					
-				response.getWriter().write("ok");
-			} 
-			else {
-				response.getWriter().write("메세지 전송에 실패했습니다..");
+			if (op.equals("search")) {
+				String actionUrl = "";
+				String query = request.getParameter("query");
+				int page = getIntFromParameter(request.getParameter("page"), 1);
+				PageResult<Message> chats = ChatDAO.getSearchPage(page, 10, query);
+				for(Message message : chats.getList()) System.out.println(message.toString());
+				request.setAttribute("chats", chats);
+				request.setAttribute("page", page);
+				actionUrl = "search.jsp";
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+				dispatcher.forward(request, response);
+			} else {
+				HttpSession session = request.getSession(true);
+
+				String userid = (String) session.getAttribute("name");
+				String content = request.getParameter("content");
+
+				if(userid == null) {
+					return;
+				}
+
+				if (ChatDAO.sendMessage(new Message(userid, content))) {               
+					response.getWriter().write("ok");
+				} 
+				else {
+					response.getWriter().write("메세지 전송에 실패했습니다..");
+				}
 			}
+
 		} 
 		catch (Exception e) {
 			response.getWriter().write(e.getMessage());
 		}
-	}
 
+	}
 }

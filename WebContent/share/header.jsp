@@ -32,7 +32,7 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 30px;" align="center">
-	<form class="form-inline" method="POST" action="MovieServlet.do">
+	<form class="form-inline" method="POST" action="chat">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
 			<input type="text" class="form-control" name="query" style="width: 300px;" required="required">
