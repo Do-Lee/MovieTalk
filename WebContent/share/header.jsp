@@ -21,7 +21,7 @@
 					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>
 					<li><a href="chat?op=admin">채팅 관리</a></li>
           		<% } else { %>
-                	<li><a href="user?op=show">회원 페이지</a></li>
+                	<li><a href="chat?op=mine">회원 페이지</a></li>
                	<% } %>
 				<li><a href="user?op=logout" onClick="FBLogout();">로그아웃</a></li>
               	<% } %>
@@ -32,10 +32,11 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 30px;" align="center">
-	<form class="form-inline" method="POST" action="chat">
+	<form class="form-inline" method="GET" action="chat">
+		<input type="hidden" name="op" value="search">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
-			<input type="text" class="form-control" name="query" style="width: 300px;" required="required">
+			<input type="text" class="form-control" id="data" name="query" style="width: 300px;" required="required">
 			<img src="images/ajax-loader.gif" style="display:none;" id="loading">
 			<div class="suggest_box" id="suggest_box"></div> 
 			<button type="submit" class="btn btn-default">Search</button>
@@ -48,6 +49,7 @@
 <div class="navbar navbar-default" style="margin-top: 30px; background:#939393;">
 	<div class="nav nav-pills"></div>
 </div>
+
 
 <script type="text/javascript">
 function fill(name) {

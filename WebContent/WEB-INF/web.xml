@@ -1,56 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	
-	<display-name>MovieTalk</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	<resource-ref>
-		<description>DB Connection</description>
-		<res-ref-name>jdbc/WebDB</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
-
-	<servlet>
-	    <description>UserAuthServlet</description>
-	    <display-name>UserAuthServlet</display-name>
-	    <servlet-name>UserAuthServlet</servlet-name>
-	    <servlet-class>user.UserAuthServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>UserAuthServlet</servlet-name>
-	    <url-pattern>/UserAuthServlet.do</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>FBAuthServlet</servlet-name>
-    	<servlet-class>facebook.FBAuthServlet</servlet-class>
-  	</servlet>
-  	<servlet-mapping>
-    	<servlet-name>FBAuthServlet</servlet-name>
-   		<url-pattern>/FBAuthServlet.do</url-pattern>
-  	</servlet-mapping>
-  	
-	<servlet>
-		<servlet-name>MovieServlet</servlet-name>
-		<servlet-class>movie.MovieServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MovieServlet</servlet-name>
-		<url-pattern>/MovieServlet.do</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>ChatServlet</servlet-name>
-		<servlet-class>chat.ChatServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ChatServlet</servlet-name>
-		<url-pattern>/ChatServlet.do</url-pattern>
-	</servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>MovieTalk</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/WebDB</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <servlet>
+    <description>UserAuthServlet</description>
+    <display-name>UserAuthServlet</display-name>
+    <servlet-name>UserAuthServlet</servlet-name>
+    <servlet-class>user.UserAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserAuthServlet</servlet-name>
+    <url-pattern>/UserAuthServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FBAuthServlet</servlet-name>
+    <servlet-class>facebook.FBAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FBAuthServlet</servlet-name>
+    <url-pattern>/FBAuthServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MovieServlet</servlet-name>
+    <servlet-class>movie.MovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieServlet</servlet-name>
+    <url-pattern>/MovieServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ChatServlet</servlet-name>
+    <servlet-class>chat.ChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatServlet</servlet-name>
+    <url-pattern>/ChatServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

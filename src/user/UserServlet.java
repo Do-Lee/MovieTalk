@@ -52,7 +52,6 @@ public class UserServlet extends HttpServlet {
 				int page = getIntFromParameter(request.getParameter("page"), 1);
 				PageResult<User> users = UserDAO.getPage(page, 10);
 				request.setAttribute("users", users);
-				
 				request.setAttribute("page", page);
 				actionUrl = "index.jsp";
 			} else if(op.equals("login")) {
