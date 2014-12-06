@@ -11,25 +11,20 @@
 	<div class="nav nav-pills" style="background: #fbfbfb;">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-               <%
-                 if(userid == null) {
-               %>
+            	<% if(userid == null) { %>
                 <li><a href="./register.jsp">회원가입</a></li>
 				<li><a href="login.jsp">로그인</a></li>
-               <%
-                 } else {
-               %>
+           		<% } else { %>
                 <li><a href="user?op=update"><%=name %></a></li>
-                  <%
-                     if(userid.equals(user.getAdmin())) {
-                   %>
-                  <li><a href="./administrator.jsp">관리자 페이지</a></li>
-                  <%} else {%>
-                  <li><a href="user?op=show">회원 페이지</a></li>
-                 <%}%>
-				<li><a href="user?op=logout" 
-                    onClick="FBLogout();">로그아웃</a></li>
-               <%} %>
+                <% if(userid.equals(user.getAdmin())) { %>
+                	<li><a href="user?op=admin" >회원 관리</a></li>
+					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>
+					<li><a href="chat?op=admin">채팅 관리</a></li>
+          		<% } else { %>
+                	<li><a href="user?op=show">회원 페이지</a></li>
+               	<% } %>
+				<li><a href="user?op=logout" onClick="FBLogout();">로그아웃</a></li>
+              	<% } %>
 			</ul>
 		</div>
 	</div>
@@ -37,7 +32,7 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 30px;" align="center">
-	<form class="form-inline" method="POST" action="ChatServlet.do">
+	<form class="form-inline" method="POST" action="chat">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
 			<input type="text" class="form-control" name="query" style="width: 300px;" required="required">
@@ -50,7 +45,7 @@
 </div>
 
 <!-- menu bar -->
-<div class="navbar navbar-default" style="margin-top: 30px background:#939393;">
+<div class="navbar navbar-default" style="margin-top: 30px; background:#939393;">
 	<div class="nav nav-pills"></div>
 </div>
 

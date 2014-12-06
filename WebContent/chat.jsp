@@ -112,11 +112,10 @@
 						append("<td></td>").
 						append("</tr>").
 						appendTo("#messages");
-					
 					}
 				});
 				// 새로운 메시지가 있을 경우, 입력 폼이 보이도록 스크롤
-				$(".thumbnail").animate({scrollTop : $("#send").offset().top}, 1000);
+				$(".thumbnail").animate({scrollTop : $("#chat_form").offset().top}, 1000);
 			}
 		});
 	}

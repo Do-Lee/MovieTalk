@@ -12,6 +12,7 @@ public class Message implements java.io.Serializable {
 	private String movietitle;
 	private String title;
 	private String userid;
+	private String content;
 	private String message;
 	private String time;
 
@@ -21,23 +22,27 @@ public class Message implements java.io.Serializable {
 		this.message = message;
 	}
 
-	public Message(int id, String movietitle, String title, String userid, String message, Timestamp time) {
+	public Message(int id, String movietitle, String title, String userid, String content, String message, Timestamp time) {
 		this.id = id;
 		this.movietitle = movietitle;
 		this.title = title;
 		this.userid = simpleName(userid);
+		this.content = content;
 		this.message = message;
 		this.time = simpleDate(time);
 	}
 
-	public String getUserid() {return userid;}
+	// Getters and Setters
 	public int getId() {return id;}
-	public String getMessage() {return message;}
-	public void setTime(Timestamp time) {this.time = simpleDate(time);}
 	public String getMovietitle() {return movietitle;}
 	public void setMovietitle(String movietitle) {this.movietitle = movietitle;}
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
+	public String getUserid() {return userid;}
+	public String getContent() {return content;}
+	public String getMessage() {return message;}
+	public void setTime(Timestamp time) {this.time = simpleDate(time);}
+
 	
 	// json 형태로 출력
 	@SuppressWarnings("unchecked")
@@ -47,6 +52,7 @@ public class Message implements java.io.Serializable {
 		jsonObj.put("movietitle", getMovietitle());
 		jsonObj.put("title", getTitle());
 		jsonObj.put("userid", getUserid());
+		jsonObj.put("content", getContent());
 		jsonObj.put("message", getMessage());
 		jsonObj.put("time", time.toString());
 		jsonObj.put("mine", ( current_name != null && 
