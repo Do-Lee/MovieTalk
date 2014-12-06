@@ -44,6 +44,11 @@ public class FBAuthServlet extends HttpServlet {
 				} else {
 					HttpSession session = request.getSession();
 					session.setAttribute("id", fbid);
+					if (me.getUsername() != null || me.getUsername().equals("")) {
+						session.setAttribute("name", me.getUsername());
+					} else {
+						session.setAttribute("name", me.getLastName() + " " + me.getFirstName());
+					}
 					actionUrl = "index.jsp";
 				}
 			} catch (SQLException | NamingException e) {
