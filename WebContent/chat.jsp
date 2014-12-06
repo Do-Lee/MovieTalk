@@ -84,7 +84,7 @@
 	function receive() {
 		// Ajax로 마지막 받은 번호 이후의 메시지를 json으로 받음.
 
-		$.get('ChatServlet', {
+		$.get('chat', {
 			last : last_id
 		}, function(data) {
 			if (data.messages.length > 0 && last_id < data.last) {
@@ -134,7 +134,7 @@
 			}
 
 			// Ajax로 글 내용 전달
-			$.post('ChatServlet', {
+			$.post('chat', {
 				content : $("#message").val()
 			}, function(data) {
 				if (data.indexOf("ERROR") != -1) {
