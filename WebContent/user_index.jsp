@@ -15,18 +15,10 @@
 	<jsp:include page="./share/header.jsp"></jsp:include>
 
 	<div class="container" align="center">
-
-		<ul class="nav nav-tabs" style="margin-bottom: 30px">
-			<li><a href="#">Member</a></li>
-			<li><a href="#">Chatting List</a></li>
-            <li><a href="fb_index.jsp">FacebookMember</a></li>
-		</ul>
-
-		<!-- 위의 상태에 따라 c:out 써서 member, chatting list 로 바꿈 -->
 		<div class="row">
 			<div class="span12 page-info">
 				<div class="pull-left">
-					Total <b>${users.numItems }</b> users
+					Total <b>${users.numItems}</b> users
 				</div>
 				<div class="pull-right">
 					<b>${users.page }</b> page / total <b>${users.numPages }</b> pages
@@ -44,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="user" items="${users }">
+					<c:forEach var="user" items="${users.list }">
 						<tr>
 							<td><a href="user?id=${user.id}"><c:out
 										value="${user.userid}" /></a></td>
@@ -56,19 +48,6 @@
 								data-id="${user.id}">delete</a></td>
 						</tr>
 					</c:forEach>
-          <!-- 
-          <c:forEach var="fbuser" items="${fbusers.list}">
-            <tr>
-              <td><a href="fbuser?id=${fbuser.id}"><c:out
-                    value="${fbuser.id}" /></a></td>
-              <td><c:out value="${fbuser.fbId}" /></td>
-              <td><c:out value="${fbuser.name}"/></td>
-              <td><a href="fbuser?op=update&id=${fbuser.id}"
-                class="btn btn-mini btn-danger" data-action="delete"
-                data-id="${fbuser.id}">delete</a></td>
-            </tr>
-          </c:forEach>
-           -->
 				</tbody>
 			</table>
 		</div>
@@ -80,7 +59,6 @@
 			<jsp:param name="endPage" value="${users.endPageNo}" />
 			<jsp:param name="numPages" value="${users.numPages}" />
 		</jsp:include>
-
 	</div>
 
 	<jsp:include page="./share/footer.jsp"></jsp:include>

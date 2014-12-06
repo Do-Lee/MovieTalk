@@ -28,7 +28,8 @@ public class FacebookUserServlet extends HttpServlet {
 
 		try {
 			id = Integer.parseInt(str);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			id = defaultValue;
 		}
 		return id;
@@ -82,6 +83,12 @@ public class FacebookUserServlet extends HttpServlet {
 				request.setAttribute("method", "POST");
 				request.setAttribute("fbuser", new FacebookUser());
 				actionUrl = "fb_register.jsp";
+			} else if (op.equals("admin")) {
+				int page = getIntFromParameter(request.getParameter("page"), 1);
+				PageResult<FacebookUser> fbusers = FacebookUserDAO.getPage(page, 10);
+				request.setAttribute("fbusers", fbusers);
+				request.setAttribute("page", page);
+				actionUrl = "fb_index.jsp";
 			} else {
 				request.setAttribute("error", "알 수 없는 명령입니다");
 				actionUrl = "error.jsp";

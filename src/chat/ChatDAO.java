@@ -1,10 +1,18 @@
 package chat;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.*;
-import javax.sql.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import common.PageResult;
 
 
 public class ChatDAO {
@@ -18,6 +26,57 @@ public class ChatDAO {
 
 		// Look up our data source
 		return (DataSource) envCtx.lookup("jdbc/WebDB");
+	}
+	
+	public static PageResult<Message> getPage(int page, int numItemsInPage) throws SQLException, NamingException {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;		
+
+		if ( page <= 0 ) {
+			page = 1;
+		}
+		
+		DataSource ds = getDataSource();
+		PageResult<Message> result = new PageResult<Message>(numItemsInPage, page);
+		int startPos = (page - 1) * numItemsInPage;
+		
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			
+			// chats 테이블: chat 수 페이지수 개산
+	 		rs = stmt.executeQuery("SELECT COUNT(*) FROM chats");
+			rs.next();
+			
+			result.setNumItems(rs.getInt(1));
+			
+			rs.close();
+			rs = null;
+			stmt.close();
+			stmt = null;
+			
+	 		// chats 테이블 SELECT
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM chats ORDER BY id LIMIT " + startPos + ", " + numItemsInPage);
+			while(rs.next()) {
+				result.getList().add(new Message(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("title"),
+						rs.getString("userid"),
+						rs.getString("content"),
+						rs.getString("message"),
+						rs.getTimestamp("created_at")
+						));
+			}
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return result;		
 	}
 	
 	public static List<Message> getChatList(int last) throws SQLException, NamingException {
@@ -50,7 +109,7 @@ public class ChatDAO {
 
 			while (rs.next()) {
 				Message msg = new Message(rs.getInt("id"), rs.getString("movietitle"), rs.getString("title"), rs.getString("userid"), 
-								rs.getString("message"), rs.getTimestamp("created_at"));
+								rs.getString("content"), rs.getString("message"), rs.getTimestamp("created_at"));
 				msgList.add(msg);
 			}	
 		} finally {

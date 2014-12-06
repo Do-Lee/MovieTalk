@@ -29,7 +29,8 @@ public class UserServlet extends HttpServlet {
 		
 		try {
 			id = Integer.parseInt(str);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			id = defaultValue;
 		}
 		return id;
@@ -51,6 +52,7 @@ public class UserServlet extends HttpServlet {
 				int page = getIntFromParameter(request.getParameter("page"), 1);
 				PageResult<User> users = UserDAO.getPage(page, 10);
 				request.setAttribute("users", users);
+				
 				request.setAttribute("page", page);
 				actionUrl = "index.jsp";
 			} else if(op.equals("login")) {
@@ -79,6 +81,12 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("method", "POST");
 				request.setAttribute("user", new User());
 				actionUrl = "register.jsp";
+			} else if (op.equals("admin")) {
+				int page = getIntFromParameter(request.getParameter("page"), 1);
+				PageResult<User> users = UserDAO.getPage(page, 10);
+				request.setAttribute("users", users);
+				
+				actionUrl = "user_index.jsp";
 			} else if (op.equals("logout")) {
 				HttpSession session = request.getSession();
 				session.invalidate();
