@@ -72,6 +72,7 @@ public class FacebookUserDAO {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		
 		DataSource ds = getDataSource();
 		
 		try {

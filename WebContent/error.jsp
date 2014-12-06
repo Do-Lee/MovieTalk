@@ -18,7 +18,7 @@
 		<div class="alert alert-error">
 			<c:out value="${error}" />
 
-			<c:if test="${errorMsg != null || errorMsg.size() > 0 }">
+			<c:if test="${errorMsgs != null || errorMsgs.size() > 0 }">
 				<h3>Errors:</h3>
 				<ul>
 					<c:forEach var="msg" items="${errorMsgs}">

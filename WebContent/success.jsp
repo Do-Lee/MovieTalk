@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Movie Talk</title>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/common.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 </head>
@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="alert alert-success"><c:out value="${msg}" escapeXml="false"/></div>
 		<div class="form-action">
-			<a href="user" class="btn">목록으로</a>
+			<a href="index.jsp" class="btn">홈으로</a>
 		</div>
 	</div>
 

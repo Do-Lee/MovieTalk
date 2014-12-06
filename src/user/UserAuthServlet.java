@@ -13,29 +13,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class LoginController
- */
-public class LoginController extends HttpServlet {
+public class UserAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		List<String> errorMsgs = new ArrayList<String>();
 		String actionUrl = "";
 		request.setCharacterEncoding("UTF-8");
 		try {
-			if(UserDAO.checkIdPwd(request.getParameter("userid"), request.getParameter("pwd")) != null) {// 성공
+			String userid = request.getParameter("userid");
+			String pwd = request.getParameter("pwd");
+			User user = UserDAO.checkIdPwd(userid, pwd);
+			if(user != null) {// 성공
+				request.setAttribute("user", user);
 				HttpSession session = request.getSession();
-				session.setAttribute("id", request.getParameter("userid"));
-				actionUrl = "index.jsp";
-			} else if(UserDAO.findById(request.getParameter("userid")) == null) {	// ID 없을 때
-				actionUrl = "register.jsp";
+				session.setAttribute("id", user.getUserid());
+				session.setAttribute("name", user.getName());
+				session.setAttribute("email", user.getEmail());
+				//actionUrl = "user?op=index";
+
+				response.sendRedirect(request.getContextPath() + "/index.jsp");
+				return;
+			} else if(UserDAO.checkID(request.getParameter("userid")) == null) {	// ID 없을 때
+				errorMsgs.add("존재하지 않는 ID입니다.");
+				actionUrl = "error.jsp";
 			} else {	// 비밀번호 틀릴 때
-				actionUrl = "login.jsp";
+				errorMsgs.add("비밀번호가 틀립니다.");
+				actionUrl = "error.jsp";
 			}
 		} catch (NamingException | SQLException e) {
 			errorMsgs.add(e.getMessage());

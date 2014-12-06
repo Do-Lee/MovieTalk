@@ -21,10 +21,10 @@ public class FBAuthServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		// facebook에서 전달받은 인증 code가 없을 경우
-		if( code == null){			
+		if( code == null) {
 			String oauthURL = Facebook.getOAuthURL();
-			response.sendRedirect (oauthURL);
-		} else{			
+			response.sendRedirect(oauthURL);
+		} else {			
 			Facebook facebook = Facebook.getInstance(code); 
 			
 			// 현재 페이스북 사용자 정보를 가져온다.

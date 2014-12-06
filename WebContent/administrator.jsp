@@ -19,7 +19,7 @@
 		<ul class="nav nav-tabs" style="margin-bottom: 30px">
 			<li><a href="#">Member</a></li>
 			<li><a href="#">Chatting List</a></li>
-			<li><a href="fb_index.jsp">FacebookMember</a></li>
+            <li><a href="fb_index.jsp">FacebookMember</a></li>
 		</ul>
 
 		<!-- 위의 상태에 따라 c:out 써서 member, chatting list 로 바꿈 -->
@@ -44,7 +44,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="user" items="${users.list }">
+					<c:forEach var="user" items="${users }">
 						<tr>
 							<td><a href="user?id=${user.id}"><c:out
 										value="${user.userid}" /></a></td>
@@ -56,6 +56,19 @@
 								data-id="${user.id}">delete</a></td>
 						</tr>
 					</c:forEach>
+          <!-- 
+          <c:forEach var="fbuser" items="${fbusers.list}">
+            <tr>
+              <td><a href="fbuser?id=${fbuser.id}"><c:out
+                    value="${fbuser.id}" /></a></td>
+              <td><c:out value="${fbuser.fbId}" /></td>
+              <td><c:out value="${fbuser.name}"/></td>
+              <td><a href="fbuser?op=update&id=${fbuser.id}"
+                class="btn btn-mini btn-danger" data-action="delete"
+                data-id="${fbuser.id}">delete</a></td>
+            </tr>
+          </c:forEach>
+           -->
 				</tbody>
 			</table>
 		</div>

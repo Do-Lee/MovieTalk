@@ -50,10 +50,8 @@ public class MovieDAO {
 
 			result.setNumItems(rs.getInt(1));
 
-			rs.close();
-			rs = null;
-			stmt.close();
-			stmt = null;
+			rs.close();	rs = null;
+			stmt.close();	stmt = null;
 
 			// movies 테이블 SELECT
 			stmt = conn.createStatement();
@@ -77,7 +75,7 @@ public class MovieDAO {
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
 
-		return result;		
+		return result;
 	}
 
 	public static Movie findById(int id) throws NamingException, SQLException{
@@ -123,7 +121,8 @@ public class MovieDAO {
 
 	// 영화 제목을 입력받아, 네이버 영화 검색 API로부터 parsing된 영화 정보를 얻어 DB에 삽입
 	// API로부터 모든 영화 정보를 가져올 순 없음...(검색어 기반으로 XML을 출력해주기 때문에 검색어가 없으면 아무 정보도 출력 x) 
-	public static boolean create(String title) throws SQLException, NamingException {
+	@SuppressWarnings("unused")
+	public static void create(String title) throws SQLException, NamingException {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -132,67 +131,34 @@ public class MovieDAO {
 
 		try {
 			conn = ds.getConnection();
-
 			for(Movie movie: RSSParser.getAllMovies(title)) {
-				stmt = conn.prepareStatement(
-						"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) "
-								+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
-						);
-				stmt.setString(1, movie.getTitle());
-				stmt.setString(2, movie.getLink());
-				stmt.setString(3, movie.getImage());
-				stmt.setString(4, movie.getSubtitle());
-				stmt.setString(5, movie.getPubDate());
-				stmt.setString(6, movie.getDirector());
-				stmt.setString(7, movie.getActor());
-				stmt.setFloat(8, movie.getUserRatingInFloat());
-				result = stmt.executeUpdate();
+				//System.out.println(movie.toString());
+				if (findMovie(movie.getTitle(), movie.getSubtitle()) == null) {
+					stmt = conn.prepareStatement(
+							"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) "
+									+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					stmt.setString(1, movie.getTitle());
+					stmt.setString(2, movie.getLink());
+					stmt.setString(3, movie.getImage());
+					stmt.setString(4, movie.getSubtitle());
+					stmt.setString(5, movie.getPubDate());
+					stmt.setString(6, movie.getDirector());
+					stmt.setString(7, movie.getActor());
+					stmt.setFloat(8, movie.getUserRatingInFloat());
+					result = stmt.executeUpdate();
+					//System.out.println(stmt);
+				}
 			}
-		} finally {
+		} 
+		
+		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}
 			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
-		return (result == 1);
-	}
-
-	public static boolean create(Movie movie) throws SQLException, NamingException {
-		int result;
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		DataSource ds = getDataSource();
-
-		try {
-			conn = ds.getConnection();
-
-			// 
-			// 질의 준비
-			stmt = conn.prepareStatement(
-					"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) " +
-							"VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
-					);
-			stmt.setString(1, movie.getTitle());
-			stmt.setString(2, movie.getLink());
-			stmt.setString(3, movie.getImage());
-			stmt.setString(4, movie.getSubtitle());
-			stmt.setString(5, movie.getPubDate());
-			stmt.setString(6, movie.getDirector());
-			stmt.setString(7, movie.getActor());
-			stmt.setFloat(8, movie.getUserRatingInFloat());
-
-
-			// 수행
-			result = stmt.executeUpdate();
-		} finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		return (result == 1);
+		//return (result == 1);
 	}
 
 	public static boolean update(Movie movie) throws SQLException, NamingException {
@@ -255,10 +221,46 @@ public class MovieDAO {
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
 		return (result == 1);		
-	}	
+	}
+	
+	public static Movie findMovie(String title, String subtitle) throws NamingException, SQLException {
+		Movie movie = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE title = ? and subtitle = ?");
+			stmt.setString(1, title);
+			stmt.setString(2, subtitle);
+			
+			// 수행
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				movie = new Movie(rs.getString("title"),
+						rs.getString("subtitle"),
+						rs.getString("link"),
+						rs.getString("image"),
+						rs.getString("director"),
+						rs.getString("actor"),
+						rs.getString("pubdate"),
+						Float.toString(rs.getFloat("userrating")));
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		return movie;
+	}
 
 	public static Vector<Movie> getMovieList(String title) throws SQLException, NamingException {
-		Vector<Movie> data_List = new Vector<Movie>();
+		Vector<Movie> movieList = new Vector<Movie>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -273,13 +275,11 @@ public class MovieDAO {
 			// 수행
 			rs = stmt.executeQuery();
 			
-			if (!rs.next()) create(title);
-			
 			while (rs.next()) {
 				Movie movie = new Movie(rs.getInt("id"), rs.getString("title"), rs.getString("link"),
 								rs.getString("image"), rs.getString("subtitle"), rs.getString("pubdate"),
 								rs.getString("director"), rs.getString("actor"), Float.toString(rs.getFloat("userrating")));
-				data_List.add(movie);
+				movieList.add(movie);
 			}	
 		} 
 		// 비슷한것을 찾을수 없을 때
@@ -290,7 +290,7 @@ public class MovieDAO {
 			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
-		return data_List;
+		return movieList;
 	}
 	
 	public static PageResult<Movie> getSearchPage(int page, int numItemsInPage, String title) 
@@ -310,7 +310,6 @@ public class MovieDAO {
 
 		try {
 			conn = ds.getConnection();
-
 			// movies 테이블: movie 수 페이지수 계산
 			stmt = conn.prepareStatement("SELECT COUNT(*) FROM movies WHERE title LIKE %?%");
 			stmt.setString(1, title);
@@ -330,6 +329,7 @@ public class MovieDAO {
 			stmt.setString(1, title);
 			
 			rs = stmt.executeQuery();
+			
 			while(rs.next()) {
 				result.getList().add(new Movie(rs.getInt("id"),
 						rs.getString("title"),

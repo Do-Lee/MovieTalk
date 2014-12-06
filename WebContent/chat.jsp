@@ -58,11 +58,11 @@
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<div class="table-responsive">
+					<!-- <div class="table-responsive"> -->
 						<table>
 							<tbody id="messages"></tbody>
 						</table>
-					</div>
+					<!-- </div> -->
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">

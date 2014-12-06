@@ -15,11 +15,12 @@
 
 	<div class="container">
 
-		<form class="form-horizontal" method="POST">
+		<form class="form-horizontal" method="POST" action="ChatServlet.do">
+            <input type="hidden" name="_method" value="createChat">
 			<div class="form-group">
 				<label for="movietitle" class="col-lg-2 control-label">Movie Title</label>
 				<div class="col-lg-3">
-				<input type="text" class="form-control" id="movietitle"
+				<input type="text" class="form-control" name="movietitle"
 						placeholder="Movie Title" style="width: 300px;">
 				</div>
 			</div>
@@ -27,15 +28,15 @@
 			<div class="form-group">
 				<label for="title" class="col-lg-2 control-label">Title</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" id="title"
+					<input type="text" class="form-control" name="title"
 						placeholder="Title" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="writer" class="col-lg-2 control-label">Writer</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" id="nickname"
-						placeholder="Nickname" style="width: 300px;">
+					<input type="text" class="form-control" name="name" value=<%=session.getAttribute("name") %>
+						readonly="readonly" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">

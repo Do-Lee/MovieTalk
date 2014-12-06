@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Movie Talk</title>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<link rel="stylesheet" href="./css/common.css">
-<script src="./js/jquery-1.11.1.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Movie Talk</title>
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/common.css">
+	<script src="./js/jquery-1.11.1.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
 </head>
 <body>
 	<jsp:include page="./share/header.jsp"></jsp:include>
@@ -20,8 +20,7 @@
 					Total <b>${fbuser.numItems}</b>
 				</div>
 				<div class="pull-right">
-					<b>${fbuser.page }</b> page / total <b>${fbuser.numPages }</b>
-					pages
+					<b>${fbuser.page }</b> page / total <b>${fbuser.numPages }</b> pages
 				</div>
 			</div>
 		</div>
@@ -41,7 +40,7 @@
 							<td><a href="fbuser?id=${fbuser.id}"><c:out
 										value="${fbuser.id}" /></a></td>
 							<td><c:out value="${fbuser.fbId}" /></td>
-							<td><c:out value="${fbuser.name}" /></td>
+							<td><c:out value="${fbuser.name}"/></td>
 							<td><a href="fbuser?op=update&id=${fbuser.id}"
 								class="btn btn-mini btn-danger" data-action="delete"
 								data-id="${fbuser.id}">delete</a></td>
@@ -50,7 +49,7 @@
 				</tbody>
 			</table>
 		</div>
-
+		
 		<jsp:include page="page.jsp">
 			<jsp:param name="currentPage" value="${fbusers.page}" />
 			<jsp:param name="url" value="fbuser" />

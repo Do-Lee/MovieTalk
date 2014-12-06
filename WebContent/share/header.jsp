@@ -2,46 +2,45 @@
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="user" class="user.User" />
 <%String userid = (String) session.getAttribute("id"); %>
-<%String pwd = (String) session.getAttribute("password"); %>
-
+<%String name = (String) session.getAttribute("name"); %>
 <link rel="stylesheet" href="./css/autocomplete.css">
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 
 <!-- member bar -->
-<div class="navbar navbar-default" style="background: #fbfbfb;">
-	<div class="nav nav-pills">
+<div class="navbar navbar-default">
+	<div class="nav nav-pills" style="background: #fbfbfb;">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-				<% if(userid != null) {
-                	if(userid.equals(user.getAdmin())) {
-                %>
-				<li><a href="./administrator.jsp">관리자 페이지</a></li>
-				<%	} 
-                	else { %>
-				<li><a href="./member.jsp">회원 페이지</a></li>
-				<%	} 
-                } %>
-				<li><a href="./register.jsp">회원가입</a></li>
-
-				<% if(userid == null) { %>
+               <%
+                 if(userid == null) {
+               %>
+                <li><a href="./register.jsp">회원가입</a></li>
 				<li><a href="login.jsp">로그인</a></li>
-				<% } 
-				else { %>
-				<li><a href="./member.jsp">ID: <%=userid %></a></li>
-				<li><a href="LogoutController.do"
-					onClick="FBLogout(); alert('로그아웃되었습니다.');" id="logout">로그아웃</a></li>
-				<%} %>
+               <%
+                 } else {
+               %>
+                <li><a href="user?op=update"><%=name %></a></li>
+                  <%
+                     if(userid.equals(user.getAdmin())) {
+                   %>
+                  <li><a href="./administrator.jsp">관리자 페이지</a></li>
+                  <%} else {%>
+                  <li><a href="user?op=show">회원 페이지</a></li>
+                 <%}%>
+				<li><a href="user?op=logout" 
+                    onClick="FBLogout();">로그아웃</a></li>
+               <%} %>
 			</ul>
 		</div>
 	</div>
 </div>
 
 <!-- search bar -->
-<div class="container" style="padding-top: 30px;" align="center">
+<div class="container" style="padding-top: 40px;" align="center">
 	<form class="form-inline" method="POST" action="MovieServlet.do">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
-			<input type="text" class="form-control" id="data" style="width: 300px;" required="required">
+			<input type="text" class="form-control" name="query" style="width: 300px;" required="required">
 			<img src="images/ajax-loader.gif" style="display:none;" id="loading">
 			<div class="suggest_box" id="suggest_box"></div> 
 			<button type="submit" class="btn btn-default">Search</button>
@@ -51,7 +50,7 @@
 </div>
 
 <!-- menu bar -->
-<div class="navbar navbar-default" style="margin-top: 30px; background: #939393;">
+<div class="navbar navbar-default" style="margin-top: 40px background:#939393;">
 	<div class="nav nav-pills"></div>
 </div>
 

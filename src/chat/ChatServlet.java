@@ -17,10 +17,14 @@ public class ChatServlet extends HttpServlet {
 	public ChatServlet() {
 		super();
 	}
+	
+	private String getMode(HttpServletRequest request) {
+		return (String) request.getParameter("_method");
+	}
 
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		String current_name = "";
 
 		if(session != null && session.getAttribute("name") != null) {
@@ -65,25 +69,27 @@ public class ChatServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 
-		String userid = (String) session.getAttribute("id");
+		String userid = (String) session.getAttribute("name");
 		String content = request.getParameter("content");
 		
 		if(userid == null) {
 			return;
 		}
 		
-		try {
-			if (ChatDAO.sendMessage(new Message(userid, content))) {					
-				response.getWriter().write("ok");
+//		if(getMode(request).equals("createChat")) {
+//			// 방 개설 함수
+//		} 
+			try {
+				if (ChatDAO.sendMessage(new Message(userid, content))) {					
+					response.getWriter().write("ok");
+				} 
+				else {
+					response.getWriter().write("메세지 전송에 실패했습니다..");
+				}
 			} 
-			else {
-				response.getWriter().write("메세지 전송에 실패했습니다..");
+			catch (Exception e) {
+				response.getWriter().write(e.getMessage());
 			}
-		} 
-		catch (Exception e) {
-			response.getWriter().write(e.getMessage());
-
-		} 
 	}
 
 }

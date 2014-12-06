@@ -14,15 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import common.PageResult;
 
 
-@WebServlet("/MovieServlet")
+@WebServlet("/movies")
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     public MovieServlet() {
         super();
     }
-    
-    private boolean isRegisterMode(HttpServletRequest request) {return true;}
     
 	private int getIntFromParameter(String str, int defaultValue) {
 		int id;
@@ -41,10 +39,10 @@ public class MovieServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String op = request.getParameter("op");
 		String actionUrl = "";
 		String query = request.getParameter("query");
-		boolean ret;
 		
 		int id = getIntFromParameter(request.getParameter("id"), -1);
 		
@@ -54,9 +52,10 @@ public class MovieServlet extends HttpServlet {
 		
 		try {
 			if (op == null || op.equals("search")) {
+				MovieDAO.create(query.trim());
 				int page = getIntFromParameter(request.getParameter("page"), 1);
-				
 				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);
+				for(Movie movie : movies.getList()) System.out.println(movie.toString());
 				request.setAttribute("movies", movies);
 				request.setAttribute("page", page);
 				actionUrl = "search.jsp";
@@ -71,8 +70,6 @@ public class MovieServlet extends HttpServlet {
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
-		dispatcher.forward(request,  response);
-		
+		dispatcher.forward(request, response);
 	}
-
 }

@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Movie Talk</title>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/common.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 </head>
@@ -37,25 +37,25 @@
 					</tr>
 				</thead>
 				<tbody>
-				<!-- db 수정후 다시  -->
 					<c:forEach var="movie" items="${movies.list }">
 						<tr>
-							<td><c:out value="${movie.link}"/></td>
+							<td><img src='<c:out value="${movie.link}"/>'></td>
 							<td><c:out value="${movie.title}"/></td>
 							<td><c:out value="${movie.director}"/></td>
-							<td><a href="chat?id=${movie.id}"><c:out value="${chat.title}"/></a>></td> 
+							<td><a href="chat?id=${movie.id}"><c:out value="${chat.title}"/></a></td> 
 						</tr>
 					</c:forEach>
+                    
 				</tbody>
 			</table>
 		</div>
 
 		<jsp:include page="./page.jsp">
-			<jsp:param name="currentPage" value="${users.page}" />
-			<jsp:param name="url" value="user" />
-			<jsp:param name="startPage" value="${users.startPageNo}" />
-			<jsp:param name="endPage" value="${users.endPageNo}" />
-			<jsp:param name="numPages" value="${users.numPages}" />
+			<jsp:param name="currentPage" value="${movies.page}" />
+			<jsp:param name="url" value="movie" />
+			<jsp:param name="startPage" value="${movies.startPageNo}" />
+			<jsp:param name="endPage" value="${movies.endPageNo}" />
+			<jsp:param name="numPages" value="${movies.numPages}" />
 		</jsp:include>
 
 	</div>

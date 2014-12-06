@@ -15,10 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import common.PageResult;
 
-/**
- * Servlet implementation class User
- */
-
 @WebServlet("/fbuser")
 public class FacebookUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -105,7 +101,7 @@ public class FacebookUserServlet extends HttpServlet {
 		String method = request.getParameter("_method");
 		return method == null || method.equals("POST");
 	}
-
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean ret = false;
 		String actionUrl="";

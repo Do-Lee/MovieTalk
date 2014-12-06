@@ -15,26 +15,26 @@ public class Movie implements Serializable {
 	private String userRating;
 	
 	public Movie(String title, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
-		this.title = (title != null) ? title : "";
-		this.subtitle = (subtitle != null) ? subtitle : "";
-		this.link = (link != null) ? link : "";
-		this.image = (image != null) ? image : "";
-		this.director = (director != null) ? director : "";
-		this.actor = (actor != null) ? actor : "";
-		this.pubDate = (pubDate != null) ? pubDate : "";
-		this.userRating = (userRating != null) ? userRating : "";
+		this.title = title;
+		this.subtitle = subtitle;
+		this.link = link;
+		this.image = image;
+		this.director = director;
+		this.actor = actor;
+		this.pubDate = pubDate;
+		this.userRating = userRating;
 	}
 	
 	public Movie(int id, String title, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
 		this.id = id;
-		this.title = (title != null) ? title : "";
-		this.subtitle = (subtitle != null) ? subtitle : "";
-		this.link = (link != null) ? link : "";
-		this.image = (image != null) ? image : "";
-		this.director = (director != null) ? director : "";
-		this.actor = (actor != null) ? actor : "";
-		this.pubDate = (pubDate != null) ? pubDate : "";
-		this.userRating = (userRating != null) ? userRating : "";
+		this.title = title;
+		this.subtitle = subtitle;
+		this.link = link;
+		this.image = image;
+		this.director = director;
+		this.actor = actor;
+		this.pubDate = pubDate;
+		this.userRating = userRating;
 	}
 	
 	public int getId() {return id;}
@@ -48,5 +48,10 @@ public class Movie implements Serializable {
 	public String getUserRating() {return userRating;}
 	public float getUserRatingInFloat() {
 		return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);
+	}
+	
+	public String toString() {
+		return title + " / " + subtitle + " / " + link + " / " + image + " / " + 
+				director + " / " + actor + " / " + pubDate + " / " + userRating;
 	}
 }
