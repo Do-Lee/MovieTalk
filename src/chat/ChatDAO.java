@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import user.User;
 import common.PageResult;
 
 
@@ -165,8 +166,7 @@ public class ChatDAO {
 
 			while (rs.next()) {
 				Message msg = new Message(rs.getInt("id"), rs.getString("movietitle"), rs.getString("title"), rs.getString("userid"), 
-								rs.getString("content"), rs.getString("message"), rs.getTimestamp("created_at"));
-				System.out.println(rs.getString("movietitle"));
+								rs.getString("contents"), rs.getString("message"), rs.getTimestamp("created_at"));
 				msgList.add(msg);
 			}	
 		} finally {
@@ -229,7 +229,7 @@ public class ChatDAO {
 						rs.getString("movietitle"),
 						rs.getString("title"),
 						rs.getString("userid"),
-						rs.getString("content"),
+						rs.getString("contents"),
 						rs.getString("message"),
 						rs.getTimestamp("created_at")						
 						);

@@ -2,9 +2,9 @@ package chat;
 
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import user.User;
+import user.UserDAO;
 import common.PageResult;
 
 @WebServlet("/chat")
@@ -56,7 +58,43 @@ public class ChatServlet extends HttpServlet {
 			op = "";
 		}
 
-		if(op.equals("")) {
+		if(op != null) {
+			try {
+				if(op.equals("admin")) {
+					int page = getIntFromParameter(request.getParameter("page"), 1);
+					PageResult<Message> chats = ChatDAO.getPage(page, 10);
+					request.setAttribute("chats", chats);
+
+					actionUrl = "chat_index.jsp";
+				}
+				else if(op.equals("mine")) {
+					String userid = (String) session.getAttribute("id");
+					int page = getIntFromParameter(request.getParameter("page"), 1);
+					PageResult<Message> chats = ChatDAO.getPage(page, userid, 10);
+					request.setAttribute("chats", chats);
+
+					actionUrl = "chat_index.jsp";
+				}
+				else if (op.equals("search")) {
+					String query = request.getParameter("query");
+					int page = getIntFromParameter(request.getParameter("page"), 1);
+
+					PageResult<Message> chats = ChatDAO.getSearchPage(page, 10, query);
+					request.setAttribute("chats", chats);
+					request.setAttribute("page", page);
+					actionUrl = "search.jsp";
+				}
+			}
+			catch (SQLException | NamingException e) {
+				request.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+				actionUrl = "error.jsp";
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+			dispatcher.forward(request,  response);
+		}
+		else {
 			String current_name = "";
 
 			if(session != null && session.getAttribute("name") != null) {
@@ -92,42 +130,6 @@ public class ChatServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(resultObj.toJSONString());
-		}
-		else {
-			try {
-				if(op.equals("admin")) {
-					int page = getIntFromParameter(request.getParameter("page"), 1);
-					PageResult<Message> chats = ChatDAO.getPage(page, 10);
-					request.setAttribute("chats", chats);
-
-					actionUrl = "chat_index.jsp";
-				}
-				else if(op.equals("mine")) {
-					String userid = (String) session.getAttribute("id");
-					int page = getIntFromParameter(request.getParameter("page"), 1);
-					PageResult<Message> chats = ChatDAO.getPage(page, userid, 10);
-					request.setAttribute("chats", chats);
-
-					actionUrl = "chat_index.jsp";
-				}
-				else if (op.equals("search")) {
-					String query = request.getParameter("query");
-					int page = getIntFromParameter(request.getParameter("page"), 1);
-
-					PageResult<Message> chats = ChatDAO.getSearchPage(page, 10, query);
-					request.setAttribute("chats", chats);
-					request.setAttribute("page", page);
-					actionUrl = "search.jsp";
-				}
-			}
-			catch (SQLException | NamingException e) {
-				request.setAttribute("error", e.getMessage());
-				e.printStackTrace();
-				actionUrl = "error.jsp";
-			}
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
-			dispatcher.forward(request,  response);
 		}
 	}
 
