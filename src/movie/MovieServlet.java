@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import common.PageResult;
 
 
-@WebServlet("/movies")
+@WebServlet("/MovieServlet")
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
