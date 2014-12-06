@@ -2,9 +2,14 @@ package chat;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.naming.*;
 import javax.sql.*;
+
+import movie.Movie;
+
+import common.PageResult;
 
 
 public class ChatDAO {
@@ -90,5 +95,135 @@ public class ChatDAO {
 		}
 
 		return (result == 1);
+	}
+	
+	public static Message findChat(String title) throws NamingException, SQLException {
+		Message message = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM chats WHERE title = ?");
+			stmt.setString(1, title);
+			
+			// 수행
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				message = new Message(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("title"),
+						rs.getString("userid"),
+						rs.getString("message"),
+						rs.getTimestamp("time")						
+						);
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		return message;
+	}
+
+	public static Vector<Message> getChatList(String title) throws SQLException, NamingException {
+		Vector<Message> chatList = new Vector<Message>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT title FROM chats WHERE title LIKE %?%");
+			stmt.setString(1, title);
+			// 수행
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				chatList.add(new Message(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("title"),
+						rs.getString("userid"),
+						rs.getString("message"),
+						rs.getTimestamp("time")						
+						));
+			}	
+		} 
+		// 비슷한것을 찾을수 없을 때
+		catch (SQLException e) {}
+		finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		return chatList;
+	}
+	
+	public static PageResult<Message> getSearchPage(int page, int numItemsInPage, String title) 
+			throws SQLException, NamingException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;		
+		DataSource ds = getDataSource();
+		
+		if (page <= 0) {
+			page = 1;
+		}
+		
+		PageResult<Message> result = new PageResult<Message>(numItemsInPage, page);
+
+		int startPos = (page - 1) * numItemsInPage;
+
+		try {
+			conn = ds.getConnection();
+			// chats 테이블: chat 수 페이지수 계산
+			stmt = conn.prepareStatement("SELECT COUNT(*) FROM chats WHERE title LIKE %?%");
+			stmt.setString(1, title);
+			
+			rs = stmt.executeQuery();
+			rs.next();
+
+			result.setNumItems(rs.getInt(1));
+
+			rs.close();
+			rs = null;
+			stmt.close();
+			stmt = null;
+
+			// chats 테이블 SELECT
+			stmt = conn.prepareStatement("SELECT * FROM chats WHERE title LIKE %?% ORDER BY title LIMIT " + startPos + ", " + numItemsInPage);
+			stmt.setString(1, title);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				result.getList().add(new Message(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("title"),
+						rs.getString("userid"),
+						rs.getString("message"),
+						rs.getTimestamp("time")						
+						));
+			}
+		} 
+		// 비슷한것을 찾을수 없을 때
+		catch (SQLException e) {}
+		finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+
+		return result;		
 	}
 }
