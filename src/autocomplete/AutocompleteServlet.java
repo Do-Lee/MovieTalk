@@ -8,12 +8,8 @@ import java.util.Vector;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import movie.Movie;
-import movie.MovieDAO;
+import javax.servlet.http.*;
+import chat.*;
 
 /**
  * Servlet implementation class ContrySuggest
@@ -39,9 +35,9 @@ public class AutocompleteServlet extends HttpServlet {
 		String query = request.getParameter("query");
 		PrintWriter out = response.getWriter();
 		
-		Vector<Movie> movieList = null;
+		Vector<Message> chatList = null;
 		try {
-			movieList = MovieDAO.getMovieList(query);
+			chatList = ChatDAO.getChatList(query);
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		}
@@ -51,10 +47,10 @@ public class AutocompleteServlet extends HttpServlet {
 		}
 		else{
 			if(query.length() > 0) {
-				for( Movie movie : movieList ) {
-					if( movie.getTitle().contains(query)) {	
-						out.println("<li onclick=\"fill('"+movie.getTitle()+"');\">"
-									+ movie.getTitle()+"</li>"); 
+				for( Message message : chatList ) {
+					if( message.getTitle().contains(query)) {	
+						out.println("<li onclick=\"fill('"+message.getTitle()+"');\">"
+									+ message.getTitle()+"</li>"); 
 					}
 				}
 			}
