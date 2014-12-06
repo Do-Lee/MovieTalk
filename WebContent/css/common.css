@@ -8,12 +8,16 @@ h4 {
 	text-align: center;
 }
 
+table {
+	width: 100%;
+}
+
 th {
 	width: 50%;
 }
  
 td {
-	width: 50%; 
+	width: 50%;
 }
  
 a {
