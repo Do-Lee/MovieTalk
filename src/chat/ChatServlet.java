@@ -23,9 +23,11 @@ public class ChatServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		String current_name = "";
 
-		if(session != null && session.getAttribute("id") != null) {
-			current_name = (String) session.getAttribute("id");
+		if(session != null && session.getAttribute("name") != null) {
+			current_name = (String) session.getAttribute("name");
 		}
+		
+		System.out.println(current_name);
 		
 		int last = -1;
 		

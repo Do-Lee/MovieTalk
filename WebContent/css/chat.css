@@ -1,9 +1,8 @@
 #messages {
-	width: 100%;
 }
 
 .name {
-	font: 9px Tahoma;
+	font: 10px Tahoma;
 	float: left;
 	background: #939393;
 	color: white;
@@ -12,7 +11,7 @@
 }
 
 .time {
-	font: 9px Tahoma;
+	font: 10px Tahoma;
 	color: white;
 	background-color: #9aaeb7;
 	margin: 0;
@@ -22,8 +21,7 @@
 }
 
 .content {
-	word-wrap: break-word;
-	max-width: 165px;
+	word-break: break-all;
 	padding: 5px 10px 5px 15px;
 	background-color: white;
 	margin: 5px 0 20px 0;
@@ -33,7 +31,7 @@
 
 
 .mine .name {
-	font: 9px Tahoma;
+	font: 10px Tahoma;
 	float: right;
 	background: #939393;
 	color: white;
@@ -42,7 +40,7 @@
 }
 
 .mine .time {
-	font: 9px Tahoma;
+	font: 10px Tahoma;
 	color: white;
 	background-color: #9aaeb7;
 	margin: 0;
@@ -52,9 +50,8 @@
 }
 
 .mine .content {
-	word-wrap: break-word;
+	word-break: break-all;
 	float: right;
-	max-width: 165px;
 	padding: 5px 15px 5px 10px;
 	background-color: #00b5e4;
 	margin: 5px 0 20px 0;

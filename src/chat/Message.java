@@ -25,7 +25,7 @@ public class Message implements java.io.Serializable {
 		this.id = id;
 		this.movietitle = movietitle;
 		this.title = title;
-		this.userid = userid;
+		this.userid = simpleName(userid);
 		this.message = message;
 		this.time = simpleDate(time);
 	}
@@ -64,5 +64,21 @@ public class Message implements java.io.Serializable {
 		}
 		
 		return simpleTime;
+	}
+	
+	private String simpleName(String name) {
+		String simpleName = new String();
+		
+		if(name.length() > 13) {
+			for(int i=0; i<10; i++) {
+				simpleName += name.charAt(i);
+			}
+			simpleName += "...";
+		}
+		else {
+			simpleName = name;
+		}
+		
+		return simpleName;
 	}
 }

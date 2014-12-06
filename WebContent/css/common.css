@@ -1,10 +1,19 @@
 body {
 	background: #f5f5f5;
+	font-family: 'Nanum gothic'
 }
 
 h4 {
 	margin:5px 0 10px 0;
 	text-align: center;
+}
+
+th {
+	width: 50%;
+}
+ 
+td {
+	width: 50%; 
 }
  
 a {

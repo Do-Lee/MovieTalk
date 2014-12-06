@@ -58,13 +58,11 @@
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<div class="table-responsive">
-						<table class="table">
-							<tbody>
-								<tr id="messages"></tr>
-							</tbody>
+					<!-- <div class="table-responsive"> -->
+						<table>
+							<tbody id="messages"></tbody>
 						</table>
-					</div>
+					<!-- </div> -->
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
@@ -94,24 +92,27 @@
 				$(data.messages).each(function(i, item) {
 					// 각 메시지를 해당위치에 추가
 					if(item.mine.length > 0) {
-						$("<tr class='message mine'></div>").
+						$("<tr>").
 							append("<td></td>").
-							append("<td>").
-							append("<span class='name'>" + item.userid + "</span>").
-							append("<span class='time'>" + item.time + "</span><br>").
-							append("<span class='content'>" + item.message + "</span>").
-							append("<td>").
+							append("<td class='message mine'>" + 
+										"<span class='name'>" + item.userid + "</span>" + 
+										"<span class='time'>" + item.time + "</span><br>" + 
+										"<span class='content'>" + item.message + "</span>" + 
+								  "</td>").
+							append("</tr>").
 							appendTo("#messages");
 					} 
 					else {
-						$("<tr class='message'></div>").
-						append("<td>").
-						append("<span class='name'>" + item.userid + "</span>").
-						append("<span class='time'>" + item.time + "</span><br>").
-						append("<span class='content'>" + item.message + "</span>").
-						append("<td>").
+						$("<tr>").
+						append("<td>" + 
+									"<span class='name'>" + item.userid + "</span>" + 
+									"<span class='time'>" + item.time + "</span><br>" + 
+									"<span class='content'>" + item.message + "</span>" + 
+							  "</td>").
 						append("<td></td>").
+						append("</tr>").
 						appendTo("#messages");
+					
 					}
 				});
 				// 새로운 메시지가 있을 경우, 입력 폼이 보이도록 스크롤
