@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import common.PageResult;
 
 
-@WebServlet("/MovieServlet")
+@WebServlet("/movies")
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,7 @@ public class MovieServlet extends HttpServlet {
 		
 		try {
 			if (op == null || op.equals("search")) {
-				MovieDAO.create(query.trim());
+				MovieDAO.create(query.contains(" ") ? query : query.trim());
 				int page = getIntFromParameter(request.getParameter("page"), 1);
 				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);
 				for(Movie movie : movies.getList()) System.out.println(movie.toString());
