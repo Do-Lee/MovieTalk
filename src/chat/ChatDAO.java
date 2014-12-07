@@ -139,7 +139,7 @@ public class ChatDAO {
 		return result;
 	}
 	
-	public static List<Message> getChatList(int last) throws SQLException, NamingException {
+	public static List<Message> getChatList(int last, String title) throws SQLException, NamingException {
 		
 		List<Message> msgList = new ArrayList<Message>();
 		
@@ -155,13 +155,16 @@ public class ChatDAO {
 			// 질의 준비
 			if (last >= 0) {
 				// last 이후의 모든 메시지
-				stmt = conn.prepareStatement("SELECT * FROM chats WHERE id > ? ;");
+				stmt = conn.prepareStatement("SELECT * FROM chats WHERE id > ? and title = ?");
 				stmt.setInt(1,  last);
+				stmt.setString(2, title);
+				
 			} else {
-				// 마지막 10개의 메시지만..
+				// 마지막 100개의 메시지만..
 				stmt = conn.prepareStatement("SELECT * FROM "
-						+ "(SELECT * FROM chats ORDER BY id DESC LIMIT 100 ) t " 
+						+ "(SELECT * FROM chats WHERE title = ? ORDER BY id DESC LIMIT 100 ) t " 
 						+ "ORDER BY id ;");
+				stmt.setString(1, title);
 			}
 
 			// 수행
@@ -183,40 +186,6 @@ public class ChatDAO {
 		return msgList;
 	}
 	
-	public static boolean create(Message msg) throws SQLException, NamingException {
-		int result;
-		
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		DataSource ds = getDataSource();
-
-		try {
-			conn = ds.getConnection();
-			
-			// 질의 준비
-			stmt = conn.prepareStatement("INSERT INTO chats(movietitle, title, image, opener, contents) "
-					+ "VALUES (?, ?, ?, ?, ?);");
-			stmt.setString(1, msg.getMovietitle());
-			stmt.setString(2, msg.getTitle());
-			stmt.setString(3, msg.getImage());
-			stmt.setString(4, msg.getOpener());
-			stmt.setString(5, msg.getContents());
-			
-			// 수행
-			result = stmt.executeUpdate();
-		} 
-		finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-
-		return (result == 1);
-	}
-	
 	public static boolean sendMessage(Message msg) throws SQLException, NamingException {
 		int result;
 		
@@ -230,12 +199,17 @@ public class ChatDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("INSERT INTO chats(writer, message) VALUES (?, ?) where title = ?;");
+			stmt = conn.prepareStatement("UPDATE chats SET writer = ?, message = ? WHERE title = ?"); // problem
 			stmt.setString(1, msg.getWriter());
 			stmt.setString(2, msg.getMessage());
 			stmt.setString(3, msg.getTitle());
+			
 			// 수행
 			result = stmt.executeUpdate();
+			
+			System.out.println(msg.getWriter());
+			System.out.println(msg.getMessage());
+			System.out.println(msg.getTitle());
 		} 
 		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료

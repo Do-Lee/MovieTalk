@@ -19,20 +19,13 @@ public class Message implements java.io.Serializable {
 	private String time;
 
 	// SendMessage용 Constructor
-	public Message(String writer, String message) {
+	public Message(String writer, String message, String title) {
 		this.writer = writer;
 		this.message = message;
+		this.title = title;
 	}
 
 	// 개설용 Constructor
-	public Message(String movietitle, String title, String image, String opener, String contents) {
-		this.movietitle = movietitle;
-		this.title = title;
-		this.image = image;
-		this.opener = opener;
-		this.contents = contents;
-	}
-	
 	public Message(int id, String movietitle, String title, String image, String opener, String writer, String contents, String message) {
 		this.id = id;
 		this.movietitle = movietitle;

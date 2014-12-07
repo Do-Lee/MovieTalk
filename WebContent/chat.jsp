@@ -35,7 +35,7 @@
 									<td><%=message.getImage()%></td>
 									<td><span class="badge pull-right">42</span><%=message.getTitle()%></td>
 								</tr>
-                              <%} %>
+                              <% } %>
 							</tbody>
 						</table>
 					</div>
@@ -60,6 +60,7 @@
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
+							<input type="text" class="form-control" id="title" value="2">
 							<input type="text" class="form-control" id="message">
 							<input type="button" class="btn btn-default" id="send" value="send" style="width: 100%; background: #eeeeee;"> 
 						</div>
@@ -79,7 +80,8 @@
 		// Ajax로 마지막 받은 번호 이후의 메시지를 json으로 받음.
 
 		$.get('chat', {
-			last : last_id
+			last : last_id,
+			title : $("#title").val()
 		}, function(data) {
 			if (data.messages.length > 0 && last_id < data.last) {
 				last_id = data.last;
@@ -129,7 +131,8 @@
 
 			// Ajax로 글 내용 전달
 			$.post('chat', {
-				content : $("#message").val()
+				content : $("#message").val(),
+				title : $("#title").val()
 			}, function(data) {
 				if (data.indexOf("ERROR") != -1) {
 					// 에러가 있으면 내용 출력

@@ -117,10 +117,13 @@ public class ChatServlet extends HttpServlet {
 			} 
 			catch(NumberFormatException e) {}
 
+			String title = request.getParameter("title");
+
 			JSONObject resultObj = new JSONObject();
 
 			try {
-				List<Message> chatList = ChatDAO.getChatList(last);
+				List<Message> chatList = ChatDAO.getChatList(last, title);
+
 				JSONArray jsonList = new JSONArray();
 				for(Message chat : chatList) {
 					jsonList.add(chat.toJSON(current_name));
@@ -128,7 +131,7 @@ public class ChatServlet extends HttpServlet {
 				if (chatList.size() > 0) {
 					last = chatList.get(chatList.size() - 1).getId();
 				}
-				
+
 				resultObj.put("size", chatList.size());
 				resultObj.put("messages", jsonList);
 				resultObj.put("last", last);
@@ -147,52 +150,26 @@ public class ChatServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		request.setCharacterEncoding("UTF-8");
 
-		String op = request.getParameter("op");
-		String actionUrl = "";
-		
-		if(op != null && op.equals("create")) {
-			boolean ret = false;
-			try {
-				ret = ChatDAO.create(new Message((String)request.getParameter("movietitle"),
-						(String)request.getParameter("title"),
-						"",//MovieDAO.findMovie((String)request.getParameter("title")).getImage(),
-						(String)request.getParameter("name"),
-						(String)request.getParameter("contents")));
-			} catch (SQLException | NamingException e) {
-				request.setAttribute("error", e.getMessage());
-				e.printStackTrace();
-				actionUrl = "error.jsp";
-			}
+		HttpSession session = request.getSession(true);
 
-			if (ret) {
-				actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
-			} else {
-				request.setAttribute("error", "중복된 Title이 존재하여 개설에 실패했습니다.");
-				actionUrl = "error.jsp";
-			}
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
-			dispatcher.forward(request,  response);
+		String userid = (String) session.getAttribute("name");
+		String content = request.getParameter("content");
+		String title = request.getParameter("title");
+
+		if(userid == null) {
+			return;
 		}
-		else {
-			HttpSession session = request.getSession(true);
 
-			String userid = (String) session.getAttribute("name");
-			String content = request.getParameter("content");
-			
-			if(userid == null) {
-				return;
-			}
+		try {
+			if (ChatDAO.sendMessage(new Message(userid, content, title))) {	
 
-			try {
-				if (ChatDAO.sendMessage(new Message(userid, content))) {					
-					response.getWriter().write("ok");
-				} else {
-					response.getWriter().write("메세지 전송에 실패했습니다..");
-				}
-			} catch (Exception e) {
-				response.getWriter().write(e.getMessage());
+				response.getWriter().write("ok");
+			} else {
+				System.out.println("Error");
+				response.getWriter().write("메세지 전송에 실패했습니다..");
 			}
+		} catch (Exception e) {
+			response.getWriter().write(e.getMessage());
 		}
 	}
 }

@@ -121,7 +121,6 @@ public class MovieDAO {
 
 	// 영화 제목을 입력받아, 네이버 영화 검색 API로부터 parsing된 영화 정보를 얻어 DB에 삽입
 	// API로부터 모든 영화 정보를 가져올 순 없음...(검색어 기반으로 XML을 출력해주기 때문에 검색어가 없으면 아무 정보도 출력 x) 
-	@SuppressWarnings("unused")
 	public static void create(String title) throws SQLException, NamingException {
 		int result = 0;
 		Connection conn = null;
@@ -132,12 +131,12 @@ public class MovieDAO {
 		try {
 			conn = ds.getConnection();
 			for(Movie movie: RSSParser.getAllMovies(title)) {
-				if (findMovie(movie.getTitle(), movie.getSubtitle()) == null) {
+				if (findMovie(movie.getMovietitle(), movie.getSubtitle()) == null) {
 					stmt = conn.prepareStatement(
 							"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) "
 									+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
 							);
-					stmt.setString(1, movie.getTitle());
+					stmt.setString(1, movie.getMovietitle());
 					stmt.setString(2, movie.getLink());
 					stmt.setString(3, movie.getImage());
 					stmt.setString(4, movie.getSubtitle());
@@ -159,6 +158,39 @@ public class MovieDAO {
 		//return (result == 1);
 	}
 
+	public static boolean createChat(Movie movie) throws SQLException, NamingException {
+		int result;
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		DataSource ds = getDataSource();
+
+		try {
+			conn = ds.getConnection();
+			
+			// 질의 준비
+			stmt = conn.prepareStatement("INSERT INTO movies(movietitle, chattitle, opener, contents) "
+					+ "VALUES (?, ?, ?, ?);");
+			stmt.setString(1, movie.getMovietitle());
+			stmt.setString(2, movie.getChattitle());
+			stmt.setString(3, movie.getOpener());
+			stmt.setString(4, movie.getContents());
+			
+			// 수행
+			result = stmt.executeUpdate();
+		} 
+		finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+
+		return (result == 1);
+	}
+	
 	public static boolean update(Movie movie) throws SQLException, NamingException {
 		int result;
 		Connection conn = null;
@@ -175,7 +207,7 @@ public class MovieDAO {
 							"SET  title = ?, link = ?, image = ?, subtitle = ?, pubdate = ?, director = ?, actor = ?, userrating = ?" +
 							"WHERE id=?"
 					);
-			stmt.setString(1,  movie.getTitle());
+			stmt.setString(1,  movie.getMovietitle());
 			stmt.setString(2,  movie.getLink());
 			stmt.setString(3,  movie.getImage());
 			stmt.setString(4,  movie.getSubtitle());

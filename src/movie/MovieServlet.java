@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import chat.Message;
+
 import common.PageResult;
 
 
-@WebServlet("/movies")
+@WebServlet("/movie")
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +53,28 @@ public class MovieServlet extends HttpServlet {
 		}
 		
 		try {
-			if (op == null || op.equals("search")) {
+			if(op != null && op.equals("create")) {
+				boolean ret = false;
+				try {
+					ret = MovieDAO.createChat(new Movie(id,
+							(String)request.getParameter("movietitle"),
+							(String)request.getParameter("title"),
+							(String)request.getParameter("name"),
+							(String)request.getParameter("contents")));
+				} catch (SQLException | NamingException e) {
+					request.setAttribute("error", e.getMessage());
+					e.printStackTrace();
+					actionUrl = "error.jsp";
+				}
+
+				if (ret) {
+					actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
+				} else {
+					request.setAttribute("error", "중복된 Title이 존재하여 개설에 실패했습니다.");
+					actionUrl = "error.jsp";
+				}
+			}
+			else if (op == null || op.equals("search")) {
 				MovieDAO.create(query.contains(" ") ? query : query.trim());
 				int page = getIntFromParameter(request.getParameter("page"), 1);
 				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);

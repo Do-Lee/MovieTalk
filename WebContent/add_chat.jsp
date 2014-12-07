@@ -15,7 +15,7 @@
 
 	<div class="container">
 
-		<form class="form-horizontal" method="POST" action="chat?op=create">
+		<form class="form-horizontal" method="POST" action="movie?op=create">
             <input type="hidden" name="_method" value="createChat">
 			<div class="form-group">
 				<label for="movietitle" class="col-lg-2 control-label">Movie Title</label>

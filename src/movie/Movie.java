@@ -1,11 +1,12 @@
 package movie;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Movie implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String title;
+	private String movietitle;
 	private String subtitle;
 	private String link;
 	private String image;
@@ -13,9 +14,21 @@ public class Movie implements Serializable {
 	private String actor;
 	private String pubDate;
 	private String userRating;
+	private String chattitle;
+	private String opener;
+	private String contents;
+	private Timestamp time;
 	
-	public Movie(String title, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
-		this.title = title;
+	public Movie(int id, String movietitle, String chattitle, String opener, String contents) {
+		this.id = id;
+		this.movietitle = movietitle;
+		this.chattitle = chattitle;
+		this.opener = opener;
+		this.contents = contents;
+	}
+	
+	public Movie(String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
+		this.movietitle = movietitle;
 		this.subtitle = subtitle;
 		this.link = link;
 		this.image = image;
@@ -25,9 +38,9 @@ public class Movie implements Serializable {
 		this.userRating = userRating;
 	}
 	
-	public Movie(int id, String title, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
+	public Movie(int id, String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
 		this.id = id;
-		this.title = title;
+		this.movietitle = movietitle;
 		this.subtitle = subtitle;
 		this.link = link;
 		this.image = image;
@@ -38,7 +51,7 @@ public class Movie implements Serializable {
 	}
 	
 	public int getId() {return id;}
-	public String getTitle() {return title;}
+	public String getMovietitle() {return movietitle;}
 	public String getSubtitle() {return subtitle;}
 	public String getLink() {return link;}
 	public String getImage() {return image;}
@@ -49,9 +62,13 @@ public class Movie implements Serializable {
 	public float getUserRatingInFloat() {
 		return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);
 	}
-	
+	public String getChattitle() {return chattitle;}
+	public String getOpener() {return opener;}
+	public String getContents() {return contents;}
+	public Timestamp getTime() {return time;}
+
 	public String toString() {
-		return title + " / " + subtitle + " / " + link + " / " + image + " / " + 
+		return movietitle + " / " + subtitle + " / " + link + " / " + image + " / " + 
 				director + " / " + actor + " / " + pubDate + " / " + userRating;
 	}
 }
