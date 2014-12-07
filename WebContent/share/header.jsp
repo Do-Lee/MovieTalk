@@ -20,7 +20,7 @@
                 <% if(userid.equals(user.getAdmin())) { %>
                 	<li><a href="user?op=admin" >회원 관리</a></li>
 					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>
-					<li><a href="chat?op=admin">채팅 관리</a></li>
+					<li><a href="movie?op=admin">채팅 관리</a></li>
           		<% } else { %>
                 	<li><a href="chat?op=mine">회원 페이지</a></li>
                	<% } %>

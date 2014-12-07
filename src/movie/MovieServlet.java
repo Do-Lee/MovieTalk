@@ -7,12 +7,7 @@ import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import chat.ChatDAO;
-import chat.Message;
+import javax.servlet.http.*;
 import common.PageResult;
 
 
@@ -49,6 +44,11 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("movies", movies);
 				request.setAttribute("page", page);
 				actionUrl = "search.jsp";
+			} else if(op.equals("admin")){
+				PageResult<Movie> movies = MovieDAO.getPage(page, 10);
+				request.setAttribute("movies", movies);
+
+				actionUrl = "chat_index.jsp";
 			}
 		} catch (SQLException | NamingException e) {
 			request.setAttribute("error", e.getMessage());

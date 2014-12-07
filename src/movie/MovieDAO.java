@@ -48,18 +48,14 @@ public class MovieDAO {
 
 			// movies 테이블 SELECT
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM movies ORDER BY title LIMIT " + startPos + ", " + numItemsInPage);
+			rs = stmt.executeQuery("SELECT * FROM movies ORDER BY movietitle LIMIT " + startPos + ", " + numItemsInPage);
 
 			while(rs.next()) {
 				result.getList().add(new Movie(rs.getInt("id"),
-						rs.getString("title"),
-						rs.getString("link"),
-						rs.getString("image"),
-						rs.getString("subtitle"),
-						rs.getString("pubdate"),
-						rs.getString("director"),
-						rs.getString("actor"),
-						Float.toString(rs.getFloat("userrating"))));
+						rs.getString("movietitle"),
+						rs.getString("chattitle"),
+						rs.getString("opener"),
+						rs.getString("contents")));
 			}
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -92,7 +88,7 @@ public class MovieDAO {
 
 			if (rs.next()) {
 				movie = new Movie(rs.getInt("id"),
-						rs.getString("title"),
+						rs.getString("movietitle"),
 						rs.getString("link"),
 						rs.getString("image"),
 						rs.getString("subtitle"),
@@ -126,7 +122,7 @@ public class MovieDAO {
 			for(Movie movie: RSSParser.getAllMovies(title)) {
 				if (findMovie(movie.getMovietitle(), movie.getSubtitle()) == null) {
 					stmt = conn.prepareStatement(
-							"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) "
+							"INSERT INTO movies(movietitle, link, image, subtitle, pubdate, director, actor, userrating) "
 									+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
 							);
 					stmt.setString(1, movie.getMovietitle());
