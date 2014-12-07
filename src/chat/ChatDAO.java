@@ -77,7 +77,7 @@ public class ChatDAO {
 		return result;		
 	}
 	
-	public static PageResult<Message> getPage(int page, String opener, int numItemsInPage) throws SQLException, NamingException {
+	public static PageResult<Message> getPage(int page, String writer, int numItemsInPage) throws SQLException, NamingException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;		
@@ -93,8 +93,8 @@ public class ChatDAO {
 		try {
 			conn = ds.getConnection();
 			
-			stmt = conn.prepareStatement("SELECT COUNT(*) FROM chats WHERE opener = ?");
-			stmt.setString(1, opener);
+			stmt = conn.prepareStatement("SELECT COUNT(*) FROM chats WHERE writer = ?");
+			stmt.setString(1, writer);
 			
 			// chats 테이블: chat 수 페이지수 개산
 	 		rs = stmt.executeQuery();
@@ -109,8 +109,8 @@ public class ChatDAO {
 			stmt = null;
 			
 	 		// chats 테이블 SELECT
-			stmt = conn.prepareStatement("SELECT * FROM chats WHERE opener = ? ORDER BY id LIMIT " + startPos + ", " + numItemsInPage);
-			stmt.setString(1, opener);
+			stmt = conn.prepareStatement("SELECT * FROM chats WHERE writer = ? ORDER BY id LIMIT " + startPos + ", " + numItemsInPage);
+			stmt.setString(1, writer);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				result.getList().add(new Message(rs.getInt("id"),

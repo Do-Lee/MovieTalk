@@ -18,7 +18,7 @@ public class Facebook{
 	public static final String APPSECRET = "34702249ffc852f6dc7144b2e4b3cb38";
 	// facebook에 등록시킬 사이트주소
 	public static final String SITEURL="http://localhost:8080/MovieTalk";
-	//public static final String SITEURL="http://54.64.172.207/MovieTalk";
+//	public static final String SITEURL="http://54.64.172.207/MovieTalk";
 	// facebook에 요청할  권한 리스트
 	private static final String PERMISSIONS ="user_about_me";	
 

@@ -89,7 +89,7 @@ public class UserServlet extends HttpServlet {
 			} else if (op.equals("logout")) {
 				HttpSession session = request.getSession();
 				session.invalidate();
-				//actionUrl = "index.jsp";
+				
 				response.sendRedirect(request.getContextPath() + "/index.jsp");
 				return;
 			} else {

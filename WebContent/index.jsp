@@ -46,7 +46,7 @@
 					</div>
 				</div>
 			</div>
-			<% for (Movie chatList : MovieDAO.findMovies(3)) {%>
+			<% for (Movie chatList : MovieDAO.findMovies(4)) {%>
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">
 					<img src="<c:out value="<%=chatList.getImage()%>"></c:out>">

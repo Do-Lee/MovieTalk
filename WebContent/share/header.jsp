@@ -21,7 +21,7 @@
 					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>
 					<li><a href="movie?op=admin">채팅 관리</a></li>
           		<% } else { %>
-                	<li><a href="chat?op=mine">회원 페이지</a></li>
+                	<li><a href="movie?op=mine">회원 페이지</a></li>
                	<% } %>
 				<li><a href="user?op=logout" onClick="FBLogout();">로그아웃</a></li>
               	<% } %>

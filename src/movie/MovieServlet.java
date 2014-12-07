@@ -11,7 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import chat.ChatDAO;
+import chat.Message;
 import user.UserDAO;
 import common.PageResult;
 
@@ -43,6 +46,8 @@ public class MovieServlet extends HttpServlet {
 		String actionUrl = "";
 		String query = request.getParameter("query");
 		
+		HttpSession session = request.getSession();
+		
 		boolean ret = false;
 		int page = getIntFromParameter(request.getParameter("page"), 1);
 		
@@ -54,7 +59,7 @@ public class MovieServlet extends HttpServlet {
 				
 				actionUrl = "chat.jsp";
 			} else if (op.equals("delete")) {
-				ret = MovieDAO.remove(Integer.parseInt(request.getParameter("id")));
+				ret = MovieDAO.remove(getIntFromParameter(request.getParameter("id"), 1));
 				request.setAttribute("result", ret);
 				
 				if (ret) {
@@ -74,8 +79,15 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("movies", movies);
 
 				actionUrl = "chat_index.jsp";
-			}
-			else {
+			} else if(op.equals("mine")) {
+				String name = (String) session.getAttribute("name");
+				PageResult<Movie> movies = MovieDAO.getUserPage(page, 10, name);
+				request.setAttribute("movies", movies);
+				movies.getList();
+				
+				actionUrl = "chat_index.jsp";
+	
+			} else {
 				request.setAttribute("error", "알 수 없는 명령입니다");
 				actionUrl = "error.jsp";
 			}

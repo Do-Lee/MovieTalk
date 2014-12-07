@@ -18,7 +18,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import user.UserDAO;
-
 import common.PageResult;
 
 @WebServlet("/chat")
@@ -66,14 +65,6 @@ public class ChatServlet extends HttpServlet {
 					request.setAttribute("chats", chats);
 
 					actionUrl = "chat_index.jsp";
-				}  else if(op.equals("mine")) {
-					String userid = (String) session.getAttribute("name");
-					int page = getIntFromParameter(request.getParameter("page"), 1);
-					PageResult<Message> chats = ChatDAO.getPage(page, userid, 10);
-					request.setAttribute("chats", chats);
-
-					actionUrl = "chat_index.jsp";
-		
 				} else if (op.equals("delete")) {
 					boolean ret = UserDAO.remove(id);
 					request.setAttribute("result", ret);

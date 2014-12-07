@@ -54,6 +54,7 @@
 				</div>
                 <img src="images/ajax-loader.gif" style="display:none;" id="loading">
 			</div>
+			
 		</form>
 
 	</div>

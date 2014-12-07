@@ -35,7 +35,7 @@
 							<tbody>
                               <%for (Movie movie : MovieDAO.findAllMoviesByTitle(request.getParameter("movietitle"))) {%>
 								<tr>
-									<td><%=movie.getImage()%></td>
+									<td><img src="<c:out value="<%=movie.getImage()%>"></c:out>"></td>
 									<td>
 										<a href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>"><%=movie.getChattitle()%></a>
 										<span class="badge pull-right"><c:out value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
