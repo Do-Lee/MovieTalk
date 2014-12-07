@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.UserDAO;
 import common.PageResult;
 
 
@@ -37,11 +38,12 @@ public class MovieServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String op = request.getParameter("op");
-
 		String movietitle = request.getParameter("movietitle");
 		String chattitle = request.getParameter("chattitle");
 		String actionUrl = "";
 		String query = request.getParameter("query");
+		
+		boolean ret = false;
 		int page = getIntFromParameter(request.getParameter("page"), 1);
 		
 		try {
@@ -51,8 +53,18 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("chattitle", chattitle);
 				
 				actionUrl = "chat.jsp";
-			} 
-			else if (op.equals("search")) {
+			} else if (op.equals("delete")) {
+				ret = MovieDAO.remove(Integer.parseInt(request.getParameter("id")));
+				request.setAttribute("result", ret);
+				
+				if (ret) {
+					request.setAttribute("msg", "사용자 정보가 삭제되었습니다.");
+					actionUrl = "success.jsp";
+				} else {
+					request.setAttribute("error", "사용자 정보 삭제에 실패했습니다.");
+					actionUrl = "error.jsp";
+				}
+			} else if (op.equals("search")) {
 				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);
 				request.setAttribute("movies", movies);
 				request.setAttribute("page", page);

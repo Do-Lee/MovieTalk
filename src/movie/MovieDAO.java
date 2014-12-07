@@ -280,10 +280,11 @@ public class MovieDAO {
 
 			// 질의 준비
 			stmt = conn.prepareStatement("DELETE FROM movies WHERE id=?");
-			stmt.setInt(1,  id);
+			stmt.setInt(1, id);
 
 			// 수행
 			result = stmt.executeUpdate();
+			
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}

@@ -41,9 +41,9 @@
 							<td><a href="movie?movietitle=${movie.movietitle}&chattitle=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
 							<td><c:out value="${movie.movietitle}" /></td>
 							<td><c:out value="${movie.opener}" /></td>
-							<td><a href="chat?op=delete&chattitle=${movie.chattitle}"
+							<td><a href="movie?op=delete&id=${movie.id }"
 								class="btn btn-mini btn-danger" data-action="delete"
-								data-id="${movie.chattitle}">delete</a></td>
+								data-id="${movie.id}">delete</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -61,4 +61,14 @@
 
 	<jsp:include page="./share/footer.jsp"></jsp:include>
 </body>
+<script>
+  $(function() {
+    $("a[data-action='delete']").click(function() {
+      if (confirm("정말로 삭제하시겠습니까?")) {
+        location = 'movie?op=delete&id=' + $(this).attr('data-id');
+      }
+      return false;
+    });
+  });
+</script>
 </html>
