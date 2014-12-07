@@ -59,7 +59,7 @@ public class UserServlet extends HttpServlet {
 			} else if (op.equals("show")) {
 				User user = UserDAO.findById(id);
 				request.setAttribute("user", user);
-				actionUrl = "member.jsp";
+				actionUrl = "update.jsp";
 			} else if (op.equals("update")) {
 				User user = UserDAO.findById(id);
 				request.setAttribute("user", user);

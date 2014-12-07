@@ -27,11 +27,10 @@ public class UserAuthServlet extends HttpServlet {
 			if(user != null) {// 성공
 				request.setAttribute("user", user);
 				HttpSession session = request.getSession();
-				session.setAttribute("id", user.getUserid());
+				session.setAttribute("idx", Integer.toString(user.getId()));
+				session.setAttribute("userid", user.getUserid());
 				session.setAttribute("name", user.getName());
 				session.setAttribute("email", user.getEmail());
-				//actionUrl = "user?op=index";
-
 				response.sendRedirect(request.getContextPath() + "/index.jsp");
 				return;
 			} else if(UserDAO.checkID(request.getParameter("userid")) == null) {	// ID 없을 때

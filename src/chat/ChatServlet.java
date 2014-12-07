@@ -17,8 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import user.User;
 import user.UserDAO;
+
 import common.PageResult;
 
 @WebServlet("/chat")
@@ -28,11 +28,6 @@ public class ChatServlet extends HttpServlet {
 	public ChatServlet() {
 		super();
 	}
-
-	private String getMode(HttpServletRequest request) {
-		return (String) request.getParameter("_method");
-	}
-
 
 	private int getIntFromParameter(String str, int defaultValue) {
 		int id;
@@ -56,6 +51,12 @@ public class ChatServlet extends HttpServlet {
 
 		if (op == null && id > 0) {
 			op = "";
+			Message msg = null;
+			try {
+				msg = ChatDAO.findChat((String)request.getParameter("title"));
+			} catch (NamingException | SQLException e) {}
+			request.setAttribute("msg", msg);
+			actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
 		}
 
 		if(op != null) {
@@ -66,16 +67,27 @@ public class ChatServlet extends HttpServlet {
 					request.setAttribute("chats", chats);
 
 					actionUrl = "chat_index.jsp";
-				}
-				else if(op.equals("mine")) {
-					String userid = (String) session.getAttribute("id");
+				} else if(op.equals("create")) {
+					boolean ret = ChatDAO.create(new Message((String)request.getParameter("movietitle"),
+										(String)request.getParameter("title"),
+										"",//MovieDAO.findMovie((String)request.getParameter("title")).getImage(),
+										(String)request.getParameter("name"),
+										(String)request.getParameter("contents")));
+					System.out.println(ret);
+					if (ret) {
+						actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
+					} else {
+						request.setAttribute("error", "개설에 실패했습니다.");
+						actionUrl = "error.jsp";
+					}
+				} else if(op.equals("mine")) {
+					String userid = (String) session.getAttribute("name");
 					int page = getIntFromParameter(request.getParameter("page"), 1);
 					PageResult<Message> chats = ChatDAO.getPage(page, userid, 10);
 					request.setAttribute("chats", chats);
 
 					actionUrl = "chat_index.jsp";
-				}
-				else if (op.equals("search")) {
+				} else if (op.equals("search")) {
 					String query = request.getParameter("query");
 					int page = getIntFromParameter(request.getParameter("page"), 1);
 
@@ -83,9 +95,19 @@ public class ChatServlet extends HttpServlet {
 					request.setAttribute("chats", chats);
 					request.setAttribute("page", page);
 					actionUrl = "search.jsp";
+				} else if (op.equals("delete")) {
+					boolean ret = UserDAO.remove(id);
+					request.setAttribute("result", ret);
+					
+					if (ret) {
+						request.setAttribute("msg", "사용자 정보가 삭제되었습니다.");
+						actionUrl = "success.jsp";
+					} else {
+						request.setAttribute("error", "사용자 정보 삭제에 실패했습니다.");
+						actionUrl = "error.jsp";
+					}	
 				}
-			}
-			catch (SQLException | NamingException e) {
+			} catch (SQLException | NamingException e) {
 				request.setAttribute("error", e.getMessage());
 				e.printStackTrace();
 				actionUrl = "error.jsp";
@@ -93,8 +115,7 @@ public class ChatServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
 			dispatcher.forward(request,  response);
-		}
-		else {
+		} else {
 			String current_name = "";
 
 			if(session != null && session.getAttribute("name") != null) {
@@ -144,7 +165,6 @@ public class ChatServlet extends HttpServlet {
 		if(userid == null) {
 			return;
 		}
-
 
 		try {
 			if (ChatDAO.sendMessage(new Message(userid, content))) {					

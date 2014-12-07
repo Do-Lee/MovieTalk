@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:useBean id="chat" class="chat.ChatDAO"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,26 @@
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail" style="height: 240px;">
 					<div class="caption">
-						<h4>Hot Topic</h4>
+                      <%if ( chat.getHotMessage() == null ) {%>
+                        <h4>Hot Topic</h4>
+                      <%} else { %>
+                        <img src="<%=chat.getHotMessage().getImage() %>">
+						<h4 style="margin-top:8px 0 10px 0; text-align: center;"><%=chat.getHotMessage().getMovietitle() %></h4>
+                        <p style="margin: 0px;"><a href="./chat.jsp?title=<%=chat.getHotMessage().getTitle() %>" >
+                            <%=chat.getHotMessage().getTitle() %></a></p>
+                      <%} %>
 					</div>
 				</div>
 				<div class="thumbnail" style="height: 240px; float: bottom">
 					<div class="caption">
-						<h4 style="margin-top:8px 0 10px 0; text-align: center;">New Topic</h4>
+                      <%if ( chat.getNewMessage() == null ) {%>
+                        <h4>New Topic</h4>
+                      <%} else { %>
+                        <img src="<%=chat.getNewMessage().getImage() %>">
+						<h4 style="margin-top:8px 0 10px 0; text-align: center;"><%=chat.getNewMessage().getMovietitle() %></h4>
+                        <p style="margin: 0px;"><a href="./chat.jsp?title=<%=chat.getNewMessage().getTitle() %>" >
+                            <%=chat.getNewMessage().getTitle() %></a></p>
+                      <%} %>
 					</div>
 				</div>
 			</div>

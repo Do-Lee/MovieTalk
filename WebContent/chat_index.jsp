@@ -38,12 +38,13 @@
 				<tbody>
 					<c:forEach var="chat" items="${chats.list }">
 						<tr>
-							<td><a href="chat?id=${chat.id}"><c:out
-										value="${chat.userid}" /></a></td>
+							<td><a href="chat.jsp?title=${chat.title}"><c:out
+										value="${chat.opener}" /></a></td>
 							<td><c:out value="${chat.movietitle}" /></td>
 							<td><c:out value="${chat.title}" /></td>
-							<td><a href="#" class="btn btn-mini btn-danger"
-								data-action="delete" data-id="${chat.id}">delete</a></td>
+							<td><a href="chat?op=delete&id=${chat.id}"
+								class="btn btn-mini btn-danger" data-action="delete"
+								data-id="${chat.id}">delete</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -61,14 +62,4 @@
 
 	<jsp:include page="./share/footer.jsp"></jsp:include>
 </body>
-<script>
-	$(function() {
-		$("a[data-action='delete']").click(function() {
-			if (confirm("정말로 삭제하시겠습니까?")) {
-				location = 'fbuser?op=delete&id=' + $(this).attr('data-id');
-			}
-			return false;
-		});
-	});
-</script>
 </html>

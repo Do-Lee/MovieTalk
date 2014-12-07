@@ -1,7 +1,8 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="user" class="user.User" />
-<%String userid = (String) session.getAttribute("id"); %>
+<%//int id = (int) session.getAttribute("id"); %>
+<%String userid = (String) session.getAttribute("userid"); %>
 <%String name = (String) session.getAttribute("name"); %>
 <link rel="stylesheet" href="./css/autocomplete.css">
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
@@ -15,7 +16,7 @@
                 <li><a href="./register.jsp">회원가입</a></li>
 				<li><a href="login.jsp">로그인</a></li>
            		<% } else { %>
-                <li><a href="user?op=update"><%=name %></a></li>
+                <li><a href='<%="user?op=update&id=" %>'><%=name %></a></li>
                 <% if(userid.equals(user.getAdmin())) { %>
                 	<li><a href="user?op=admin" >회원 관리</a></li>
 					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>

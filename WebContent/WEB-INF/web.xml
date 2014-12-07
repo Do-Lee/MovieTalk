@@ -37,12 +37,12 @@
     <servlet-name>MovieServlet</servlet-name>
     <url-pattern>/MovieServlet.do</url-pattern>
   </servlet-mapping>
-  <servlet>
+<!--  <servlet>
     <servlet-name>ChatServlet</servlet-name>
     <servlet-class>chat.ChatServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ChatServlet</servlet-name>
     <url-pattern>/ChatServlet.do</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
 </web-app>

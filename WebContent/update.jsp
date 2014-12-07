@@ -11,8 +11,7 @@
 <script src="./js/bootstrap.min.js"></script>
 </head>
 <body>
-    <%String name = (String) session.getAttribute("name"); %>
-	<jsp:include page="./share/header.jsp"></jsp:include>
+    <jsp:include page="./share/header.jsp"></jsp:include>
 
 	<div class="container">
 		<form class="form-horizontal" method="POST" action="user">
@@ -20,7 +19,7 @@
 			<div class="form-group">
 				<label for="userid" class="col-lg-2 control-label">ID</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" name="userid" value="<%=session.getAttribute("id") %>"
+					<input type="text" class="form-control" name="userid" value="${user.userid}"
 						placeholder="ID" readonly="readonly" style="width: 300px;">
 				</div>
 			</div>
@@ -41,14 +40,14 @@
 			<div class="form-group">
 				<label for="nickname" class="col-lg-2 control-label">Nickname</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" name="nickname" value="<%=session.getAttribute("name") %>"
+					<input type="text" class="form-control" name="nickname" value="${user.name}"
 						placeholder="Nickname" required="required" style="width: 300px;">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="email" class="col-lg-2 control-label">E-Mail</label>
 				<div class="col-lg-3">
-					<input type="email" class="form-control" name="email" value="<%=session.getAttribute("email") %>"
+					<input type="email" class="form-control" name="email" value="${user.email}"
 						placeholder="example@email.com" required="required" style="width: 300px;">
 				</div>
 			</div>

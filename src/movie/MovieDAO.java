@@ -132,7 +132,6 @@ public class MovieDAO {
 		try {
 			conn = ds.getConnection();
 			for(Movie movie: RSSParser.getAllMovies(title)) {
-				//System.out.println(movie.toString());
 				if (findMovie(movie.getTitle(), movie.getSubtitle()) == null) {
 					stmt = conn.prepareStatement(
 							"INSERT INTO movies(title, link, image, subtitle, pubdate, director, actor, userrating) "
@@ -147,7 +146,6 @@ public class MovieDAO {
 					stmt.setString(7, movie.getActor());
 					stmt.setFloat(8, movie.getUserRatingInFloat());
 					result = stmt.executeUpdate();
-					//System.out.println(stmt);
 				}
 			}
 		} 
@@ -223,6 +221,41 @@ public class MovieDAO {
 		return (result == 1);		
 	}
 	
+	public static Movie findMovie(String title) throws NamingException, SQLException {
+		Movie movie = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		create(title);
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE title = ?");
+			stmt.setString(1, title);
+			
+			// 수행
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				movie = new Movie(rs.getString("title"),
+						rs.getString("subtitle"),
+						rs.getString("link"),
+						rs.getString("image"),
+						rs.getString("director"),
+						rs.getString("actor"),
+						rs.getString("pubdate"),
+						Float.toString(rs.getFloat("userrating")));
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		return movie;
+	}
+	
 	public static Movie findMovie(String title, String subtitle) throws NamingException, SQLException {
 		Movie movie = null;
 		Connection conn = null;
@@ -270,8 +303,8 @@ public class MovieDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("SELECT title FROM movies WHERE title LIKE %?%");
-			stmt.setString(1, title);
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE title LIKE ?");
+			stmt.setString(1, "%" + title + "%");
 			// 수행
 			rs = stmt.executeQuery();
 			

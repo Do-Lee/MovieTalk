@@ -11,24 +11,41 @@ public class Message implements java.io.Serializable {
 	private int id;
 	private String movietitle;
 	private String title;
-	private String userid;
-	private String content;
+	private String image;
+	private String opener;
+	private String writer;
+	private String contents;
 	private String message;
 	private String time;
 
-	// Constructor
-	public Message(String userid, String message) {
-		this.userid = userid;
+	// SendMessage용 Constructor
+	public Message(String writer, String message) {
+		this.writer = writer;
 		this.message = message;
 	}
 
-	public Message(int id, String movietitle, String title, String userid, String content, String message, Timestamp time) {
+	// 개설용 Constructor
+	public Message(String movietitle, String title, String image, String opener, String contents) {
+		this.movietitle = movietitle;
+		this.title = title;
+		this.image = image;
+		this.opener = opener;
+		this.contents = contents;
+	}
+	
+	public Message(int id, String movietitle, String title, String image, String opener, String writer, String contents, String message) {
 		this.id = id;
 		this.movietitle = movietitle;
 		this.title = title;
-		this.userid = simpleName(userid);
-		this.content = content;
+		this.image = image;
+		this.opener = opener;
+		this.writer = simpleName(writer);
+		this.contents = contents;
 		this.message = message;
+	}
+	
+	public Message(int id, String movietitle, String title, String image, String opener, String writer, String contents, String message, Timestamp time) {
+		this(id, movietitle, title, image, opener, writer, contents, message);
 		this.time = simpleDate(time);
 	}
 
@@ -38,10 +55,12 @@ public class Message implements java.io.Serializable {
 	public void setMovietitle(String movietitle) {this.movietitle = movietitle;}
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
-	public String getUserid() {return userid;}
-	public String getContent() {return content;}
+	public String getOpener() {return opener;}
+	public String getWriter() {return writer;}
+	public String getContents() {return contents;}
 	public String getMessage() {return message;}
 	public void setTime(Timestamp time) {this.time = simpleDate(time);}
+	public String getImage() {return image;}
 
 	
 	// json 형태로 출력
@@ -51,12 +70,14 @@ public class Message implements java.io.Serializable {
 		jsonObj.put("id", getId());
 		jsonObj.put("movietitle", getMovietitle());
 		jsonObj.put("title", getTitle());
-		jsonObj.put("userid", getUserid());
-		jsonObj.put("content", getContent());
+		jsonObj.put("image", getImage());
+		jsonObj.put("opener", getOpener());
+		jsonObj.put("writer", getWriter());
+		jsonObj.put("contents", getContents());
 		jsonObj.put("message", getMessage());
 		jsonObj.put("time", time.toString());
 		jsonObj.put("mine", ( current_name != null && 
-				current_name.equals(getUserid()) ) ? "mine" : "");
+				current_name.equals(getOpener()) ) ? "mine" : "");
 
 		return jsonObj;
 	}
@@ -80,8 +101,7 @@ public class Message implements java.io.Serializable {
 				simpleName += name.charAt(i);
 			}
 			simpleName += "...";
-		}
-		else {
+		} else {
 			simpleName = name;
 		}
 		

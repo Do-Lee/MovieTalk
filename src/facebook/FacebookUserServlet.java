@@ -71,8 +71,9 @@ public class FacebookUserServlet extends HttpServlet {
 
 				if (ret) {
 					request.setAttribute("msg", "사용자 정보가 삭제되었습니다.");
+					
 					HttpSession session = request.getSession();
-					session.invalidate();
+					if (!((String)session.getAttribute("id")).equals("webmaster")) session.invalidate();
 					actionUrl = "success.jsp";
 				} else {
 					request.setAttribute("error", "사용자 정보 삭제에 실패했습니다.");

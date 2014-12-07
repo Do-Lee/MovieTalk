@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	import="chat.Message" pageEncoding="UTF-8"%>
+<jsp:useBean id="ChatDAO" class="chat.ChatDAO"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,15 +30,12 @@
 								</tr>
 							</thead>
 							<tbody>
+                              <%for (Message message : ChatDAO.findAllChatsByTitle((String)request.getAttribute("title"))) {%>
 								<tr>
-									<td>Image...</td>
-									<td><span class="badge pull-right">42</span>Hello Chat
-										World</td>
+									<td><%=message.getImage()%></td>
+									<td><span class="badge pull-right">42</span><%=message.getTitle()%></td>
 								</tr>
-								<tr>
-									<td>Image...</td>
-									<td><span class="badge pull-right">28</span>Hello Chatting</td>
-								</tr>
+                              <%} %>
 							</tbody>
 						</table>
 					</div>
@@ -45,24 +43,20 @@
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img src="./images/movie2.jpg">
+					<img src="${msg.image}">
 					<div class="caption">
-						<h3>Movie Title</h3>
-						<p>Chat Title</p>
-						<p>Writer</p>
-						<p>Content</p>
-						<p>...</p>
-						<p>...</p>
+						<h3>${msg.movietitle}</h3>
+						<p>${msg.title}</p>
+						<p>${msg.userid}</p>
+						<p>${msg.content}</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<!-- <div class="table-responsive"> -->
 						<table>
 							<tbody id="messages"></tbody>
 						</table>
-					<!-- </div> -->
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
@@ -122,7 +116,7 @@
 	$(function() {
 		$("#send").click(function() {
 			// 이름이나 내용이 없으면 포커스를 옮기고 종료
-			<% if ((String) session.getAttribute("id") == null) { %>
+			<% if ((String) session.getAttribute("name") == null) { %>
 				alert("로그인 해주세요.");
 				location.replace("./login.jsp");
 				return;
