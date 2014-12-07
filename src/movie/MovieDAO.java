@@ -1,19 +1,11 @@
 ﻿package movie;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Vector;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.naming.*;
 import javax.sql.DataSource;
-
-import chat.Message;
 import common.PageResult;
 
 public class MovieDAO {
@@ -405,13 +397,9 @@ public class MovieDAO {
 			while(rs.next()) {
 				result.getList().add(new Movie(rs.getInt("id"),
 						rs.getString("movietitle"),
-						rs.getString("link"),
-						rs.getString("image"),
-						rs.getString("subtitle"),
-						rs.getString("pubdate"),
-						rs.getString("director"),
-						rs.getString("actor"),
-						Float.toString(rs.getFloat("userrating"))));
+						rs.getString("chattitle"),
+						rs.getString("opener"),
+						rs.getString("contents")));
 			}
 		} 
 		// 비슷한것을 찾을수 없을 때
