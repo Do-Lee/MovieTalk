@@ -3,7 +3,6 @@ package chat;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -15,13 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import movie.Movie;
-import movie.MovieDAO;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import user.UserDAO;
+
 import common.PageResult;
 
 @WebServlet("/chat")
@@ -46,7 +43,6 @@ public class ChatServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String op = request.getParameter("op");
-		String chattitle = request.getParameter("chattitle");
 		String actionUrl = "";
 
 		HttpSession session = request.getSession();

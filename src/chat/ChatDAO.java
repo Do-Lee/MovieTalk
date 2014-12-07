@@ -268,7 +268,6 @@ public class ChatDAO {
 	}
 	
 	public int findChatLastId(String title) throws NamingException, SQLException {
-		Message message = null;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -322,74 +321,6 @@ public class ChatDAO {
 		return (result == 1);		
 	}
 	
-	public Message getNewMessage() throws NamingException, SQLException {
-		Message message = null;
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		DataSource ds = getDataSource();
-		
-		try {
-			conn = ds.getConnection();
-			// 질의 준비
-			stmt = conn.prepareStatement("SELECT * FROM chats ORDER BY created_at DESC LIMIT 1");
-			
-			// 수행
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				message = new Message(rs.getInt("id"),
-						rs.getString("title"),
-						rs.getString("writer"),
-						rs.getString("message"),
-						rs.getTimestamp("created_at")
-						);
-			}	
-		} finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		return message;
-	}
-	
-	public Message getHotMessage() throws NamingException, SQLException {
-		Message message = null;
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		DataSource ds = getDataSource();
-		
-		try {
-			conn = ds.getConnection();
-			// 질의 준비
-			/*		stmt = conn.prepareStatement("SELECT COUNT(message) FROM chats "
-					+ "WHERE title=? GROUP BY MINUTE(created_at)");
-			//stmt.setString(1, x);
-			// 수행
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				message = new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
-						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
-						rs.getString("writer"),
-						rs.getString("contents"),
-						rs.getString("message"),
-						rs.getTimestamp("created_at"));
-			}	*/
-		} finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		return message;
-	}
-
 	public static PageResult<Message> getSearchPage(int page, int numItemsInPage, String movietitle) 
 			throws SQLException, NamingException {
 		Connection conn = null;

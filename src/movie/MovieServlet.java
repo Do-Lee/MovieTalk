@@ -44,8 +44,6 @@ String op = request.getParameter("op");
 		String query = request.getParameter("query");
 		int page = getIntFromParameter(request.getParameter("page"), 1);
 		
-		int id = getIntFromParameter(request.getParameter("id"), -1);
-		
 		try {
 			if(movietitle != null && chattitle != null) {
 				ArrayList<Movie> moives = MovieDAO.findAllMoviesByMovieTitle(movietitle);

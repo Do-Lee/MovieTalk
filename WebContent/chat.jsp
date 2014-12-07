@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="movie.Movie" import="chat.Message" pageEncoding="UTF-8"%>
+	import="movie.Movie" import="chat.Message"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean id="MovieDAO" class="movie.MovieDAO"/>
 <jsp:useBean id="ChatDAO" class="chat.ChatDAO"/>
