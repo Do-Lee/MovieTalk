@@ -36,9 +36,13 @@ public class MovieServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+String op = request.getParameter("op");
+
 		String movietitle = request.getParameter("movietitle");
 		String chattitle = request.getParameter("chattitle");
 		String actionUrl = "";
+		String query = request.getParameter("query");
+		int page = getIntFromParameter(request.getParameter("page"), 1);
 		
 		int id = getIntFromParameter(request.getParameter("id"), -1);
 		
@@ -50,6 +54,17 @@ public class MovieServlet extends HttpServlet {
 				
 				actionUrl = "chat.jsp";
 			} 
+			else if (op.equals("search")) {
+				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);
+				request.setAttribute("movies", movies);
+				request.setAttribute("page", page);
+				actionUrl = "search.jsp";
+			} else if(op.equals("admin")){
+				PageResult<Movie> movies = MovieDAO.getPage(page, 10);
+				request.setAttribute("movies", movies);
+
+				actionUrl = "chat_index.jsp";
+			}
 			else {
 				request.setAttribute("error", "알 수 없는 명령입니다");
 				actionUrl = "error.jsp";
@@ -62,9 +77,8 @@ public class MovieServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
 		dispatcher.forward(request,  response);
-		
+	
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String op = request.getParameter("op");

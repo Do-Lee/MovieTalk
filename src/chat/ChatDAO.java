@@ -6,14 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import movie.Movie;
 import common.PageResult;
 
 
@@ -392,44 +390,6 @@ public class ChatDAO {
 		return message;
 	}
 
-	public static Vector<Message> getChatList(String movietitle) throws SQLException, NamingException {
-		Vector<Message> chatList = new Vector<Message>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		DataSource ds = getDataSource();
-		
-		try {
-			conn = ds.getConnection();
-
-			// 질의 준비
-			stmt = conn.prepareStatement("SELECT * FROM chats WHERE movietitle LIKE ?");
-			stmt.setString(1, "%" + movietitle + "%");
-			
-			// 수행
-			rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				chatList.add(new Message(rs.getInt("id"),
-						rs.getString("title"),
-						rs.getString("writer"),
-						rs.getString("message"),
-						rs.getTimestamp("created_at")
-						));
-			}
-			
-		} 
-		// 비슷한것을 찾을수 없을 때
-		catch (SQLException e) {}
-		finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		return chatList;
-	}
-	
 	public static PageResult<Message> getSearchPage(int page, int numItemsInPage, String movietitle) 
 			throws SQLException, NamingException {
 		Connection conn = null;

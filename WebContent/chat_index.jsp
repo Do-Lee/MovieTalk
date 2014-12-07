@@ -18,10 +18,10 @@
 		<div class="row">
 			<div class="span12 page-info">
 				<div class="pull-left">
-					Total <b>${chats.numItems}</b> users
+					Total <b>${movies.numItems}</b> movies
 				</div>
 				<div class="pull-right">
-					<b>${chats.page }</b> page / total <b>${chats.numPages }</b> pages
+					<b>${movies.page }</b> page / total <b>${movies.numPages }</b> movies
 				</div>
 			</div>
 		</div>
@@ -29,22 +29,21 @@
 			<table class="table table-bordered table-stripped">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>Movie Title</th>
 						<th>Chat Title</th>
+						<th>Movie Title</th>
+						<th>ID</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="chat" items="${chats.list }">
+					<c:forEach var="movie" items="${movies.list }">
 						<tr>
-							<td><a href="chat.jsp?title=${chat.title}"><c:out
-										value="${chat.opener}" /></a></td>
-							<td><c:out value="${chat.movietitle}" /></td>
-							<td><c:out value="${chat.title}" /></td>
-							<td><a href="chat?op=delete&id=${chat.id}"
+							<td><a href="chat.jsp?title=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
+							<td><c:out value="${movie.movietitle}" /></td>
+							<td><c:out value="${movie.opener}" /></td>
+							<td><a href="chat?op=delete&chattitle=${movie.chattitle}"
 								class="btn btn-mini btn-danger" data-action="delete"
-								data-id="${chat.id}">delete</a></td>
+								data-id="${movie.chattitle}">delete</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -52,11 +51,11 @@
 		</div>
 
 		<jsp:include page="./page.jsp">
-			<jsp:param name="currentPage" value="${users.page}" />
-			<jsp:param name="url" value="user" />
-			<jsp:param name="startPage" value="${users.startPageNo}" />
-			<jsp:param name="endPage" value="${users.endPageNo}" />
-			<jsp:param name="numPages" value="${users.numPages}" />
+			<jsp:param name="currentPage" value="${movies.page}" />
+			<jsp:param name="url" value="movie" />
+			<jsp:param name="startPage" value="${movies.startPageNo}" />
+			<jsp:param name="endPage" value="${movies.endPageNo}" />
+			<jsp:param name="numPages" value="${movies.numPages}" />
 		</jsp:include>
 	</div>
 

@@ -72,9 +72,7 @@ public class Movie implements Serializable {
 	public String getActor() {return actor;}
 	public String getPubDate() {return pubDate;}
 	public String getUserRating() {return userRating;}
-	public float getUserRatingInFloat() {
-		return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);
-	}
+	public float getUserRatingInFloat() {return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);	}
 	public String getChattitle() {return chattitle;}
 	public String getOpener() {return opener;}
 	public String getContents() {return contents;}

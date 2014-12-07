@@ -20,7 +20,7 @@
                 <% if(userid.equals(user.getAdmin())) { %>
                 	<li><a href="user?op=admin" >회원 관리</a></li>
 					<li><a href="fbuser?op=admin">페이스북 회원 관리</a></li>
-					<li><a href="chat?op=admin">채팅 관리</a></li>
+					<li><a href="movie?op=admin">채팅 관리</a></li>
           		<% } else { %>
                 	<li><a href="chat?op=mine">회원 페이지</a></li>
                	<% } %>
@@ -33,7 +33,7 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 30px;" align="center">
-	<form class="form-inline" method="GET" action="chat">
+	<form class="form-inline" method="GET" action="movie">
 		<input type="hidden" name="op" value="search">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">
