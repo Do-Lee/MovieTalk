@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class RSSParser {
-	private static String title;
+	private static String movietitle;
 	private static String subtitle;
 	private static String link;
 	private static String image;
@@ -38,7 +38,7 @@ public class RSSParser {
 							Node node = movieItemList.item(j);
 							if (node.getNodeType() == Node.ELEMENT_NODE) {
 								Element e = (Element) node;
-								title = removeBTag(catchNULL(e.getElementsByTagName("title").item(0)));
+								movietitle = removeBTag(catchNULL(e.getElementsByTagName("movietitle").item(0)));
 								subtitle = removeBTag(catchNULL(e.getElementsByTagName("subtitle").item(0)));
 								link = removeBTag(catchNULL(e.getElementsByTagName("link").item(0)));
 								image = removeBTag(catchNULL(e.getElementsByTagName("image").item(0)));
@@ -46,7 +46,7 @@ public class RSSParser {
 								actor = changeStringToken(removeBTag(catchNULL(e.getElementsByTagName("actor").item(0))));
 								pubDate = removeBTag(catchNULL(e.getElementsByTagName("pubDate").item(0)));
 								userRating = removeBTag(catchNULL(e.getElementsByTagName("userRating").item(0)));
-								Movie movie = new Movie(title, subtitle, link, image, 
+								Movie movie = new Movie(movietitle, subtitle, link, image, 
 										director, actor, pubDate, userRating);
 								movielist.add(movie);
 							}
@@ -57,7 +57,7 @@ public class RSSParser {
 							Node node = movieItemList.item(j);
 							if (node.getNodeType() == Node.ELEMENT_NODE) {
 								Element e = (Element) node;
-								title = removeBTag(catchNULL(e.getElementsByTagName("title").item(0)));
+								movietitle = removeBTag(catchNULL(e.getElementsByTagName("movietitle").item(0)));
 								subtitle = removeBTag(catchNULL(e.getElementsByTagName("subtitle").item(0)));
 								link = removeBTag(catchNULL(e.getElementsByTagName("link").item(0)));
 								image = removeBTag(catchNULL(e.getElementsByTagName("image").item(0)));
@@ -65,7 +65,7 @@ public class RSSParser {
 								actor = changeStringToken(removeBTag(catchNULL(e.getElementsByTagName("actor").item(0))));
 								pubDate = removeBTag(catchNULL(e.getElementsByTagName("pubDate").item(0)));
 								userRating = removeBTag(catchNULL(e.getElementsByTagName("userRating").item(0)));
-								Movie movie = new Movie(title, subtitle, link, image, 
+								Movie movie = new Movie(movietitle, subtitle, link, image, 
 										director, actor, pubDate, userRating);
 								movielist.add(movie);
 							}

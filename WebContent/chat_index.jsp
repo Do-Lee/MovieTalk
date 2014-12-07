@@ -38,7 +38,7 @@
 				<tbody>
 					<c:forEach var="movie" items="${movies.list }">
 						<tr>
-							<td><a href="chat.jsp?title=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
+							<td><a href="movie?movietitle=${movie.movietitle}&chattitle=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
 							<td><c:out value="${movie.movietitle}" /></td>
 							<td><c:out value="${movie.opener}" /></td>
 							<td><a href="chat?op=delete&chattitle=${movie.chattitle}"

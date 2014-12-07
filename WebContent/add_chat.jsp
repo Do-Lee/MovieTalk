@@ -7,6 +7,7 @@
 <title>Movie Talk</title>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/common.css">
+<link rel="stylesheet" href="./css/autocomplete.css">
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 </head>
@@ -16,20 +17,21 @@
 	<div class="container">
 
 		<form class="form-horizontal" method="POST" action="movie?op=create">
-            <input type="hidden" name="_method" value="createChat">
+			<input type="hidden" name="_method" value="createChat">
+
 			<div class="form-group">
 				<label for="movietitle" class="col-lg-2 control-label">Movie Title</label>
 				<div class="col-lg-3">
-    				<input type="text" class="form-control" id="data" name="movietitle"
+    				<input type="text" class="form-control" name="movietitle"
     						placeholder="Movie Title" style="width: 300px;">
                     <img src="images/ajax-loader.gif" style="display:none;" id="loading">
-                    <div class="suggest_box" id="suggest_box"></div>
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<label for="title" class="col-lg-2 control-label">Title</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" name="title"
+					<input type="text" class="form-control" name="chattitle"
 						placeholder="Title" style="width: 300px;">
 				</div>
 			</div>
@@ -58,26 +60,5 @@
 
 	<jsp:include page="share/footer.jsp"></jsp:include>
 </body>
-<script type="text/javascript">
-  function fill(name) {
-    // 아이템이 선택되었을때 처리 
-    $('#data').val(name);
-    $('#suggest_box').fadeOut();
-  }
-  
-  $(function() {
-    $('#data').keyup(function() {
-      // 입력창에 키가 눌러진 경우 이벤트 처리
-      // Ajax로 값을 전송
-      $.post('DataSuggestServlet', {query: $('#data').val()}, 
-        function(data) {
-          $('#suggest_box').html(data).show();
-        }
-      );
-    });
-    // Ajax 진행 중임을 표시
-    $('#loading').ajaxStart(function() {$(this).show();});
-    $('#loading').ajaxComplete(function() {$(this).hide();});
-  });
-</script>
+
 </html>

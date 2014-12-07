@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import movie.Movie;
 import movie.MovieDAO;
 
-@WebServlet("/DataSuggestServlet")
+@WebServlet("/autocomplete")
 public class AutocompleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,8 +27,6 @@ public class AutocompleteServlet extends HttpServlet {
 
 		String query = request.getParameter("query");
 		PrintWriter out = response.getWriter();
-		
-		
 		
 		Vector<Movie> movieList = null;
 		try {

@@ -21,25 +21,6 @@ public class Movie implements Serializable {
 	
 	private int lastId;
 	
-	public Movie(int id, String movietitle, String chattitle, String opener, String contents) {
-		this.id = id;
-		this.movietitle = movietitle;
-		this.chattitle = chattitle;
-		this.opener = opener;
-		this.contents = contents;
-	}
-	
-	public Movie(int id, String movietitle, String chattitle, String opener, String contents, Timestamp time) {
-		this.id = id;
-		this.movietitle = movietitle;
-		this.chattitle = chattitle;
-		this.opener = opener;
-		this.contents = contents;
-		this.time = time;
-		
-		this.lastId = id;
-	}
-	
 	public Movie(String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
 		this.movietitle = movietitle;
 		this.subtitle = subtitle;
@@ -51,7 +32,7 @@ public class Movie implements Serializable {
 		this.userRating = userRating;
 	}
 	
-	public Movie(int id, String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
+	public Movie(int id, String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating, String chattitle, String opener, String contents, Timestamp time) {
 		this.id = id;
 		this.movietitle = movietitle;
 		this.subtitle = subtitle;
@@ -61,6 +42,10 @@ public class Movie implements Serializable {
 		this.actor = actor;
 		this.pubDate = pubDate;
 		this.userRating = userRating;
+		this.chattitle = chattitle;
+		this.opener = opener;
+		this.contents = contents;
+		this.time = time;
 	}
 	
 	public int getId() {return id;}
@@ -72,7 +57,7 @@ public class Movie implements Serializable {
 	public String getActor() {return actor;}
 	public String getPubDate() {return pubDate;}
 	public String getUserRating() {return userRating;}
-	public float getUserRatingInFloat() {return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);	}
+	public float getUserRatingInFloat() {return (this.userRating.equals("")) ? 0.0f : Float.parseFloat(this.userRating);}
 	public String getChattitle() {return chattitle;}
 	public String getOpener() {return opener;}
 	public String getContents() {return contents;}

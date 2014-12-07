@@ -36,7 +36,7 @@ public class MovieServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String op = request.getParameter("op");
+		String op = request.getParameter("op");
 
 		String movietitle = request.getParameter("movietitle");
 		String chattitle = request.getParameter("chattitle");
@@ -90,22 +90,23 @@ String op = request.getParameter("op");
 		}
 		
 		try {
-			if(op != null && op.equals("create")) {
+			if(op.equals("create")) {
 				boolean ret = false;
+				
 				try {
-					ret = MovieDAO.createChat(new Movie(id,
-							(String)request.getParameter("movietitle"),
-							(String)request.getParameter("title"),
-							(String)request.getParameter("name"),
-							(String)request.getParameter("contents")));
+					ret = MovieDAO.createChat((String)request.getParameter("movietitle"), 
+							(String)request.getParameter("chattitle"), 
+							(String)request.getParameter("name"), 
+							(String)request.getParameter("contents"));
 				} catch (SQLException | NamingException e) {
+					System.out.println("Error");
 					request.setAttribute("error", e.getMessage());
 					e.printStackTrace();
 					actionUrl = "error.jsp";
 				}
 
 				if (ret) {
-					actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
+					actionUrl = "index.jsp";
 				} else {
 					request.setAttribute("error", "중복된 Title이 존재하여 개설에 실패했습니다.");
 					actionUrl = "error.jsp";

@@ -49,7 +49,7 @@
 			<% for (Movie chatList : MovieDAO.findMovies(3)) {%>
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">
-					<img src="<%=chatList.getImage() %>">
+					<img src="<c:out value="<%=chatList.getImage()%>"></c:out>">
 					<div class="caption">
 						<h4>
 							<c:out value="<%=chatList.getMovietitle()%>"></c:out>

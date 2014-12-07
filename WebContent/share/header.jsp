@@ -1,7 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="user" class="user.User" />
-<%//int id = (int) session.getAttribute("id"); %>
 <%String userid = (String) session.getAttribute("userid"); %>
 <%String name = (String) session.getAttribute("name"); %>
 <link rel="stylesheet" href="./css/autocomplete.css">
@@ -63,7 +62,7 @@ $(function() {
 	$('#data').keyup(function() {
 		// 입력창에 키가 눌러진 경우 이벤트 처리
 		// Ajax로 값을 전송
-		$.post('DataSuggestServlet', {query: $('#data').val()}, 
+		$.post('autocomplete', {query: $('#data').val()}, 
 			function(data) {
 				$('#suggest_box').html(data).show();
 			}

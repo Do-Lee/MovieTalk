@@ -50,7 +50,7 @@
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					<% Movie movie = MovieDAO.findChat(request.getParameter("chattitle")); %>
-					<img src="<%=movie.getImage() %>">
+					<img src="<c:out value="<%=movie.getImage()%>"></c:out>">
 					<div class="caption">
 						<h3 align="center"><%=movie.getMovietitle() %></h3>
 						<p>Chat Title: <%=movie.getChattitle() %></p>
