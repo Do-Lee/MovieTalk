@@ -41,6 +41,8 @@ public class UserServlet extends HttpServlet {
 		String actionUrl = "";
 		boolean ret;
 		
+		HttpSession session = request.getSession();
+		
 		int id = getIntFromParameter(request.getParameter("id"), -1);
 		
 		if (op == null && id > 0) {
@@ -86,8 +88,13 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("users", users);
 				
 				actionUrl = "user_index.jsp";
+			} else if (op.equals("mine")) {
+				int page = getIntFromParameter(request.getParameter("page"), 1);
+				PageResult<User> users = UserDAO.getUserPage(page, 10, (String) session.getAttribute("userid"));
+				request.setAttribute("users", users);
+				
+				actionUrl = "user_index.jsp";
 			} else if (op.equals("logout")) {
-				HttpSession session = request.getSession();
 				session.invalidate();
 				
 				response.sendRedirect(request.getContextPath() + "/index.jsp");

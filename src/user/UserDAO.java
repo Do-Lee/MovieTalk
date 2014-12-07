@@ -77,6 +77,65 @@ public class UserDAO {
 		return result;		
 	}
 	
+	public static PageResult<User> getUserPage(int page, int numItemsInPage, String userid) 
+			throws SQLException, NamingException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;		
+
+		if (page <= 0) {
+			page = 1;
+		}
+		
+		DataSource ds = getDataSource();
+		PageResult<User> result = new PageResult<User>(numItemsInPage, page);
+		
+		
+		int startPos = (page - 1) * numItemsInPage;
+		
+		try {
+			conn = ds.getConnection();
+			
+			System.out.println(userid);
+			
+			stmt = conn.prepareStatement("SELECT COUNT(*) FROM users WHERE userid = ?");
+			stmt.setString(1, userid);
+			
+			// users 테이블: user 수 페이지수 개산
+	 		rs = stmt.executeQuery();
+			rs.next();
+			
+			result.setNumItems(rs.getInt(1));
+			
+			rs.close();
+			rs = null;
+			stmt.close();
+			stmt = null;
+			
+	 		// users 테이블 SELECT
+			stmt = conn.prepareStatement("SELECT * FROM users WHERE userid = ? ORDER BY name LIMIT " + startPos + ", " + numItemsInPage);
+			stmt.setString(1, userid);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				result.getList().add(new User(rs.getInt("id"),
+							rs.getString("userid"),
+							rs.getString("name"),
+							rs.getString("pwd"),
+							rs.getString("email")
+						));
+			}
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return result;		
+	}
+	
 	public static User checkIdPwd(String userid, String pwd) throws NamingException, SQLException {
 		User user = null;
 		Connection conn = null;
