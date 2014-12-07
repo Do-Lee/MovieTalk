@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="movie.Movie" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="MovieDAO" class="movie.MovieDAO" />
-<jsp:useBean id="ChatDAO" class="chat.ChatDAO" />
+<jsp:useBean id="MovieDAO" class="movie.MovieDAO" scope="request"/>
+<jsp:useBean id="ChatDAO" class="chat.ChatDAO" scope="request"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +22,11 @@
 				<div class="thumbnail" style="height: 240px;">
 					<div class="caption">
 						<h4>Hot Topic</h4>
-						<% for (Movie movie : MovieDAO.findHotChats(5)) { %>
+						<% for (Movie movie : MovieDAO.findHotChats(9)) { %>
 						<p style="margin: 0px;">
-							<a
-								href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>">
-								<%=movie.getChattitle() %></a> <span class="badge pull-right"><c:out
-									value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
+							<a href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>">
+							<%=movie.getChattitle() %></a> <span class="badge pull-right">
+							<c:out value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
 						</p>
 						<% } %>
 					</div>
@@ -35,12 +34,11 @@
 				<div class="thumbnail" style="height: 240px; float: bottom">
 					<div class="caption">
 						<h4>New Topic</h4>
-						<% for (Movie movie : MovieDAO.findNewChats(5)) { %>
+						<% for (Movie movie : MovieDAO.findNewChats(9)) { %>
 						<p style="margin: 0px;">
-							<a
-								href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>">
-								<%=movie.getChattitle() %></a> <span class="badge pull-right"><c:out
-									value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
+							<a href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>">
+							<%=movie.getChattitle() %></a> <span class="badge pull-right">
+							<c:out value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
 						</p>
 						<% } %>
 					</div>
@@ -57,8 +55,8 @@
 
 						<% for (Movie movie : MovieDAO.findAllMoviesByTitle(chatList.getMovietitle())) { %>
 						<p style="margin: 0px;">
-							<a
-								href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>"><%=movie.getChattitle()%></a>
+							<a href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>"><%=movie.getChattitle()%></a>
+							<span class="badge pull-right"><c:out value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
 						</p>
 						<% } %>
 					</div>

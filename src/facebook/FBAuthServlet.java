@@ -37,14 +37,23 @@ public class FBAuthServlet extends HttpServlet {
 			String fbid = me.getId();
 			String actionUrl="";
 
-			HttpSession session = request.getSession();
-			session.setAttribute("id", fbid);
-			if (me.getUsername() != null || me.getUsername().equals("")) {
-				session.setAttribute("name", me.getUsername());
-			} else {
-				session.setAttribute("name", me.getLastName() + " " + me.getFirstName());
+			try {
+				FacebookUser fbuserinfo = FacebookUserDAO.findByFbId(fbid);
+				if(fbuserinfo == null ) {
+					actionUrl = "fbuser?op=register";
+				} else {
+					HttpSession session = request.getSession();
+					
+					session.setAttribute("userid", fbid);
+					session.setAttribute("name", me.getLastName() + " " + me.getFirstName());
+
+					actionUrl = "index.jsp";
+				}
+			} catch (SQLException | NamingException e) {
+				request.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+				actionUrl = "error.jsp";
 			}
-			actionUrl = "index.jsp";
 
 			RequestDispatcher view = request.getRequestDispatcher(actionUrl); 
 			view.forward(request, response);

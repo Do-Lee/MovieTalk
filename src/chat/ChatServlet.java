@@ -41,6 +41,8 @@ public class ChatServlet extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.setCharacterEncoding("UTF-8");
+		
 		String op = request.getParameter("op");
 		String actionUrl = "";
 
@@ -138,14 +140,12 @@ public class ChatServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
 
-		
 		if(userid == null) {
 			return;
 		}
 
 		try {
 			if (ChatDAO.sendMessage(new Message(title, userid, content))) {	
-
 				response.getWriter().write("ok");
 			} else {
 				response.getWriter().write("메세지 전송에 실패했습니다..");

@@ -2,8 +2,8 @@
 	import="movie.Movie" import="chat.Message"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="MovieDAO" class="movie.MovieDAO"/>
-<jsp:useBean id="ChatDAO" class="chat.ChatDAO"/>
+<jsp:useBean id="MovieDAO" class="movie.MovieDAO" scope="request"/>
+<jsp:useBean id="ChatDAO" class="chat.ChatDAO" scope="request"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +68,7 @@
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
-							<input type="hidden" class="form-control" id="title" value="${requestScope.chattitle }"> <!-- 영화 title값  -->
+							<input type="hidden" class="form-control" id="title" value="${requestScope.chattitle }">
 							<input type="text" class="form-control" id="message">
 							<input type="button" class="btn btn-default" id="send" value="send" style="width: 100%; background: #eeeeee;"> 
 						</div>
@@ -131,11 +131,6 @@
 				location.replace("./login.jsp");
 				return;
 			<% } %>
-			if ($("#message").val().length == 0) {
-				alert("내용을 입력하여 주세요.");
-				$("#message").focus();
-				return;
-			}
 
 			// Ajax로 글 내용 전달
 			$.post('chat', {

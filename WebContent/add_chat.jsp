@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%String name = (String) session.getAttribute("name"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +40,7 @@
 			<div class="form-group">
 				<label for="writer" class="col-lg-2 control-label">Writer</label>
 				<div class="col-lg-3">
-					<input type="text" class="form-control" name="name" value=<%=session.getAttribute("name") %>
+					<input type="text" class="form-control" name="name" value=<c:out value="<%=name %>"></c:out>
 						readonly="readonly" style="width: 300px;">
 				</div>
 			</div>

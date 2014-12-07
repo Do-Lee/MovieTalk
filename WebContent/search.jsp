@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="span12 page-info">
 				<div class="pull-left">
-					Total <b>${movies.numItems }</b> movies
+					Total <b>${movies.numItems }</b> chats
 				</div>
 				<div class="pull-right">
 					<b>${movies.page }</b> page / total <b>${movies.numPages }</b> pages
@@ -38,7 +38,7 @@
 				<tbody>
 					<c:forEach var="movie" items="${movies.list }">
 						<tr>
-							<td><a href="movie?movietitle=${movie.id}&chattitle=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
+							<td><a href="movie?movietitle=${movie.movietitle}&chattitle=${movie.chattitle}"><c:out value="${movie.chattitle}" /></a></td>
 							<td><c:out value="${movie.movietitle}" /></td>
 							<td><c:out value="${movie.opener}" /></td>
 						</tr>

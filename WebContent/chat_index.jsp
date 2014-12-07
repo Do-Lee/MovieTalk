@@ -18,7 +18,7 @@
 		<div class="row">
 			<div class="span12 page-info">
 				<div class="pull-left">
-					Total <b>${movies.numItems}</b> movies
+					Total <b>${movies.numItems}</b> chats
 				</div>
 				<div class="pull-right">
 					<b>${movies.page }</b> page / total <b>${movies.numPages }</b> movies

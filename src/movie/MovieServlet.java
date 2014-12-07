@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import chat.ChatDAO;
-import chat.Message;
-import user.UserDAO;
 import common.PageResult;
 
 
@@ -23,6 +20,10 @@ import common.PageResult;
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// Attributes
+	String tempMovieTitle;
+	String tempChatTitle;
+	
     public MovieServlet() {
         super();
     }
@@ -40,6 +41,8 @@ public class MovieServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+
 		String op = request.getParameter("op");
 		String movietitle = request.getParameter("movietitle");
 		String chattitle = request.getParameter("chattitle");
@@ -57,7 +60,17 @@ public class MovieServlet extends HttpServlet {
 				request.setAttribute("moives", moives);
 				request.setAttribute("chattitle", chattitle);
 				
+				tempMovieTitle = movietitle;
+				tempChatTitle = chattitle;
+				
 				actionUrl = "chat.jsp";
+			} else if(op == null) {
+				ArrayList<Movie> moives = MovieDAO.findAllMoviesByMovieTitle(tempMovieTitle);
+				request.setAttribute("moives", moives);
+				request.setAttribute("chattitle", tempChatTitle);
+			System.out.println(tempChatTitle);
+				
+				actionUrl = "movie?movietitle=" + tempMovieTitle + "&chattitle=" + tempChatTitle;
 			} else if (op.equals("delete")) {
 				ret = MovieDAO.remove(getIntFromParameter(request.getParameter("id"), 1));
 				request.setAttribute("result", ret);
@@ -86,7 +99,6 @@ public class MovieServlet extends HttpServlet {
 				movies.getList();
 				
 				actionUrl = "chat_index.jsp";
-	
 			} else {
 				request.setAttribute("error", "알 수 없는 명령입니다");
 				actionUrl = "error.jsp";
