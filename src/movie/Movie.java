@@ -19,12 +19,25 @@ public class Movie implements Serializable {
 	private String contents;
 	private Timestamp time;
 	
+	private int lastId;
+	
 	public Movie(int id, String movietitle, String chattitle, String opener, String contents) {
 		this.id = id;
 		this.movietitle = movietitle;
 		this.chattitle = chattitle;
 		this.opener = opener;
 		this.contents = contents;
+	}
+	
+	public Movie(int id, String movietitle, String chattitle, String opener, String contents, Timestamp time) {
+		this.id = id;
+		this.movietitle = movietitle;
+		this.chattitle = chattitle;
+		this.opener = opener;
+		this.contents = contents;
+		this.time = time;
+		
+		this.lastId = id;
 	}
 	
 	public Movie(String movietitle, String subtitle, String link, String image, String director, String actor, String pubDate, String userRating) {
@@ -66,7 +79,8 @@ public class Movie implements Serializable {
 	public String getOpener() {return opener;}
 	public String getContents() {return contents;}
 	public Timestamp getTime() {return time;}
-
+	public int getLastId() {return lastId;}
+	
 	public String toString() {
 		return movietitle + " / " + subtitle + " / " + link + " / " + image + " / " + 
 				director + " / " + actor + " / " + pubDate + " / " + userRating;

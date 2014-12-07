@@ -2,6 +2,7 @@ package movie;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -10,8 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import chat.Message;
 
 import common.PageResult;
 
@@ -37,6 +36,32 @@ public class MovieServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String movietitle = request.getParameter("movietitle");
+		String chattitle = request.getParameter("chattitle");
+		String actionUrl = "";
+		
+		int id = getIntFromParameter(request.getParameter("id"), -1);
+		
+		try {
+			if(movietitle != null && chattitle != null) {
+				ArrayList<Movie> moives = MovieDAO.findAllMoviesByMovieTitle(movietitle);
+				request.setAttribute("moives", moives);
+				request.setAttribute("chattitle", chattitle);
+				
+				actionUrl = "chat.jsp";
+			} 
+			else {
+				request.setAttribute("error", "알 수 없는 명령입니다");
+				actionUrl = "error.jsp";
+			}
+		} catch (SQLException | NamingException e) {
+			request.setAttribute("error", e.getMessage());
+			e.printStackTrace();
+			actionUrl = "error.jsp";
+		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+		dispatcher.forward(request,  response);
 		
 	}
 

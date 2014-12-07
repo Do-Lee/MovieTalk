@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="chat.Message" pageEncoding="UTF-8"%>
+	import="movie.Movie" import="chat.Message" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="MovieDAO" class="movie.MovieDAO"/>
 <jsp:useBean id="ChatDAO" class="chat.ChatDAO"/>
 <!DOCTYPE html>
 <html>
@@ -30,10 +32,13 @@
 								</tr>
 							</thead>
 							<tbody>
-                              <%for (Message message : ChatDAO.findAllChatsByTitle((String)request.getAttribute("title"))) {%>
+                              <%for (Movie movie : MovieDAO.findAllMoviesByTitle(request.getParameter("movietitle"))) {%>
 								<tr>
-									<td><%=message.getImage()%></td>
-									<td><span class="badge pull-right">42</span><%=message.getTitle()%></td>
+									<td><%=movie.getImage()%></td>
+									<td>
+										<a href="movie?movietitle=<%=movie.getMovietitle()%>&chattitle=<%=movie.getChattitle()%>"><%=movie.getChattitle()%></a>
+										<span class="badge pull-right"><c:out value="<%=ChatDAO.findChatLastId(movie.getChattitle())%>"></c:out></span>
+									</td>
 								</tr>
                               <% } %>
 							</tbody>
@@ -52,6 +57,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 						<table>
@@ -60,7 +66,7 @@
 					<div id="error"></div>
 					<form id="chat_form">
 						<div class="form-group">
-							<input type="text" class="form-control" id="title" value="2">
+							<input type="hidden" class="form-control" id="title" value="${requestScope.chattitle }"> <!-- 영화 title값  -->
 							<input type="text" class="form-control" id="message">
 							<input type="button" class="btn btn-default" id="send" value="send" style="width: 100%; background: #eeeeee;"> 
 						</div>
@@ -91,7 +97,7 @@
 						$("<tr>").
 							append("<td></td>").
 							append("<td class='message mine'>" + 
-										"<span class='name'>" + item.userid + "</span>" + 
+										"<span class='name'>" + item.writer + "</span>" + 
 										"<span class='time'>" + item.time + "</span><br>" + 
 										"<span class='content'>" + item.message + "</span>" + 
 								  "</td>").
@@ -101,7 +107,7 @@
 					else {
 						$("<tr>").
 						append("<td>" + 
-									"<span class='name'>" + item.userid + "</span>" + 
+									"<span class='name'>" + item.writer + "</span>" + 
 									"<span class='time'>" + item.time + "</span><br>" + 
 									"<span class='content'>" + item.message + "</span>" + 
 							  "</td>").

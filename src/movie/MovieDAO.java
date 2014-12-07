@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.naming.Context;
@@ -324,6 +325,80 @@ public class MovieDAO {
 		return movie;
 	}
 
+	public static ArrayList<Movie> findAllMoviesByMovieTitle(String movietitle) throws NamingException, SQLException {
+		ArrayList<Movie> movieList = null;
+		Movie movie = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE movietitle = ?");
+			stmt.setString(1, movietitle);
+			
+			// 수행
+			rs = stmt.executeQuery();
+			movieList = new ArrayList<Movie>();
+			while (rs.next()) {
+				movie = new Movie(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("chattitle"),
+						rs.getString("opener"),
+						rs.getString("contents"),
+						rs.getTimestamp("created_at")
+						);
+				movieList.add(movie);
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return movieList;
+	}
+	
+	public ArrayList<Movie> findAllMoviesByTitle(String movietitle) throws NamingException, SQLException {
+		ArrayList<Movie> movieList = null;
+		Movie movie = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE movietitle = ?");
+			stmt.setString(1, movietitle);
+			
+			// 수행
+			rs = stmt.executeQuery();
+			movieList = new ArrayList<Movie>();
+			while (rs.next()) {
+				movie = new Movie(rs.getInt("id"),
+						rs.getString("movietitle"),
+						rs.getString("chattitle"),
+						rs.getString("opener"),
+						rs.getString("contents"),
+						rs.getTimestamp("created_at")
+						);
+				movieList.add(movie);
+			}	
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return movieList;
+	}
+	
 	public static Vector<Movie> getMovieList(String title) throws SQLException, NamingException {
 		Vector<Movie> movieList = new Vector<Movie>();
 		Connection conn = null;

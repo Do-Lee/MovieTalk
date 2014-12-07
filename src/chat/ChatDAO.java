@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import movie.Movie;
 import common.PageResult;
 
 
@@ -62,12 +63,8 @@ public class ChatDAO {
 			rs = stmt.executeQuery("SELECT * FROM chats ORDER BY id LIMIT " + startPos + ", " + numItemsInPage);
 			while(rs.next()) {
 				result.getList().add(new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
 						rs.getTimestamp("created_at")
 						));
@@ -119,12 +116,8 @@ public class ChatDAO {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				result.getList().add(new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
 						rs.getTimestamp("created_at")
 						));
@@ -171,11 +164,11 @@ public class ChatDAO {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Message msg = new Message(rs.getInt("id"), rs.getString("movietitle"), rs.getString("title"), 
-										rs.getString("opener"), rs.getString("writer"), rs.getString("image"),
-										rs.getString("contents"), rs.getString("message"), rs.getTimestamp("created_at"));
+				Message msg = new Message(rs.getInt("id"), rs.getString("title"), rs.getString("writer"), 
+											rs.getString("message"), rs.getTimestamp("created_at"));
 				msgList.add(msg);
-			}	
+			}
+
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}
@@ -199,17 +192,13 @@ public class ChatDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("UPDATE chats SET writer = ?, message = ? WHERE title = ?"); // problem
-			stmt.setString(1, msg.getWriter());
-			stmt.setString(2, msg.getMessage());
-			stmt.setString(3, msg.getTitle());
+			stmt = conn.prepareStatement("INSERT INTO chats(title, writer, message) VALUES(?, ?, ?)"); // problem
+			stmt.setString(1, msg.getTitle());
+			stmt.setString(2, msg.getWriter());
+			stmt.setString(3, msg.getMessage());
 			
 			// 수행
 			result = stmt.executeUpdate();
-			
-			System.out.println(msg.getWriter());
-			System.out.println(msg.getMessage());
-			System.out.println(msg.getTitle());
 		} 
 		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -247,44 +236,6 @@ public class ChatDAO {
 		return 0;
 	}
 	
-	public ArrayList<Message> findAllChatsByTitle(String title) throws NamingException, SQLException {
-		ArrayList<Message> chatList = null;
-		Message message = null;
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		DataSource ds = getDataSource();
-		
-		try {
-			conn = ds.getConnection();
-			// 질의 준비
-			stmt = conn.prepareStatement("SELECT * FROM chats WHERE title = ?");
-			stmt.setString(1, title);
-			
-			// 수행
-			rs = stmt.executeQuery();
-			chatList = new ArrayList<Message>();
-			if (rs.next()) {
-				message = new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
-						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
-						rs.getString("writer"),
-						rs.getString("contents"),
-						rs.getString("message"),
-						rs.getTimestamp("created_at"));
-				chatList.add(message);
-			}	
-		} finally {
-			// 무슨 일이 있어도 리소스를 제대로 종료
-			if (rs != null) try{rs.close();} catch(SQLException e) {}
-			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
-			if (conn != null) try{conn.close();} catch(SQLException e) {}
-		}
-		return chatList;
-	}
-	
 	public static Message findChat(String title) throws NamingException, SQLException {
 		Message message = null;
 		Connection conn = null;
@@ -303,14 +254,11 @@ public class ChatDAO {
 
 			if (rs.next()) {
 				message = new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
-						rs.getTimestamp("created_at"));
+						rs.getTimestamp("created_at")
+						);
 			}	
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -319,6 +267,36 @@ public class ChatDAO {
 			if (conn != null) try{conn.close();} catch(SQLException e) {}
 		}
 		return message;
+	}
+	
+	public int findChatLastId(String title) throws NamingException, SQLException {
+		Message message = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DataSource ds = getDataSource();
+		
+		int num;
+		
+		try {
+			conn = ds.getConnection();
+			// 질의 준비
+			stmt = conn.prepareStatement("SELECT COUNT(*) FROM chats WHERE title = ?");
+			stmt.setString(1, title);
+			
+			// 수행
+			rs = stmt.executeQuery();
+			rs.next();
+			
+			num = rs.getInt(1);
+		} finally {
+			// 무슨 일이 있어도 리소스를 제대로 종료
+			if (rs != null) try{rs.close();} catch(SQLException e) {}
+			if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+			if (conn != null) try{conn.close();} catch(SQLException e) {}
+		}
+		
+		return num;
 	}
 	
 	public static boolean remove(int id) throws NamingException, SQLException {
@@ -363,14 +341,11 @@ public class ChatDAO {
 
 			if (rs.next()) {
 				message = new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
-						rs.getTimestamp("created_at"));
+						rs.getTimestamp("created_at")
+						);
 			}	
 		} finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
@@ -436,14 +411,11 @@ public class ChatDAO {
 			
 			while (rs.next()) {
 				chatList.add(new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
-						rs.getTimestamp("created_at")));
+						rs.getTimestamp("created_at")
+						));
 			}
 			
 		} 
@@ -497,12 +469,8 @@ public class ChatDAO {
 			
 			while(rs.next()) {
 				result.getList().add(new Message(rs.getInt("id"),
-						rs.getString("movietitle"),
 						rs.getString("title"),
-						rs.getString("image"),
-						rs.getString("opener"),
 						rs.getString("writer"),
-						rs.getString("contents"),
 						rs.getString("message"),
 						rs.getTimestamp("created_at")
 						));

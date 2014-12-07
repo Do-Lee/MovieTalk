@@ -9,68 +9,45 @@ public class Message implements java.io.Serializable {
 	
 	// Attributes
 	private int id;
-	private String movietitle;
 	private String title;
-	private String image;
-	private String opener;
 	private String writer;
-	private String contents;
 	private String message;
 	private String time;
-
+	
 	// SendMessage용 Constructor
-	public Message(String writer, String message, String title) {
+	public Message(String title, String writer, String message) {
+		this.title = title;
 		this.writer = writer;
 		this.message = message;
-		this.title = title;
 	}
 
-	// 개설용 Constructor
-	public Message(int id, String movietitle, String title, String image, String opener, String writer, String contents, String message) {
+	public Message(int id, String title, String writer, String message, Timestamp time) {
 		this.id = id;
-		this.movietitle = movietitle;
 		this.title = title;
-		this.image = image;
-		this.opener = opener;
 		this.writer = simpleName(writer);
-		this.contents = contents;
 		this.message = message;
-	}
-	
-	public Message(int id, String movietitle, String title, String image, String opener, String writer, String contents, String message, Timestamp time) {
-		this(id, movietitle, title, image, opener, writer, contents, message);
 		this.time = simpleDate(time);
 	}
 
 	// Getters and Setters
 	public int getId() {return id;}
-	public String getMovietitle() {return movietitle;}
-	public void setMovietitle(String movietitle) {this.movietitle = movietitle;}
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
-	public String getOpener() {return opener;}
 	public String getWriter() {return writer;}
-	public String getContents() {return contents;}
 	public String getMessage() {return message;}
-	public void setTime(Timestamp time) {this.time = simpleDate(time);}
-	public String getImage() {return image;}
+	public String getTime() {return time;}
 
-	
 	// json 형태로 출력
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON(String current_name) {
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("id", getId());
-		jsonObj.put("movietitle", getMovietitle());
 		jsonObj.put("title", getTitle());
-		jsonObj.put("image", getImage());
-		jsonObj.put("opener", getOpener());
 		jsonObj.put("writer", getWriter());
-		jsonObj.put("contents", getContents());
 		jsonObj.put("message", getMessage());
-		jsonObj.put("time", time.toString());
+		jsonObj.put("time", getTime());
 		jsonObj.put("mine", ( current_name != null && 
-				current_name.equals(getOpener()) ) ? "mine" : "");
+				current_name.equals(getWriter()) ) ? "mine" : "");
 
 		return jsonObj;
 	}

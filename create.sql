@@ -21,7 +21,7 @@ CREATE TABLE movies (
 	director VARCHAR(100),
 	actor VARCHAR(255),
 	pubdate VARCHAR(255),
-	userrating FLOAT
+	userrating FLOAT,
 	chattitle VARCHAR(255) UNIQUE,
 	opener VARCHAR(30) NOT NULL,
 	contents VARCHAR(255),

@@ -3,6 +3,7 @@ package chat;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -14,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import movie.Movie;
+import movie.MovieDAO;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import user.UserDAO;
-
 import common.PageResult;
 
 @WebServlet("/chat")
@@ -43,6 +46,7 @@ public class ChatServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String op = request.getParameter("op");
+		String chattitle = request.getParameter("chattitle");
 		String actionUrl = "";
 
 		HttpSession session = request.getSession();
@@ -53,10 +57,9 @@ public class ChatServlet extends HttpServlet {
 			op = "";
 			Message msg = null;
 			try {
-				msg = ChatDAO.findChat((String)request.getParameter("title"));
+				msg = ChatDAO.findChat((String)request.getParameter("movietitle"));
 			} catch (NamingException | SQLException e) {}
 			request.setAttribute("msg", msg);
-			actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
 		}
 
 		if(op != null) {
@@ -123,7 +126,7 @@ public class ChatServlet extends HttpServlet {
 
 			try {
 				List<Message> chatList = ChatDAO.getChatList(last, title);
-
+				
 				JSONArray jsonList = new JSONArray();
 				for(Message chat : chatList) {
 					jsonList.add(chat.toJSON(current_name));
@@ -156,12 +159,13 @@ public class ChatServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
 
+		
 		if(userid == null) {
 			return;
 		}
 
 		try {
-			if (ChatDAO.sendMessage(new Message(userid, content, title))) {	
+			if (ChatDAO.sendMessage(new Message(title, userid, content))) {	
 
 				response.getWriter().write("ok");
 			} else {
