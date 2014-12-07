@@ -29,7 +29,7 @@
                       <%} %>
 					</div>
 				</div>
-				<div class="thumbnail" style="height: 240px; float: bottom">
+				<%-- <div class="thumbnail" style="height: 240px; float: bottom">
 					<div class="caption">
                       <%if ( chat.getNewMessage() == null ) {%>
                         <h4>New Topic</h4>
@@ -40,7 +40,7 @@
                             <%=chat.getNewMessage().getTitle() %></a></p>
                       <%} %>
 					</div>
-				</div>
+				</div> --%>
 			</div>
 			<div class="col-sm-6 col-md-2">
 				<div class="thumbnail">

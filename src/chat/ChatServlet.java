@@ -67,20 +67,7 @@ public class ChatServlet extends HttpServlet {
 					request.setAttribute("chats", chats);
 
 					actionUrl = "chat_index.jsp";
-				} else if(op.equals("create")) {
-					boolean ret = ChatDAO.create(new Message((String)request.getParameter("movietitle"),
-										(String)request.getParameter("title"),
-										"",//MovieDAO.findMovie((String)request.getParameter("title")).getImage(),
-										(String)request.getParameter("name"),
-										(String)request.getParameter("contents")));
-					System.out.println(ret);
-					if (ret) {
-						actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
-					} else {
-						request.setAttribute("error", "개설에 실패했습니다.");
-						actionUrl = "error.jsp";
-					}
-				} else if(op.equals("mine")) {
+				}  else if(op.equals("mine")) {
 					String userid = (String) session.getAttribute("name");
 					int page = getIntFromParameter(request.getParameter("page"), 1);
 					PageResult<Message> chats = ChatDAO.getPage(page, userid, 10);
@@ -98,7 +85,7 @@ public class ChatServlet extends HttpServlet {
 				} else if (op.equals("delete")) {
 					boolean ret = UserDAO.remove(id);
 					request.setAttribute("result", ret);
-					
+
 					if (ret) {
 						request.setAttribute("msg", "사용자 정보가 삭제되었습니다.");
 						actionUrl = "success.jsp";
@@ -108,6 +95,7 @@ public class ChatServlet extends HttpServlet {
 					}	
 				}
 			} catch (SQLException | NamingException e) {
+				System.out.println("Error");
 				request.setAttribute("error", e.getMessage());
 				e.printStackTrace();
 				actionUrl = "error.jsp";
@@ -140,6 +128,7 @@ public class ChatServlet extends HttpServlet {
 				if (chatList.size() > 0) {
 					last = chatList.get(chatList.size() - 1).getId();
 				}
+				
 				resultObj.put("size", chatList.size());
 				resultObj.put("messages", jsonList);
 				resultObj.put("last", last);
@@ -151,29 +140,59 @@ public class ChatServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(resultObj.toJSONString());
+
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		request.setCharacterEncoding("UTF-8");
 
-		HttpSession session = request.getSession(true);
-
-		String userid = (String) session.getAttribute("name");
-		String content = request.getParameter("content");
-
-		if(userid == null) {
-			return;
-		}
-
-		try {
-			if (ChatDAO.sendMessage(new Message(userid, content))) {					
-				response.getWriter().write("ok");
-			} else {
-				response.getWriter().write("메세지 전송에 실패했습니다..");
+		String op = request.getParameter("op");
+		String actionUrl = "";
+		
+		if(op != null && op.equals("create")) {
+			boolean ret = false;
+			try {
+				ret = ChatDAO.create(new Message((String)request.getParameter("movietitle"),
+						(String)request.getParameter("title"),
+						"",//MovieDAO.findMovie((String)request.getParameter("title")).getImage(),
+						(String)request.getParameter("name"),
+						(String)request.getParameter("contents")));
+			} catch (SQLException | NamingException e) {
+				request.setAttribute("error", e.getMessage());
+				e.printStackTrace();
+				actionUrl = "error.jsp";
 			}
-		} catch (Exception e) {
-			response.getWriter().write(e.getMessage());
+
+			if (ret) {
+				actionUrl = "chat.jsp?title=" + (String)request.getParameter("title");
+			} else {
+				request.setAttribute("error", "중복된 Title이 존재하여 개설에 실패했습니다.");
+				actionUrl = "error.jsp";
+			}
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+			dispatcher.forward(request,  response);
+		}
+		else {
+			HttpSession session = request.getSession(true);
+
+			String userid = (String) session.getAttribute("name");
+			String content = request.getParameter("content");
+			
+			if(userid == null) {
+				return;
+			}
+
+			try {
+				if (ChatDAO.sendMessage(new Message(userid, content))) {					
+					response.getWriter().write("ok");
+				} else {
+					response.getWriter().write("메세지 전송에 실패했습니다..");
+				}
+			} catch (Exception e) {
+				response.getWriter().write(e.getMessage());
+			}
 		}
 	}
 }

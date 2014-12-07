@@ -194,7 +194,7 @@ public class ChatDAO {
 
 		try {
 			conn = ds.getConnection();
-
+			
 			// 질의 준비
 			stmt = conn.prepareStatement("INSERT INTO chats(movietitle, title, image, opener, contents) "
 					+ "VALUES (?, ?, ?, ?, ?);");
@@ -203,6 +203,7 @@ public class ChatDAO {
 			stmt.setString(3, msg.getImage());
 			stmt.setString(4, msg.getOpener());
 			stmt.setString(5, msg.getContents());
+			
 			// 수행
 			result = stmt.executeUpdate();
 		} 
