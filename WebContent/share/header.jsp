@@ -33,7 +33,7 @@
 
 <!-- search bar -->
 <div class="container" style="padding-top: 30px;" align="center">
-	<form class="form-inline" method="GET" action="chat">
+	<form class="form-inline" method="GET" action="movie">
 		<input type="hidden" name="op" value="search">
 		<h1><a href="./index.jsp">Movie Talk</a></h1>
 		<div class="form-group">

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import chat.ChatDAO;
 import chat.Message;
-
 import common.PageResult;
 
 
@@ -37,9 +37,28 @@ public class MovieServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String op = request.getParameter("op");
+		String actionUrl = "";
+		String query = request.getParameter("query");
+		int page = getIntFromParameter(request.getParameter("page"), 1);
 		
+		
+		try {
+			if (op.equals("search")) {
+				PageResult<Movie> movies = MovieDAO.getSearchPage(page, 10, query);
+				request.setAttribute("movies", movies);
+				request.setAttribute("page", page);
+				actionUrl = "search.jsp";
+			}
+		} catch (SQLException | NamingException e) {
+			request.setAttribute("error", e.getMessage());
+			e.printStackTrace();
+			actionUrl = "error.jsp";
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+		dispatcher.forward(request,  response);
+	
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String op = request.getParameter("op");

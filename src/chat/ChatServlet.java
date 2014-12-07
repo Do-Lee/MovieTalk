@@ -74,14 +74,7 @@ public class ChatServlet extends HttpServlet {
 					request.setAttribute("chats", chats);
 
 					actionUrl = "chat_index.jsp";
-				} else if (op.equals("search")) {
-					String query = request.getParameter("query");
-					int page = getIntFromParameter(request.getParameter("page"), 1);
-
-					PageResult<Message> chats = ChatDAO.getSearchPage(page, 10, query);
-					request.setAttribute("chats", chats);
-					request.setAttribute("page", page);
-					actionUrl = "search.jsp";
+		
 				} else if (op.equals("delete")) {
 					boolean ret = UserDAO.remove(id);
 					request.setAttribute("result", ret);

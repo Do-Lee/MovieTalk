@@ -19,10 +19,10 @@
 		<div class="row">
 			<div class="span12 page-info">
 				<div class="pull-left">
-					Total <b>${chats.numItems }</b> chats
+					Total <b>${movies.numItems }</b> movies
 				</div>
 				<div class="pull-right">
-					<b>${chats.page }</b> page / total <b>${chats.numPages }</b> pages
+					<b>${movies.page }</b> page / total <b>${movies.numPages }</b> pages
 				</div>
 			</div>
 		</div>
@@ -36,11 +36,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="chat" items="${chats.list }">
+					<c:forEach var="movie" items="${movies.list }">
 						<tr>
-							<td><a href="chat?id=${chat.id}"><c:out value="${chat.title}" /></a></td>
-							<td><c:out value="${chat.movietitle}" /></td>
-							<td><c:out value="${chat.userid}" /></td>
+							<td><a href="movie?id=${movie.id}"><c:out value="${movie.chattitle}" /></a></td>
+							<td><c:out value="${movie.movietitle}" /></td>
+							<td><c:out value="${movie.opener}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -48,11 +48,11 @@
 		</div>
 
 		<jsp:include page="./page.jsp">
-			<jsp:param name="currentPage" value="${chats.page}" />
-			<jsp:param name="url" value="chat" />
-			<jsp:param name="startPage" value="${chats.startPageNo}" />
-			<jsp:param name="endPage" value="${chats.endPageNo}" />
-			<jsp:param name="numPages" value="${chats.numPages}" />
+			<jsp:param name="currentPage" value="${movies.page}" />
+			<jsp:param name="url" value="movie" />
+			<jsp:param name="startPage" value="${movies.startPageNo}" />
+			<jsp:param name="endPage" value="${movies.endPageNo}" />
+			<jsp:param name="numPages" value="${movies.numPages}" />
 		</jsp:include>
 
 	</div>

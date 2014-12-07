@@ -68,11 +68,10 @@ public class AutocompleteServlet extends HttpServlet {
 			else{
 				if(query.length() > 0) {
 					for( Movie movie : movieList ) {
-						System.out.println(movie.getTitle());
 						
-						if( movie.getTitle().contains(query)) {	
-							out.println("<li onclick=\"fill('" + movie.getTitle() + "');\">"
-										+ movie.getTitle() + "</li>"); 
+						if( movie.getMovietitle().contains(query)) {	
+							out.println("<li onclick=\"fill('" + movie.getMovietitle() + "');\">"
+										+ movie.getMovietitle() + "</li>"); 
 						}
 					}
 				}
