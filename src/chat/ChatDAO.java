@@ -368,7 +368,7 @@ public class ChatDAO {
 			}
 		} 
 		// 비슷한것을 찾을수 없을 때
-		catch (SQLException e) {System.out.println("Error");}
+		catch (SQLException e) {}
 		finally {
 			// 무슨 일이 있어도 리소스를 제대로 종료
 			if (rs != null) try{rs.close();} catch(SQLException e) {}

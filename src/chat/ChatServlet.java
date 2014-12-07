@@ -87,7 +87,6 @@ public class ChatServlet extends HttpServlet {
 					}	
 				}
 			} catch (SQLException | NamingException e) {
-				System.out.println("Error");
 				request.setAttribute("error", e.getMessage());
 				e.printStackTrace();
 				actionUrl = "error.jsp";
@@ -158,7 +157,6 @@ public class ChatServlet extends HttpServlet {
 
 				response.getWriter().write("ok");
 			} else {
-				System.out.println("Error");
 				response.getWriter().write("메세지 전송에 실패했습니다..");
 			}
 		} catch (Exception e) {

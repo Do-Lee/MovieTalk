@@ -49,12 +49,13 @@
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img src="${msg.image}">
+					<% Movie movie = MovieDAO.findChat(request.getParameter("chattitle")); %>
+					<img src="<%=movie.getImage() %>">
 					<div class="caption">
-						<h3>${msg.movietitle}</h3>
-						<p>${msg.title}</p>
-						<p>${msg.userid}</p>
-						<p>${msg.content}</p>
+						<h3 align="center"><%=movie.getMovietitle() %></h3>
+						<p>Chat Title: <%=movie.getChattitle() %></p>
+						<p>Wrtier: <%=movie.getOpener() %></p>
+						<p>Contents: <%=movie.getContents() %></p>
 					</div>
 				</div>
 			</div>

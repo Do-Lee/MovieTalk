@@ -358,6 +358,40 @@ public class MovieDAO {
 		return movieList;
 	}
 
+	public Movie findChat(String chattitle) throws NamingException, SQLException {
+	      Movie movie = null;
+	      Connection conn = null;
+	      PreparedStatement stmt = null;
+	      ResultSet rs = null;
+	      DataSource ds = getDataSource();
+
+	      try {
+	         conn = ds.getConnection();
+	         // 질의 준비
+	         stmt = conn.prepareStatement("SELECT * FROM movies WHERE chattitle = ?");
+	         stmt.setString(1, chattitle);
+	         
+	         // 수행
+	         rs = stmt.executeQuery();
+
+	         if (rs.next()) {
+	            movie = new Movie(rs.getInt("id"),
+	                  rs.getString("movietitle"),
+	                  rs.getString("chattitle"),
+	                  rs.getString("opener"),
+	                  rs.getString("contents"),
+	                  rs.getTimestamp("created_at")
+	                  );
+	         }   
+	      } finally {
+	         // 무슨 일이 있어도 리소스를 제대로 종료
+	         if (rs != null) try{rs.close();} catch(SQLException e) {}
+	         if (stmt != null) try{stmt.close();} catch(SQLException e) {}
+	         if (conn != null) try{conn.close();} catch(SQLException e) {}
+	      }
+	      return movie;
+	   }
+	
 	public ArrayList<Movie> findHotChats(int num) throws NamingException, SQLException {
 		ArrayList<Movie> movieList = null;
 		Movie movie = null;
@@ -381,8 +415,6 @@ public class MovieDAO {
 				stmt = conn.prepareStatement("SELECT * FROM movies WHERE chattitle = ?;");
 				stmt.setString(1, chatRS.getString("title"));
 
-				System.out.println(chatRS.getString("title"));
-				
 				movieRS = stmt.executeQuery();
 
 				while(movieRS.next()) {
@@ -529,7 +561,7 @@ public class MovieDAO {
 			conn = ds.getConnection();
 
 			// 질의 준비
-			stmt = conn.prepareStatement("SELECT * FROM movies WHERE movietitle LIKE ?");
+			stmt = conn.prepareStatement("SELECT * FROM movies WHERE movietitle LIKE ? GROUP BY movietitle");
 			stmt.setString(1, "%" + movietitle + "%");
 
 			// 수행
